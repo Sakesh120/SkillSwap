@@ -45,6 +45,7 @@ export async function register(req, res) {
         id: user._id,
         name: user.name,
         email: user.email,
+        credit: user.credits,
       },
     });
   } catch (error) {
@@ -95,3 +96,26 @@ export async function login(req, res) {
     res.status(500).send(error);
   }
 }
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      skillsOffered: user.skillsOffered,
+      skillsWanted: user.skillsWanted,
+      credits: user.credits,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

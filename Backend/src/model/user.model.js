@@ -17,8 +17,13 @@ const userSchema = new mongoose.Schema(
     },
     skillsOffered: [String],
     skillsWanted: [String],
+    credits: {
+      type: Number,
+      default: 50, // bonus on registration
+    },
     rating: { type: Number, default: 0 },
   },
+
   { timestamps: true },
 );
 
