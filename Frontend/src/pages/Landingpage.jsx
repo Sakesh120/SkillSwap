@@ -1,20 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
 
-function Landingpage() {
+import Hero from "../components/Hero";
+import HowItWorks from "../components/HowItWorks";
+import Features from "../components/Features";
+import Skills from "../components/Skills.jsx";
+import CTA from "../components/CTA";
+import Footer from "../components/Footer";
+
+function Landing() {
   return (
-     <div className="h-screen flex flex-col items-center justify-top bg-gray-900 text-white">
-          
-          <img src={logo} alt="Logo" className="mb-4 w-70 h-70 object-contain" />
-
-          <Link to="/signup">
-            <button className="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10" >Get Started</button>
-          </Link>
-
-          </div>
-
-  )
+    <div className="bg-white text-black">
+      <Hero />
+      <HowItWorks />
+      <Features />
+      <Skills />
+      <CTA />
+      <Footer />
+    </div>
+  );
 }
 
-export default Landingpage
+export default Landing;
