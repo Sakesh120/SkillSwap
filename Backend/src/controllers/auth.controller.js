@@ -61,7 +61,7 @@ export async function login(req, res) {
     return res.status(400).send("All fields are required");
   }
   try {
-    const user = await userModel.findOne({ email: email });
+    const user = await userModel.findOne({ email: email }).select("+password");
 
     if (!user) {
       return res.status(400).send("Invlied email");
