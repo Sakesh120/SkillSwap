@@ -30,7 +30,7 @@ function Navbar() {
      }}>
       <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
 
-      <div className="space-x-8 text-sm text-black">
+      <div className="space-x-8 text-2xl  text-black">
         <a href="#">Home</a>
         <a href="#">About</a>
         <a href="#">How it works</a>
