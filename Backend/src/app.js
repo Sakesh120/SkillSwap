@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import authRouter from "./routes/auth.route.js";
+import matchRouter from "./routes/match.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -12,5 +13,5 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/auth", authRouter);
-
+app.use("/api/match", matchRouter);
 export default app;

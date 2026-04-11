@@ -1,0 +1,15 @@
+/// users : 
+{
+    "name":"sakesh chopkar",
+    "email":"sac@120.com",
+    "password":"sac120",
+    "skillsOffered":["frontend","html","css","javascript"],
+    "skillsWanted": ["backend","nodeJs","ExpressJs","MongoDB"]
+},
+{
+    "name":"swapnil Meshram",
+    "email":"sam@120.com",
+    "password":"sam120",
+    "skillsOffered":["ExpressJs","backend","css","Python"],
+    "skillsWanted": ["javascript","frontend","MongoDB"]
+}
