@@ -12,13 +12,11 @@ export const getMatches = async (req, res) => {
       });
     }
     // match logic
-    const matches = await userModel
-      .find({
-        skillsOffered: { $in: currentUser.skillsWanted },
-        skillsWanted: { $in: currentUser.skillsOffered },
-        _id: { $ne: userId },
-      })
-      .select("-password");
+    const matches = await userModel.find({
+      skillsOffered: { $in: currentUser.skillsWanted },
+      skillsWanted: { $in: currentUser.skillsOffered },
+      _id: { $ne: userId },
+    });
 
     res.json({
       count: matches.length,
