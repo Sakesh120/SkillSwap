@@ -15,7 +15,8 @@ function Login() {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-      
+       <Navbar />
+
       <img src={logo} alt="Logo" className="mb-4 w-40 h-40 object-contain" />
       
       <h1 className="text-3xl font-bold mb-6">Log in</h1>
