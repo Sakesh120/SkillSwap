@@ -10,6 +10,7 @@ const requestRouter = express.Router();
 
 requestRouter.post("/send", protect, sendRequest);
 requestRouter.get("/received", protect, getReceivedRequests);
-requestRouter.put("/respond/:id", protect, respondRequest);
+requestRouter.put("/:id/respond", protect, respondRequest);
+requestRouter.delete("/delete/:id", protect, respondRequest); /// ERRor durin the post man
 
 export default requestRouter;

@@ -1,5 +1,6 @@
 import SwapRequest from "../model/swapRequest.model.js";
 import userModel from "../model/user.model.js";
+import Session from "../model/session.model.js";
 
 //SENDER REQUEST
 export const sendRequest = async (req, res) => {
@@ -95,6 +96,16 @@ export const respondRequest = async (req, res) => {
       sender.credits += 10;
       await sender.save();
     }
+
+    // CREATE SESSION
+    if (status == "accepted" && request.status == "pending") {
+      await Session.create({
+        users: [request.sender, request.receiver],
+        skillsOffered: request.skillOffered,
+        skillRequested: request.skillRequested,
+      });
+    }
+
     /// update status
     request.status = status;
     await request.save();
@@ -114,6 +125,36 @@ export const respondRequest = async (req, res) => {
 export const deleteRequest = async (req, res) => {
   try {
     const request = await SwapRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({
+        message: "Request not found",
+      });
+    }
+
+    // Only sender can delete
+    if (request.sender.toString() !== req.user) {
+      return res.status(403).json({
+        message: "Not authorized",
+      });
+    }
+
+    //Only pending request can be deleted
+    if (request.status !== "pending") {
+      return res.status(400).json({
+        message: "Only pending request can be deleted",
+      });
+    }
+    // refund credits
+    const sender = await userModel.findById(request.sender);
+    sender.credits += 10;
+    await sender.save();
+
+    // delete request
+    await request.deleteOne();
+
+    res.json({
+      message: "Request deleted successfully",
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
