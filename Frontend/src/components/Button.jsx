@@ -5,7 +5,7 @@ function Button({ text, onClick, type = "button", className = "" }) {
     <button
       type={type}
       onClick={onClick}
-      className={`flex break-inside bg-black rounded-3xl px-8 py-4 mb-4 w-50 dark:bg-slate-800 dark:text-white 
+      className={`flex break-inside bg-black rounded-3xl px-8 py-4 mb-4 min-w-50 dark:bg-slate-800 dark:text-white 
       ${className}`}
     >
       

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"; 
+import Card from './Card'; 
 
 
 function HowItWorks() {
@@ -49,13 +50,13 @@ function HowItWorks() {
   
 
   return (
-    <div className="py-16 text-center"
+    <div className="py-16 text-center overflow-x-hidden"
      style={{
         backgroundImage: "url('/Howbg.png')", // put image in public folder
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}>
-      <h2 className="text-2xl font-bold mb-10">HOW IT WORKS</h2>
+      <h2 className="font-[Space_Grotesk] text-4xl font-bold mb-10">HOW IT WORKS</h2>
 
       <div className="flex flex-col justify-center space-y-0">
         {steps.map((step, index) => {
@@ -71,32 +72,13 @@ function HowItWorks() {
       }`}>
 
 
-                <div className={`
-      relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-70 h-90
-      transition-all duration-700 ease-out delay-[${index * 100}ms]
-      ${
+                <Card image={image} text={step} className={`  transition-all duration-700 ease-out delay-[${index * 100}ms] ${
         visibleCards.includes(index.toString())
           ? "opacity-100 translate-x-0"
           : `opacity-0 ${
               index % 2 === 0 ? "-translate-x-80" : "translate-x-80"
             }`
-      }
-    `}
-    style={{ transitionDelay: `${index * 100}ms` }}
-    >
-
-                  <div className="relative mx-1  overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-full">
-                    <img src={image} alt={step} className="h-full w-full object-contain" />
-                  </div>
-
-                  <div className="p-1 self-center">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900">
-                        {step}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+      }`} style={{ transitionDelay: `${index * 100}ms` }} />
               </div>
             </div>
           );
