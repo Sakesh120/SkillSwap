@@ -1,5 +1,6 @@
 import SwapRequest from "../model/swapRequest.model.js";
 import userModel from "../model/user.model.js";
+import Session from "../model/session.model.js";
 
 //SENDER REQUEST
 export const sendRequest = async (req, res) => {
@@ -95,6 +96,16 @@ export const respondRequest = async (req, res) => {
       sender.credits += 10;
       await sender.save();
     }
+
+    // CREATE SESSION
+    if (status == "accepted" && request.status == "pending") {
+      await Session.create({
+        users: [request.sender, request.receiver],
+        skillsOffered: request.skillOffered,
+        skillRequested: request.skillRequested,
+      });
+    }
+
     /// update status
     request.status = status;
     await request.save();
