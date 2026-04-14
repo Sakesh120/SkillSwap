@@ -16,6 +16,12 @@ const sessionSchema = new mongoose.Schema(
       enum: ["pending", "scheduled", "completed"],
       default: "pending",
     },
+    completeBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
   },
   { timestamps: true },
 );
