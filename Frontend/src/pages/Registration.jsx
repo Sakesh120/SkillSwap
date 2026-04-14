@@ -87,8 +87,6 @@ const handleSubmit = (e) => {
     <div className="  min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-100 bg-gray-900 flex flex-col items-center justify-center ">
        <Navbar />
 
-    
-    <div className='scroll'>
     <div className=" flex flex-col items-center justify-center signup-section min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 p-8 rounded-xl w-full max-w-lg shadow-lg">
       <img src={logo} alt="Logo" className="w-64 mb-6"/> 
         <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
@@ -142,7 +140,7 @@ const handleSubmit = (e) => {
                           name="confirmPassword" 
                           value={formData.confirmPassword} 
                           onChange={handleChange}
-                          className="w-full p-2 rounded-2xl bg-gray-700 outline-none"
+                          className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 outline-none"
                         />
                     </div>
 
@@ -161,7 +159,7 @@ const handleSubmit = (e) => {
         key={index}
         type="button"
         onClick={() => handleSelectTeach(skill)}
-        className="bg-gray-700 px-3 py-1 rounded-2xl hover:bg-blue-500"
+        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 rounded-2xl hover:bg-blue-500"
       >
         {skill}
       </button>
@@ -172,7 +170,7 @@ const handleSubmit = (e) => {
   <input
     type="text"
     placeholder="Type and press Enter"
-    className="w-full p-2 rounded-2xl bg-gray-700"
+    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100"
     value={teachInput}
     onChange={(e) => setTeachInput(e.target.value)}
     onKeyDown={handleAddTeach}
@@ -183,7 +181,7 @@ const handleSubmit = (e) => {
     {teachSkills.map((skill, index) => (
       <div
         key={index}
-        className="bg-blue-500 px-3 py-1 rounded-2xl flex items-center gap-2"
+        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 rounded-2xl flex items-center gap-2"
       >
         {skill}
         <span
@@ -209,7 +207,7 @@ const handleSubmit = (e) => {
         key={index}
         type="button"
         onClick={() => handleSelectLearn(skill)}
-        className="bg-gray-700 px-3 py-1rounded-2xl hover:bg-blue-500"
+        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1rounded-2xl hover:bg-blue-500"
       >
         {skill}
       </button>
@@ -220,7 +218,7 @@ const handleSubmit = (e) => {
   <input
     type="text"
     placeholder="Type and press Enter"
-    className="w-full p-2 rounded-2xl bg-gray-700"
+    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100"
     value={learnInput}
     onChange={(e) => setLearnInput(e.target.value)}
     onKeyDown={handleAddLearn}
@@ -231,7 +229,7 @@ const handleSubmit = (e) => {
     {learnSkills.map((skill, index) => (
       <div
         key={index}
-        className="bg-blue-500 px-3 py-1 rounded-2xl flex items-center gap-2"
+        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 rounded-2xl flex items-center gap-2"
       >
         {skill}
         <span
@@ -255,7 +253,7 @@ const handleSubmit = (e) => {
                       name="bio" 
                       value={formData.bio} 
                       onChange={handleChange}
-                      className="w-full p-2 rounded-2xl bg-gray-700"
+                      className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100"
                     ></textarea> 
                 </div>
 
@@ -264,7 +262,7 @@ const handleSubmit = (e) => {
                     <input type="file" className="w-full text-sm"/>  
                 </div>
 
-                <button className="w-full bg-blue-500 hover:bg-blue-600 transition p-2 rounded-2xl font-semibold">
+                <button className="w-full bg-linear-to-tr from-sky-100 via-white to-blue-100 hover:bg-blue-600 transition p-2 rounded-2xl font-semibold">
                   Sign Up
                 </button>
 
@@ -276,7 +274,6 @@ const handleSubmit = (e) => {
      Already have an account? Log in
     </Link>
 
-    </div>
     </div>
     </div>
   )

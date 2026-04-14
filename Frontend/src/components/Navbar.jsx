@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 
 function Navbar() {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
      const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -30,12 +33,21 @@ function Navbar() {
      }}>
       <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
 
-      <div className="space-x-8 text-2xl  text-black">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">How it works</a>
-        <Link to="/login">Log In</Link>
-        <Link to="/signup">Sign Up</Link>
+      <div className="flex items-center space-x-8 text-xl  text-black">
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/">How it works</Link>
+        {isLoggedIn ? (
+  <div className="flex flex-row items-center gap-4">
+    <span>🔔</span>
+    <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+  </div>
+) : (
+  <div className="flex gap-4">
+    <Link to="/login">Login</Link>
+    <Link to="/signup">Sign Up</Link>
+  </div>
+)}
       </div>
     </div>
   );
