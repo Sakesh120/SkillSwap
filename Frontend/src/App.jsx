@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Landingpage from "./pages/Landingpage";
-import Dashboard from "./pages/Dashboard";
+import Profilepage from "./pages/Profilepage";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />
-         <Route path="/dashboard" element={<Dashboard />} />
+         <Route path="/profilepage" element={<Profilepage />} />
       </Routes>
     </>
   );
