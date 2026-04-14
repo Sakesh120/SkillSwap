@@ -1,4 +1,5 @@
 import Button from "./Button";
+import { Link } from "react-router-dom";
 
 function CTA() {
   return (
@@ -23,9 +24,8 @@ text-center
         Teach What You Know. Learn What You Want.
       </p>
 
-      <Button text="Join SkillSwap" >
-        
-      </Button>
+     <Link to="/signup"><Button text="Join SkillSwap" >  </Button>
+      </Link> 
     </div>
   );
 }
