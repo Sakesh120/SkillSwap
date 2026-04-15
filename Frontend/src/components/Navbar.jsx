@@ -47,6 +47,11 @@ function Navbar() {
         <Link to="/about">About</Link>
         <Link to="/">How it works</Link>
         {user ? (
+          <div className="flex gap-4">
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )  :(
           <div className="flex flex-row items-center gap-4">
             <span>🔔</span>
             <div
@@ -64,12 +69,7 @@ function Navbar() {
               Logout
             </button>
           </div>
-        ) : (
-          <div className="flex gap-4">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        )}
+        ) }
       </div>
     </div>
   );
