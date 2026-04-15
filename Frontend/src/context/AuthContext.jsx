@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentUser, loginUser, logoutUser } from "../api/auth.api";
 
-// ✅ IMPORTANT
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await getCurrentUser();
       setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data)); // ✅ persist
     } catch {
       setUser(null);
     } finally {
@@ -22,17 +22,25 @@ export const AuthProvider = ({ children }) => {
   const login = async (data) => {
     const res = await loginUser(data);
     localStorage.setItem("token", res.data.token);
-    await fetchUser();
+    await fetchUser(); // ✅ sync user
   };
 
   const logout = async () => {
     await logoutUser();
     localStorage.removeItem("token");
-    setUser(null);
+    localStorage.removeItem("user");
+    setUser(null); // ✅ clear user
   };
 
   useEffect(() => {
-    fetchUser();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (storedUser) {
+      setUser(storedUser);
+      setLoading(false);
+    } else {
+      fetchUser();
+    }
   }, []);
 
   return (
@@ -42,5 +50,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// ✅ THIS LINE IS MISSING IN YOUR FILE
 export const useAuth = () => useContext(AuthContext);

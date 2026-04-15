@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+const { user } = useAuth();
 
      const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -37,7 +37,7 @@ function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/">How it works</Link>
-        {isLoggedIn ? (
+       {user ? (
   <div className="flex flex-row items-center gap-4">
     <span>🔔</span>
     <div className="w-10 h-10 bg-gray-300 rounded-full"></div>

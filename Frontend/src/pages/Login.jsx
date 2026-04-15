@@ -26,7 +26,7 @@ function Login() {
 
     try {
       await login(form);
-      navigate("/Profilepage");
+      navigate("/Dashboard");
     } catch (err) {
       console.log(err);
       alert("Login failed");
