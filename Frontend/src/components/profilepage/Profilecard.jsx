@@ -1,6 +1,6 @@
 import React from "react";
 
-function Sidebar({ profile, teachSkills, learnSkills , }) {
+function Profilecard({ profile, teachSkills, learnSkills , }) {
   return (
     <div className=" bg-white/20 backdrop-blur-lg  border border-white/30 shadow-lg rounded-xl  p-5 flex flex-col items-center text-center">
 
@@ -64,4 +64,4 @@ function Sidebar({ profile, teachSkills, learnSkills , }) {
   );
 }
 
-export default Sidebar;
+export default Profilecard;
