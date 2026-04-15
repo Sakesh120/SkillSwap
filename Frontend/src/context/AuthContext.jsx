@@ -28,6 +28,14 @@ export const AuthProvider = ({ children }) => {
     const res = await loginUser(data);
     localStorage.setItem("token", res.data.token);
     await fetchUser();
+    return res;
+  };
+
+  const register = async (data) => {
+    const res = await registerUser(data);
+    localStorage.setItem("token", res.data.token);
+    await fetchUser();
+    return res;
   };
 
   const logout = async () => {
