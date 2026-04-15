@@ -46,7 +46,7 @@ function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/">How it works</Link>
-        {user ? (
+        {!user ? (
           <div className="flex gap-4">
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>

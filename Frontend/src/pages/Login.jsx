@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import { div } from "three/tsl";
 
 function Login() {
   const [form, setform] = useState({
@@ -34,16 +35,28 @@ function Login() {
   };
 
   return (
-    <div className=" min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-100 bg-gray-900 flex flex-col items-center justify-center">
+    
+    
+    <div className=" relative min-h-screen  flex flex-col items-center justify-center "
+    style={{ backgroundImage: "url('/hero.png')", // put image in public folder
+        backgroundSize: "cover",
+        backgroundPosition: "center", }}>
       <Navbar />
 
+{/* over lay */}
+       <div className="absolute  inset-0 bg-white/40 "></div>
+
+{/* 🔥 Content (above overlay) */}
+      <div className="relative z-10 w-full h-screen flex flex-col items-center justify-center ">
+
+        <div className="w-full h-screen max-w-md  overflow-y-scroll no-scrollbar flex flex-col items-center justify-center p-8 mt-22  rounded-xl">
       <img src={logo} alt="Logo" className="mt-18 w-40 h-40 object-contain" />
 
       <h1 className="text-3xl font-bold mb-6">Log in</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center signup-section min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 p-8 rounded-xl w-full max-w-lg shadow-lg"
+        className="flex flex-col items-center justify-center signup-section min-h-90 bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-8  w-full max-w-lg "
       >
         <div className="email mb-4">
           <label htmlFor="email" className="block mb-1">
@@ -93,6 +106,8 @@ function Login() {
         </Link>
       </div>
     </div>
+   </div>
+   </div>
   );
 }
 
