@@ -1,21 +1,37 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 function ProfileHeader({ profile, setProfile }) {
+
+  const { user, setUser } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
 
   // 🔥 HANDLE IMAGE UPLOAD
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
+ const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const imageURL = URL.createObjectURL(file);
 
-      setProfile({
-        ...profile,
-        image: imageURL
-      });
-    }
-  };
+    // update local profile
+    setProfile({
+      ...profile,
+      image: imageURL
+    });
+
+    // 🔥 update global user (Navbar will react)
+    setUser({
+      ...user,
+      image: imageURL
+    });
+
+    // optional: persist
+    localStorage.setItem("user", JSON.stringify({
+      ...user,
+      image: imageURL
+    }));
+  }
+};
 
   const handleChange = (e) => {
     setProfile({
