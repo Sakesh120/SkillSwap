@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { MongooseError } from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,7 +22,20 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 50, // bonus on registration
     },
-    rating: { type: Number, default: 0 },
+    rating: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+        rate: Number,
+        review: String,
+      },
+    ],
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
   },
 
   { timestamps: true },
