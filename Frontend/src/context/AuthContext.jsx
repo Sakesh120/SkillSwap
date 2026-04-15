@@ -39,10 +39,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await logoutUser();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null); // ✅ clear user
+    try {
+      // remove token
+      localStorage.removeItem("token");
+
+      // clear userState
+      setUser(null);
+    } catch (error) {
+      console.log("Logout error:", error);
+    }
   };
 
   useEffect(() => {
@@ -57,7 +62,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, setUser, loading, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

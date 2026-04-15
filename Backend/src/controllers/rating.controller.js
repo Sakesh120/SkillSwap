@@ -6,7 +6,7 @@ export const giveRating = async (req, res) => {
   try {
     const { sessionId, rate, review, targetUserId } = req.body;
 
-    // ✅ 1. Validate input
+    // Validate input
     if (!sessionId || rate === undefined || !targetUserId) {
       return res.status(400).json({
         message: "All fields are required",
@@ -20,7 +20,7 @@ export const giveRating = async (req, res) => {
       });
     }
 
-    // ✅ 2. Find session
+    // Find session
     const session = await Session.findById(sessionId);
 
     if (!session || session.status !== "completed") {
@@ -29,21 +29,21 @@ export const giveRating = async (req, res) => {
       });
     }
 
-    // ✅ 3. Check user is part of session
+    //  Check user is part of session
     if (!session.users.some((user) => user.toString() === req.user)) {
       return res.status(403).json({
         message: "Not authorized",
       });
     }
 
-    // ✅ 4. Prevent self rating
+    //  Prevent self rating
     if (req.user === targetUserId) {
       return res.status(400).json({
         message: "Cannot rate yourself",
       });
     }
 
-    // ✅ 5. Find target user
+    //  Find target user
     const targetUser = await userModel.findById(targetUserId);
 
     if (!targetUser) {
@@ -52,7 +52,7 @@ export const giveRating = async (req, res) => {
       });
     }
 
-    // ✅ 6. Ensure rating array exists and remove any invalid entries
+    //  Ensure rating array exists and remove any invalid entries
     if (!Array.isArray(targetUser.rating)) {
       targetUser.rating = [];
     } else {
@@ -61,7 +61,7 @@ export const giveRating = async (req, res) => {
       );
     }
 
-    // ✅ 7. Prevent multiple ratings
+    //  Prevent multiple ratings
     const alreadyRated = targetUser.rating.some(
       (r) => r.user && r.user.toString() === req.user,
     );
@@ -72,14 +72,14 @@ export const giveRating = async (req, res) => {
       });
     }
 
-    // ✅ 8. Add rating
+    //  Add rating
     targetUser.rating.push({
       user: new mongoose.Types.ObjectId(req.user),
       rate: parsedRate,
       review: review,
     });
 
-    // ✅ 9. Calculate average safely
+    //  Calculate average safely
     const total = targetUser.rating.reduce(
       (acc, curr) => acc + (curr.rate || 0),
       0,
@@ -88,7 +88,7 @@ export const giveRating = async (req, res) => {
     targetUser.averageRating =
       targetUser.rating.length > 0 ? total / targetUser.rating.length : 0;
 
-    // ✅ 10. Save user
+    //  Save user
     await targetUser.save();
 
     res.json({

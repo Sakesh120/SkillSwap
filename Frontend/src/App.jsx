@@ -5,6 +5,7 @@ import Landingpage from "./pages/Landingpage";
 import Profilepage from "./pages/Profilepage";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -14,8 +15,15 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />
-         <Route path="/profilepage" element={<Profilepage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profilepage" element={<Profilepage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );
