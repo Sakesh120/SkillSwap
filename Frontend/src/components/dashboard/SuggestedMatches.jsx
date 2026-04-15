@@ -7,12 +7,13 @@ function SuggestedMatches() {
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("profiles")) || [];
     if (stored.length === 0) {
-      // Default users for demo
       const defaultUsers = [
         { name: "Sam", tagline: "React Expert", image: null, about: "Loves coding", teachSkills: ["React"], learnSkills: ["Node"] },
         { name: "Eli", tagline: "JS Guru", image: null, about: "Passionate about JS", teachSkills: ["JavaScript"], learnSkills: ["Python"] },
         { name: "Holdar", tagline: "Designer", image: null, about: "Creative mind", teachSkills: ["UI/UX"], learnSkills: ["React"] },
-        { name: "Max", tagline: "Backend Dev", image: null, about: "Server side", teachSkills: ["Node"], learnSkills: ["React"] }
+        { name: "Max", tagline: "Backend Dev", image: null, about: "Server side", teachSkills: ["Node"], learnSkills: ["React"] },
+         { name: "Max", tagline: "Backend Dev", image: null, about: "Server side", teachSkills: ["Node"], learnSkills: ["React"] },
+          { name: "Max", tagline: "Backend Dev", image: null, about: "Server side", teachSkills: ["Node"], learnSkills: ["React"] }
       ];
       setUsers(defaultUsers);
     } else {
@@ -20,20 +21,31 @@ function SuggestedMatches() {
     }
   }, []);
 
-   return (
-    <div className="bg-white/60 backdrop-blur-lg p-4 rounded-xl shadow">
+  return (
+    <div className="px-2">
 
       <h2 className="text-lg font-semibold mb-4">Suggested matches</h2>
 
-      <div className="flex gap-4 overflow-x-auto">
+      {/*  HORIZONTAL SCROLL ONLY */}
+      <div className="
+        flex gap-4 
+        overflow-x-auto overflow-y-hidden
+        p-5
+        scrollbar-hide
+        no-scrollbar
+
+      ">
+
         {users.map((user, i) => (
-          <Profilecard
-            key={i}
-            profile={user}
-            teachSkills={user.teachSkills || []}
-            learnSkills={user.learnSkills || []}
-          />
+          <div key={i} className="shrink-0">
+            <Profilecard
+              profile={user}
+              teachSkills={user.teachSkills || []}
+              learnSkills={user.learnSkills || []}
+            />
+          </div>
         ))}
+
       </div>
 
     </div>
