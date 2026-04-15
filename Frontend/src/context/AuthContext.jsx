@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser, loginUser, logoutUser } from "../api/auth.api";
+import {
+  getCurrentUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../api/auth.api";
 
 // ✅ IMPORTANT
 const AuthContext = createContext();
@@ -23,6 +28,14 @@ export const AuthProvider = ({ children }) => {
     const res = await loginUser(data);
     localStorage.setItem("token", res.data.token);
     await fetchUser();
+    return res;
+  };
+
+  const register = async (data) => {
+    const res = await registerUser(data);
+    localStorage.setItem("token", res.data.token);
+    await fetchUser();
+    return res;
   };
 
   const logout = async () => {
@@ -36,11 +49,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// ✅ THIS LINE IS MISSING IN YOUR FILE
 export const useAuth = () => useContext(AuthContext);
