@@ -127,7 +127,7 @@ function Registration() {
 {/* 🔥 Content (above overlay) */}
       <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center overflow-y-hidden no-scrollbar  p-4">
 
-        <div className="w-full max-w-md max-h-[85vh] overflow-y-auto flex flex-col items-center  bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-8  no-scrollbar ">
+        <div className="w-full max-w-md max-h-[85vh] overflow-y-auto flex flex-col items-center  bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-8  no-scrollbar mt-20 ">
           <img src={logo} alt="Logo" className="w-64 mb-6" />
           <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
 

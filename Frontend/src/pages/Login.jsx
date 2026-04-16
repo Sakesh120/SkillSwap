@@ -48,8 +48,8 @@ function Login() {
       <div className="absolute  inset-0 bg-white/40 "></div>
 
       {/* 🔥 Content (above overlay) */}
-      <div className="relative z-10 w-full h-screen flex flex-col items-center justify-center ">
-        <div className="w-full h-screen max-w-md  overflow-y-scroll no-scrollbar flex flex-col items-center justify-center p-8 mt-22  rounded-xl">
+      <div className="relative z-10 w-full h-screen flex flex-col items-center justify-center  ">
+        <div className="w-full h-screen max-w-md  overflow-y-scroll no-scrollbar flex flex-col items-center justify-center p-8 mt-28  rounded-xl">
           <img
             src={logo}
             alt="Logo"

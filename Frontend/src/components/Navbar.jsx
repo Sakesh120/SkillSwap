@@ -34,12 +34,12 @@ function Navbar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 flex justify-between items-center px-8 py-1 bg-blue/30 backdrop-blur-sm z-50  transition-transform duration-300"
+      className="fixed top-0 left-0 right-0 flex justify-between items-center px-8 bg-blue/30 backdrop-blur-sm z-50  transition-transform duration-300"
       style={{ transform: show ? "translateY(0)" : "translateY(-100%)" }}
     >
       <Link to="/">
         {" "}
-        <img src={logo} alt="Logo" className="w-20 h-20 object-contain " />{" "}
+        <img src={logo} alt="Logo" className="w-30 h-30 object-contain " />{" "}
       </Link>
 
       <div className="flex items-center space-x-8 text-xl  text-black">

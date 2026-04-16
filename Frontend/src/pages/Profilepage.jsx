@@ -81,7 +81,7 @@ function Profilepage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar">
       {loading ? (
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
@@ -140,8 +140,14 @@ function Profilepage() {
 
           {/* EDIT MODAL */}
           {showEditModal  && (
-            <div className="fixed inset-0 bg-linear-to-r from-purple-100 via-pink-100 to-blue-100 bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50"
+             style={{
+        backgroundImage: "url('/editpage.png')", // put image in public folder
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      
+      }}>
+              <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
                 <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
                 <form onSubmit={handleEditSubmit} className="space-y-4">
                   <div>
