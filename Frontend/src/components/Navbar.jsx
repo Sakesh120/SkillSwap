@@ -51,25 +51,32 @@ function Navbar() {
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
-        )  :(
+        ) : (
           <div className="flex flex-row items-center gap-4">
             <span>🔔</span>
             <div
-              className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer"
+              className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"
               onClick={() => navigate("/profilepage")}
+              title="Go to profile"
             >
-              {user?.image && (
-                <img src={user.image} className="w-full h-full object-cover" />
+              {user?.avatar?.image ? (
+                <img
+                  src={`http://localhost:3000${user.avatar.image}`}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-lg">👤</span>
               )}
             </div>
             <button
               onClick={handleLogout}
-              className="bg-red-400 text-white px-3 py-1 rounded"
+              className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500"
             >
               Logout
             </button>
           </div>
-        ) }
+        )}
       </div>
     </div>
   );
