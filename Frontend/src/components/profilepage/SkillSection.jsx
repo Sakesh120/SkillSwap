@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 
 function SkillSection({ title, skills, setSkills, type }) {
-
   const [input, setInput] = useState("");
+
+  const bgClass =
+    type === "primary"
+      ? "bg-gradient-to-br from-blue-50 to-cyan-100 border-blue-300"
+      : "bg-gradient-to-br from-orange-50 to-amber-100 border-orange-300";
+  const badgeClass =
+    type === "primary"
+      ? "bg-blue-200 text-blue-700 hover:bg-blue-300"
+      : "bg-orange-200 text-orange-700 hover:bg-orange-300";
+  const emoji = type === "primary" ? "🎓" : "🎯";
 
   const addSkill = (e) => {
     if (e.key === "Enter" && input.trim() !== "") {
@@ -15,12 +24,14 @@ function SkillSection({ title, skills, setSkills, type }) {
   };
 
   const removeSkill = (skillToRemove) => {
-    setSkills(skills.filter(skill => skill !== skillToRemove));
+    setSkills(skills.filter((skill) => skill !== skillToRemove));
   };
 
   return (
-    <div className="bg-white/20 backdrop-blur-lg  border border-white/30 shadow-lg rounded-xl p-5">
-      <h3 className="font-semibold mb-3">{title}</h3>
+    <div className={`${bgClass} border rounded-xl p-5 shadow-sm`}>
+      <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        <span className="text-2xl">{emoji}</span> {title}
+      </h3>
 
       {/* INPUT */}
       <input
@@ -29,24 +40,31 @@ function SkillSection({ title, skills, setSkills, type }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={addSkill}
-        className="w-full p-2 mb-3 border rounded"
+        className={`w-full p-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 ${
+          type === "primary" ? "focus:ring-blue-400" : "focus:ring-orange-400"
+        }`}
       />
 
       {/* SKILLS */}
-      <div className=" flex flex-wrap gap-2">
-        {skills.map((skill, i) => (
-          <div
-            key={i}
-            className={` px-3 py-1 rounded-full flex items-center gap-2 cursor-pointer ${
-              type === "primary"
-                ? "bg-blue-100 text-blue-600"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            {skill}
-            <span onClick={() => removeSkill(skill)}>✕</span>
-          </div>
-        ))}
+      <div className="flex flex-wrap gap-2">
+        {skills.length > 0 ? (
+          skills.map((skill, i) => (
+            <div
+              key={i}
+              className={`${badgeClass} px-3 py-1 rounded-full flex items-center gap-2 cursor-pointer transition`}
+            >
+              {skill}
+              <span
+                onClick={() => removeSkill(skill)}
+                className="font-bold hover:opacity-70"
+              >
+                ✕
+              </span>
+            </div>
+          ))
+        ) : (
+          <p className="text-sm text-gray-500 italic">No skills added yet</p>
+        )}
       </div>
     </div>
   );

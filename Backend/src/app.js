@@ -8,6 +8,11 @@ import userRouter from "./routes/user.routes.js";
 import requestRouter from "./routes/request.routes.js";
 import sessionRouter from "./routes/session.routes.js";
 import ratingRouter from "./routes/rating.routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -20,6 +25,9 @@ app.use(
     credentials: true,
   }),
 );
+
+// Serve static files (uploaded images)
+app.use("/uploads", express.static(path.resolve(__dirname, "../uploads")));
 
 app.use("/api/auth", authRouter);
 app.use("/api/match", matchRouter);

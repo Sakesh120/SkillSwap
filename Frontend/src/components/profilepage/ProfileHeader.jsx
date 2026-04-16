@@ -1,109 +1,33 @@
-import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import React from "react";
 
-function ProfileHeader({ profile, setProfile }) {
-
-  const { user, setUser } = useAuth();
-
-  const [isEditing, setIsEditing] = useState(false);
-
-  // 🔥 HANDLE IMAGE UPLOAD
- const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const imageURL = URL.createObjectURL(file);
-
-    // update local profile
-    setProfile({
-      ...profile,
-      image: imageURL
-    });
-
-    // 🔥 update global user (Navbar will react)
-    setUser({
-      ...user,
-      image: imageURL
-    });
-
-    // optional: persist
-    localStorage.setItem("user", JSON.stringify({
-      ...user,
-      image: imageURL
-    }));
-  }
-};
-
-  const handleChange = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value
-    });
-  };
-
+function ProfileHeader({ profile }) {
   return (
-    <div className="bg-white/20 backdrop-blur-lg  border border-white/30 shadow-lg rounded-xl  p-5">
-
-      {!isEditing ? (
-        <div className="flex items-center gap-4">
-           {/* PROFILE IMAGE */}
-          <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-300">
-            {profile.image ? (
-              <img src={profile.image} className="w-full h-full object-cover" />
-            ) : null}
-          </div>
-
-          <div>
-            <h2 className="text-xl font-semibold">{profile.name}</h2>
-            <p className="text-gray-500 text-sm">{profile.tagline}</p>
-          </div>
-
-          <button
-            onClick={() => setIsEditing(true)}
-            className="ml-auto bg-blue-500 text-white px-3 py-1 rounded"
-          >
-            Edit Profile
-          </button>
+    <div className="bg-linear-to-r from-indigo-50 to-blue-100 border border-indigo-300 rounded-xl p-6 shadow-sm">
+      <div className="flex items-center gap-4">
+        {/* PROFILE IMAGE */}
+        <div className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 border-4 border-indigo-300 shadow-md">
+          {profile?.avatar?.image ? (
+            <img
+              src={`http://localhost:3000${profile.avatar.image}`}
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-linear-to-br from-indigo-300 to-blue-400 flex items-center justify-center text-white text-3xl">
+              👤
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="flex flex-col gap-3">
 
-           {/* IMAGE INPUT */}
-          <input type="file" onChange={handleImageChange} />
-
-          <input
-            type="text"
-            name="name"
-            value={profile.name}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-
-          <input
-            type="text"
-            name="tagline"
-            value={profile.tagline}
-            onChange={handleChange}
-            className="p-2 border rounded"
-          />
-
-          <div className="flex gap-2">
-            <button
-              onClick={() => setIsEditing(false)}
-              className="bg-green-500 text-white px-3 py-1 rounded"
-            >
-              Save
-            </button>
-
-            <button
-              onClick={() => setIsEditing(false)}
-              className="bg-gray-300 px-3 py-1 rounded"
-            >
-              Cancel
-            </button>
-          </div>
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {profile?.name || "Name"}
+          </h2>
+          <p className="text-indigo-600 font-medium">
+            {profile?.tagline || "Tagline"}
+          </p>
         </div>
-      )}
-
+      </div>
     </div>
   );
 }
