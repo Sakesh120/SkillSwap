@@ -1,17 +1,30 @@
-function MatchCard({ name }) {
+function MatchCard({ user, onRequest }) {
   return (
-    <div className="bg-purple-100 rounded-xl p-4 w-56 flex flex-col items-center">
-
-      <div className="w-14 h-14 bg-gray-300 rounded-full mb-2"></div>
-
-      <div className="bg-white px-3 py-1 rounded mb-2 text-sm font-medium">
-        {name}
+    <div className="min-w-50 bg-gray-50 rounded-xl p-4 border hover:shadow-md hover:scale-[1.02] transition">
+      {/* Avatar + Name */}
+      <div className="flex items-center gap-3 mb-3">
+        <img
+          src={user.avatar || "https://via.placeholder.com/40"}
+          alt={user.name}
+          className="w-10 h-10 rounded-full object-cover"
+        />
+        <h3 className="font-medium text-gray-800">{user.name}</h3>
       </div>
 
-      <p className="text-sm text-gray-600">Can teach: [skill]</p>
-      <p className="text-sm text-gray-600 mb-3">Want: [UI/UX]</p>
+      {/* Skills */}
+      <p className="text-xs text-gray-600">
+        <span className="font-medium">Teach:</span> {user.teach.join(", ")}
+      </p>
 
-      <button className="bg-blue-400 text-white px-3 py-1 rounded">
+      <p className="text-xs text-gray-600 mb-3">
+        <span className="font-medium">Learn:</span> {user.learn.join(", ")}
+      </p>
+
+      {/* CTA */}
+      <button
+        onClick={() => onRequest(user._id)}
+        className="w-full text-sm bg-blue-500 text-white py-1.5 rounded-lg hover:bg-blue-600 transition"
+      >
         Request Swap
       </button>
     </div>
