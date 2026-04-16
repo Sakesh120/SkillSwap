@@ -36,6 +36,17 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    avatar: {
+      image: String,
+    },
+    about: {
+      type: String,
+      default: "I am a new User of SkillSwap",
+    },
+    tagline: {
+      type: String,
+      default: "Knowledge TO Share",
+    },
   },
 
   { timestamps: true },
