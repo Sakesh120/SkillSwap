@@ -76,6 +76,7 @@ function HowItWorks() {
   image={image}
   text={step}
   align={index % 2 === 0 ? "left" : "right"}
+  enableHoverEffect={true}
   className={`transition-all duration-700 ease-out ${
     visibleCards.includes(index.toString())
       ? "opacity-100 translate-x-0"

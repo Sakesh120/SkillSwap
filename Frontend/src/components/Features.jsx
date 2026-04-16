@@ -39,6 +39,7 @@ function Features() {
               key={index}
               image={item.image}
               title={item.title}
+               enableHoverEffect={false}
               className="min-w-62 "
             />
           ))}
