@@ -1,18 +1,41 @@
-function Card({ image, title, text, className = "", style = {} }) {
-  const label = title || text;
-
+function Card({ image, text, className = "", align = "left" }) {
   return (
-    <div className={`relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-70 h-90 ${className}`} style={style}>
-      <div className="relative mx-1 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-full">
-        <img src={image} alt={label} className="h-full w-full object-contain" />
+    <div
+      className={`relative group overflow-hidden w-150 h-80 rounded-2xl bg-white shadow-md
+      transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${className}`}
+    >
+
+      {/* Dark overlay (for readability) */}
+      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+      {/* Main Content (initial view) */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full transition-all duration-300 group-hover:opacity-0">
+        <img src={`/${image}`} alt={text} className={`w-45 mb-2 
+         
+            `} />
+        <p className="font-semibold">{text}</p>
       </div>
-      <div className="p-1 self-center">
-        <div className="flex items-center justify-between mb-2">
-          <p className="block   font-[Poppins] text-lg font-semibold antialiased leading-relaxed text-blue-gray-900">
-            {label}
-          </p>
-        </div>
-      </div>
+
+      {/* Text on hover */}
+     <div
+  className={`
+    absolute inset-0 overflow-hidden
+    ${align === "left"
+      ? "-translate-x-full group-hover:translate-x-0"
+      : "translate-x-full group-hover:translate-x-0"}
+    transition-all duration-500
+  `}
+>
+ {/* Gradient Layer */}
+<div className="absolute inset-0 bg-linear-to-r from-blue-400/80 via-blue-300/70 to-blue-200/60"></div>
+
+  {/* Text */}
+  <div className="relative z-10 flex items-center justify-center h-full px-6">
+    <p className="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500">
+      Learn more about <span className="font-bold">{text}</span> in SkillSwap.
+    </p>
+  </div>
+</div>
     </div>
   );
 }

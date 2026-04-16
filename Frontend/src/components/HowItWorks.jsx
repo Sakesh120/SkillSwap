@@ -72,13 +72,19 @@ function HowItWorks() {
       }`}>
 
 
-                <Card image={image} text={step} className={`  transition-all duration-700 ease-out delay-[${index * 100}ms] ${
-        visibleCards.includes(index.toString())
-          ? "opacity-100 translate-x-0"
-          : `opacity-0 ${
-              index % 2 === 0 ? "-translate-x-80" : "translate-x-80"
-            }`
-      }`} style={{ transitionDelay: `${index * 100}ms` }} />
+              <Card
+  image={image}
+  text={step}
+  align={index % 2 === 0 ? "left" : "right"}
+  className={`transition-all duration-700 ease-out ${
+    visibleCards.includes(index.toString())
+      ? "opacity-100 translate-x-0"
+      : `opacity-0 ${
+          index % 2 === 0 ? "-translate-x-80" : "translate-x-80"
+        }`
+  }`}
+  style={{ transitionDelay: `${index * 100}ms` }}
+/>
               </div>
             </div>
           );
