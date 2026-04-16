@@ -92,7 +92,7 @@ function Profilepage() {
       ) : (
         <>
           {/* MAIN CONTAINER */}
-          <div className="max-w-6xl mx-auto space-y-6">
+          <div className="max-w-6xl mx-auto space-y-6 mt-5">
             {/* PROFILE HEADER */}
             <div className="bg-white rounded-2xl shadow-sm border p-6">
               <ProfileHeader profile={profile} setProfile={setProfile} />
