@@ -2,7 +2,7 @@ import React from "react";
 
 function ProfileHeader({ profile }) {
   return (
-    <div className="bg-gradient-to-r from-indigo-50 to-blue-100 border border-indigo-300 rounded-xl p-6 shadow-sm">
+    <div className="bg-linear-to-r from-indigo-50 to-blue-100 border border-indigo-300 rounded-xl p-6 shadow-sm">
       <div className="flex items-center gap-4">
         {/* PROFILE IMAGE */}
         <div className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 border-4 border-indigo-300 shadow-md">
@@ -13,7 +13,7 @@ function ProfileHeader({ profile }) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-indigo-300 to-blue-400 flex items-center justify-center text-white text-3xl">
+            <div className="w-full h-full bg-linear-to-br from-indigo-300 to-blue-400 flex items-center justify-center text-white text-3xl">
               👤
             </div>
           )}

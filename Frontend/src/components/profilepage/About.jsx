@@ -11,11 +11,11 @@ function About({ profile, setProfile }) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-pink-100 border border-purple-300 rounded-xl p-5 shadow-sm">
+    <div className="bg-linear-to-br from-purple-50 to-pink-100 border border-purple-300 rounded-xl p-5 shadow-sm text-xl h-full">
       {!isEditing ? (
         // 🔹 VIEW MODE
         <>
-          <div className="flex justify-between items-center mb-3">
+          <div className="flex justify-between items-center mb-3 ">
             <h3 className="font-semibold text-gray-800 flex items-center gap-2">
               <span className="text-2xl">✍️</span> About
             </h3>
@@ -33,7 +33,7 @@ function About({ profile, setProfile }) {
         </>
       ) : (
         // 🔹 EDIT MODE
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 ">
           <textarea
             value={profile.about}
             onChange={handleChange}
