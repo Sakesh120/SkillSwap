@@ -11,7 +11,7 @@ function About({ profile, setProfile }) {
   };
 
   return (
-    <div className="bg-linear-to-br from-purple-50 to-pink-100  rounded-xl p-5 shadow-sm text-xl h-full">
+    <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-xl p-5 shadow-sm text-xl h-full">
       {!isEditing ? (
         // 🔹 VIEW MODE
         <>

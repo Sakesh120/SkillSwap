@@ -13,22 +13,9 @@ function SkillSection({ title, skills, setSkills, type }) {
       : "bg-orange-200 text-orange-700 hover:bg-orange-300";
   const emoji = type === "primary" ? "🎓" : "🎯";
 
-  const addSkill = (e) => {
-    if (e.key === "Enter" && input.trim() !== "") {
-      e.preventDefault();
-      if (!skills.includes(input)) {
-        setSkills([...skills, input]);
-      }
-      setInput("");
-    }
-  };
-
-  const removeSkill = (skillToRemove) => {
-    setSkills(skills.filter((skill) => skill !== skillToRemove));
-  };
 
   return (
-    <div className={`${bgClass} rounded-xl p-5 shadow-sm`}>
+    <div className={`bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-sm`}>
       <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
         <span className="text-2xl">{emoji}</span> {title}
       </h3>

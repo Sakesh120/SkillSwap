@@ -110,7 +110,7 @@ function Profilepage() {
               </button>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm p-6 space-y-6">
+            <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-2xl shadow-sm p-6 space-y-6">
               <SkillSection
                 title="Skills You Can Teach"
                 skills={profile.skillsOffered || []}
@@ -133,12 +133,12 @@ function Profilepage() {
             {/* ABOUT + STATS */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* ABOUT */}
-              <div className="md:col-span-2 bg-white rounded-2xl shadow-sm  p-6">
+              <div className="md:col-span-2 bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
                 <About profile={profile} setProfile={setProfile} />
               </div>
 
               {/* STATS */}
-              <div className="bg-white rounded-2xl shadow-sm  p-6">
+              <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
                 <Stats profile={profile} />
               </div>
             </div>

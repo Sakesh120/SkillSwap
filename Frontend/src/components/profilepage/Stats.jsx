@@ -7,7 +7,7 @@ function Stats({ profile }) {
   return (
     <div className="space-y-4">
       {/* RATING CARD */}
-      <div className="bg-linear-to-br from-yellow-50 to-yellow-100 rounded-xl p-5 shadow-sm">
+      <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <h3 className="font-semibold text-gray-800 flex items-center gap-2">
             <span className="text-2xl">⭐</span> Rating
