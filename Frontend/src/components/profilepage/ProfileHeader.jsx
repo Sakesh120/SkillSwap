@@ -3,6 +3,7 @@ import React from "react";
 function ProfileHeader({ profile }) {
   return (
     <div className="bg-linear-to-r from-indigo-50 to-blue-100 border border-indigo-300 rounded-xl p-6 shadow-sm">
+      <span className="font-semibold font text-gray-800 mb-3 flex items-center gap-2 "> 🤵Profile</span>
       <div className="flex items-center gap-4">
         {/* PROFILE IMAGE */}
         <div className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 border-4 border-indigo-300 shadow-md">
