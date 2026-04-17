@@ -11,7 +11,7 @@ function About({ profile, setProfile }) {
   };
 
   return (
-    <div className="bg-linear-to-br from-purple-50 to-pink-100 border border-purple-300 rounded-xl p-5 shadow-sm text-xl h-full">
+    <div className="bg-linear-to-br from-purple-50 to-pink-100  rounded-xl p-5 shadow-sm text-xl h-full">
       {!isEditing ? (
         // 🔹 VIEW MODE
         <>
@@ -31,7 +31,7 @@ function About({ profile, setProfile }) {
           <textarea
             value={profile.about}
             onChange={handleChange}
-            className="p-3 border border-purple-300 rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="p-3 rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
 
           <div className="flex gap-2">

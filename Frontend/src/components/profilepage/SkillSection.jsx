@@ -5,8 +5,8 @@ function SkillSection({ title, skills, setSkills, type }) {
 
   const bgClass =
     type === "primary"
-      ? "bg-gradient-to-br from-blue-50 to-cyan-100 border-blue-300"
-      : "bg-gradient-to-br from-orange-50 to-amber-100 border-orange-300";
+      ? "bg-gradient-to-br from-blue-50 to-cyan-100"
+      : "bg-gradient-to-br from-orange-50 to-amber-100";
   const badgeClass =
     type === "primary"
       ? "bg-blue-200 text-blue-700 hover:bg-blue-300"
@@ -28,7 +28,7 @@ function SkillSection({ title, skills, setSkills, type }) {
   };
 
   return (
-    <div className={`${bgClass} border rounded-xl p-5 shadow-sm`}>
+    <div className={`${bgClass} rounded-xl p-5 shadow-sm`}>
       <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
         <span className="text-2xl">{emoji}</span> {title}
       </h3>

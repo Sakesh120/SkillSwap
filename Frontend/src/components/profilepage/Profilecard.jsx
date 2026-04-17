@@ -3,10 +3,10 @@ import React from "react";
 function Profilecard({ profile, teachSkills, learnSkills }) {
   return (
     <div className="
-      bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-3 
+      bg-white/20 backdrop-blur-lg shadow-lg rounded-xl p-3 
       flex flex-col items-center text-center w-64
       transition-all duration-300 ease-out
-      hover:scale-105 hover:shadow-2xl hover:border-blue-300
+      hover:scale-105 hover:shadow-2xl
     ">
 
       {/* PROFILE IMAGE */}
@@ -55,7 +55,7 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
       <div className="grid grid-cols-1 gap-3 w-full">
 
         <div className="
-          bg-white/20 backdrop-blur-lg border border-white/30 shadow rounded-lg p-3
+          bg-white/20 backdrop-blur-lg shadow rounded-lg p-3
           transition hover:bg-white/30
         ">
           <h3 className="font-semibold mb-1 text-sm">About</h3>
@@ -65,7 +65,7 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
         </div>
 
         <div className="
-          bg-white/20 backdrop-blur-lg border border-white/30 shadow rounded-lg p-3
+          bg-white/20 backdrop-blur-lg shadow rounded-lg p-3
           transition hover:bg-white/30
         ">
           <h3 className="font-semibold mb-1 text-sm">Stats</h3>
