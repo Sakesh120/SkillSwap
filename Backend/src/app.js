@@ -8,6 +8,7 @@ import userRouter from "./routes/user.routes.js";
 import requestRouter from "./routes/request.routes.js";
 import sessionRouter from "./routes/session.routes.js";
 import ratingRouter from "./routes/rating.routes.js";
+import activityRouter from "./routes/activity.routes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -34,6 +35,7 @@ app.use("/api/match", matchRouter);
 app.use("/api/users", userRouter);
 app.use("/api/request", requestRouter);
 app.use("/api/session", sessionRouter);
+app.use("/api/activity", activityRouter);
 app.use("/api/rating", ratingRouter);
 
 export default app;

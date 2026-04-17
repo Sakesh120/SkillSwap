@@ -44,7 +44,7 @@ export const completeSession = async (req, res) => {
     const session = await Session.findById(sessionId);
 
     if (!session) {
-      return res.status(404).json({ message });
+      return res.status(404).json({ message: "Session not found" });
     }
 
     // Only participants can complete
@@ -69,12 +69,12 @@ export const completeSession = async (req, res) => {
     // Add current user to
     session.completeBy.push(req.user);
 
-    // If both users ompleted -> finalize
+    // If both users completed -> finalize
     if (session.completeBy.length === 2) {
       // Reward both users
       for (let userId of session.users) {
         const user = await userModel.findById(userId);
-        user.credits + 20;
+        user.credits += 20;
         await user.save();
       }
       session.status = "completed";
