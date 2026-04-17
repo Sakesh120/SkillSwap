@@ -2,6 +2,7 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Search } from "lucide-react";
 
 function Navbar() {
   const { user, logout } = useAuth();
@@ -25,7 +26,7 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -43,16 +44,32 @@ function Navbar() {
       </Link>
 
       <div className="flex items-center space-x-8 text-xl  text-black">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/">How it works</Link>
+      
         {!user ? (
           <div className="flex gap-4">
+              <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/">How it works</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         ) : (
           <div className="flex flex-row items-center gap-4">
+           <div className="group flex flex-row-reverse items-center bg-white/70 backdrop-blur-lg border border-white/40 shadow-lg rounded-full px-2 py-2 w-12 hover:w-[320px] overflow-hidden transition-all duration-500 ease-in-out">
+
+  {/* Search Icon */}
+  <button className="p-2 bg-linear-to-r from-blue-500 to-indigo-500 text-white rounded-full shrink-0">
+    <Search size={18} />
+  </button>
+
+  {/* Input */}
+  <input
+    type="text"
+    placeholder="Search skills..."
+    className="w-0 group-hover:w-full opacity-0 group-hover:opacity-100 transition-all duration-500 outline-none text-gray-700 placeholder-gray-400 px-3 bg-transparent"
+  />
+
+</div>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"
