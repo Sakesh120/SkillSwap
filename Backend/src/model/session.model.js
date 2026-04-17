@@ -9,7 +9,7 @@ const sessionSchema = new mongoose.Schema(
       },
     ],
     skillsOffered: String,
-    skillsWanted: String,
+    skillRequested: String,
     scheduledAt: Date,
     status: {
       type: String,
