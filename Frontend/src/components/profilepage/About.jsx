@@ -19,12 +19,6 @@ function About({ profile, setProfile }) {
             <h3 className="font-semibold text-gray-800 flex items-center gap-2">
               <span className="text-2xl">✍️</span> About
             </h3>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="text-purple-600 hover:text-purple-700 text-sm font-medium"
-            >
-              Edit
-            </button>
           </div>
 
           <p className="text-sm text-gray-700 leading-relaxed">

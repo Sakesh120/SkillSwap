@@ -33,17 +33,6 @@ function SkillSection({ title, skills, setSkills, type }) {
         <span className="text-2xl">{emoji}</span> {title}
       </h3>
 
-      {/* INPUT */}
-      <input
-        type="text"
-        placeholder="Type and press Enter"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={addSkill}
-        className={`w-full p-2 mb-3 border rounded-lg focus:outline-none focus:ring-2 ${
-          type === "primary" ? "focus:ring-blue-400" : "focus:ring-orange-400"
-        }`}
-      />
 
       {/* SKILLS */}
       <div className="flex flex-wrap gap-2">
@@ -54,12 +43,6 @@ function SkillSection({ title, skills, setSkills, type }) {
               className={`${badgeClass} px-3 py-1 rounded-full flex items-center gap-2 cursor-pointer transition`}
             >
               {skill}
-              <span
-                onClick={() => removeSkill(skill)}
-                className="font-bold hover:opacity-70"
-              >
-                ✕
-              </span>
             </div>
           ))
         ) : (
