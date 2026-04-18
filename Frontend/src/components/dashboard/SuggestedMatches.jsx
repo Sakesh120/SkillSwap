@@ -10,6 +10,11 @@ function SuggestedMatches() {
     const fetchMatches = async () => {
       try {
         const res = await getMatches();
+        console.log("API Response:", res.data);
+        console.log("Matches data:", res.data.matches);
+        if (res.data.matches && res.data.matches.length > 0) {
+          console.log("First user avatar:", res.data.matches[0].avatar);
+        }
         setUsers(res.data.matches || []);
       } catch (err) {
         console.error("Failed to fetch matches", err);
@@ -56,11 +61,23 @@ function SuggestedMatches() {
               key={user._id}
               className="min-w-55 bg-gray-50 rounded-xl p-4 border hover:shadow-md hover:scale-[1.02] transition"
             >
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-3 cursor-pointer">
                 <img
-                  src={user.avatar?.image || "https://via.placeholder.com/40"}
+                  src={
+                    user.avatar?.image
+                      ? `http://localhost:3000${user.avatar.image}`
+                      : "https://ui-avatars.com/api/?name=" +
+                        encodeURIComponent(user.name) +
+                        "&background=random"
+                  }
                   alt={user.name}
-                  className="w-10 h-10 rounded-full object-cover"
+                  className="w-10 h-10 rounded-full object-cover border"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://ui-avatars.com/api/?name=" +
+                      encodeURIComponent(user.name) +
+                      "&background=random";
+                  }}
                 />
                 <h3 className="font-medium text-gray-800">{user.name}</h3>
               </div>

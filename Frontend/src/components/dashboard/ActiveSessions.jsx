@@ -69,7 +69,7 @@ function ActiveSessions() {
                 Chat
               </button>
               <button className="text-xs bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
-                Join
+                Schedule
               </button>
             </div>
           </div>
