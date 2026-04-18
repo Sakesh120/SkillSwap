@@ -64,3 +64,20 @@ export const updateProfile = async (req, res) => {
     });
   }
 };
+
+// GET OTHER PROFILE
+export const getOtherProfile = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
