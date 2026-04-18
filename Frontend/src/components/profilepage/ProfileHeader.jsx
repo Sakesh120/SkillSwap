@@ -1,12 +1,20 @@
 import React from "react";
 
-function ProfileHeader({ profile }) {
+function ProfileHeader({ profile, onAvatarClick }) {
   return (
     <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-xl p-6 shadow-sm">
-      <span className="font-semibold font text-gray-800 mb-3 flex items-center gap-2 "> 🤵Profile</span>
+      <span className="font-semibold font text-gray-800 mb-3 flex items-center gap-2 ">
+        {" "}
+        🤵Profile
+      </span>
       <div className="flex items-center gap-4">
         {/* PROFILE IMAGE */}
-        <div className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 shadow-md">
+        <button
+          type="button"
+          onClick={onAvatarClick}
+          className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 shadow-md border-2 cursor-pointer border-transparent transition-all duration-300 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="View profile avatar"
+        >
           {profile?.avatar?.image ? (
             <img
               src={`http://localhost:3000${profile.avatar.image}`}
@@ -18,7 +26,7 @@ function ProfileHeader({ profile }) {
               👤
             </div>
           )}
-        </div>
+        </button>
 
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-800">

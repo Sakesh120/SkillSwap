@@ -10,6 +10,7 @@ function Profilepage() {
   const { user, setUser, loading } = useAuth();
   const [profile, setProfile] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showAvatarPreview, setShowAvatarPreview] = useState(false);
   const [editForm, setEditForm] = useState({
     name: "",
     tagline: "",
@@ -81,13 +82,14 @@ function Profilepage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
-    style={{
-        backgroundImage: "url('/profilebg.jpg')", // put image in public folder
+    <div
+      className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
+      style={{
+        backgroundImage: "url('/profilebg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-      
-      }}>
+      }}
+    >
       {loading ? (
         <div className="flex items-center justify-center min-h-screen ">
           <div className="text-center">
@@ -98,10 +100,16 @@ function Profilepage() {
       ) : (
         <>
           {/* MAIN CONTAINER */}
-          <div className="max-w-6xl mx-auto space-y-6 mt-5">
+          <div
+            className={`max-w-6xl mx-auto space-y-6 mt-5 ${showAvatarPreview ? "blur-sm" : ""}`}
+          >
             {/* PROFILE HEADER */}
             <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-2xl  p-6">
-              <ProfileHeader profile={profile} setProfile={setProfile} />
+              <ProfileHeader
+                profile={profile}
+                setProfile={setProfile}
+                onAvatarClick={() => setShowAvatarPreview(true)}
+              />
               <button
                 onClick={() => setShowEditModal(true)}
                 className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
@@ -145,14 +153,15 @@ function Profilepage() {
           </div>
 
           {/* EDIT MODAL */}
-          {showEditModal  && (
-            <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50"
-             style={{
-        backgroundImage: "url('/editpage.png')", // put image in public folder
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      
-      }}>
+          {showEditModal && (
+            <div
+              className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50"
+              style={{
+                backgroundImage: "url('/editpage.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
               <div className="bg-white/20 backdrop-blur-lg shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
                 <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
                 <form onSubmit={handleEditSubmit} className="space-y-4">
@@ -287,6 +296,30 @@ function Profilepage() {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          )}
+
+          {showAvatarPreview && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+              onClick={() => setShowAvatarPreview(false)}
+            >
+              <div
+                className="relative max-w-[90vw] max-h-[90vh] p-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-slate-900/80 transform transition-all duration-300 ease-out scale-100 opacity-100">
+                  <img
+                    src={
+                      profile?.avatar?.image
+                        ? `http://localhost:3000${profile.avatar.image}`
+                        : ""
+                    }
+                    alt="Profile Preview"
+                    className="max-h-[80vh] w-auto max-w-[90vw] object-contain block"
+                  />
+                </div>
               </div>
             </div>
           )}
