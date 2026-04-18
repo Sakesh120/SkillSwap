@@ -23,7 +23,7 @@ function Activity() {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border p-6">
+    <div className="bg-white/20 backdrop-blur-lg border-white/30  rounded-2xl shadow-sm border p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">Activity</h2>
 
       {loading && <p className="text-sm text-gray-500">Loading activity...</p>}

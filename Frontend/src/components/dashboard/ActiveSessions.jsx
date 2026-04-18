@@ -35,7 +35,7 @@ function ActiveSessions() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border p-6">
+    <div className="bg-white/20 backdrop-blur-lg border-white/30  rounded-2xl shadow-sm border p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Active Sessions
       </h2>

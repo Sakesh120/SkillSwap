@@ -33,7 +33,7 @@ function RequestsOverview() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border p-6">
+    <div className="bg-white/20 backdrop-blur-lg border-white/30  rounded-2xl shadow-sm border p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Requests Overview
       </h2>
@@ -64,13 +64,13 @@ function RequestsOverview() {
             <div className="flex gap-3 text-sm">
               <button
                 onClick={() => handleResponse(req._id, "accepted")}
-                className="text-green-600 hover:underline"
+                className="text-green-800 hover:underline"
               >
                 Accept
               </button>
               <button
                 onClick={() => handleResponse(req._id, "rejected")}
-                className="text-red-500 hover:underline"
+                className="text-red-900 hover:underline"
               >
                 Reject
               </button>
