@@ -41,6 +41,28 @@ function SuggestedMatches() {
     }
   };
 
+  const getRatingDisplay = (averageRating) => {
+    const rating = averageRating || 0;
+    let label = "";
+    let stars = "";
+
+    if (rating === 0) {
+      label = "Fresher";
+      stars = "⭐".repeat(0) || "✨";
+    } else if (rating >= 1 && rating <= 2) {
+      label = "Beginner";
+      stars = "⭐".repeat(Math.ceil(rating));
+    } else if (rating >= 3 && rating <= 4) {
+      label = "Professional";
+      stars = "⭐".repeat(Math.ceil(rating));
+    } else if (rating === 5) {
+      label = "Expert";
+      stars = "⭐".repeat(5);
+    }
+
+    return { label, stars };
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-4">
@@ -80,6 +102,18 @@ function SuggestedMatches() {
                   }}
                 />
                 <h3 className="font-medium text-gray-800">{user.name}</h3>
+              </div>
+
+              <div className="mb-3">
+                <div className="text-sm font-medium text-gray-700">
+                  {getRatingDisplay(user.averageRating).stars || "✨"}{" "}
+                  <span className="text-gray-600">
+                    {user.averageRating ? user.averageRating.toFixed(1) : "0"}
+                  </span>{" "}
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                    {getRatingDisplay(user.averageRating).label}
+                  </span>
+                </div>
               </div>
 
               <p className="text-xs text-gray-600">
