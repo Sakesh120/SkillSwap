@@ -70,6 +70,7 @@ function Navbar() {
   />
 
 </div>
+          <Link to="/dashboard">Discover</Link>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"
@@ -88,7 +89,7 @@ function Navbar() {
             </div>
             <button
               onClick={handleLogout}
-              className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500"
+              className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500  border-blue-950 hover:border-2"
             >
               Logout
             </button>

@@ -81,9 +81,15 @@ function Profilepage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar">
+    <div className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
+    style={{
+        backgroundImage: "url('/profilebg.jpg')", // put image in public folder
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      
+      }}>
       {loading ? (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen ">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
             <p className="text-gray-600">Loading your profile...</p>
@@ -94,7 +100,7 @@ function Profilepage() {
           {/* MAIN CONTAINER */}
           <div className="max-w-6xl mx-auto space-y-6 mt-5">
             {/* PROFILE HEADER */}
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
+            <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-2xl  p-6">
               <ProfileHeader profile={profile} setProfile={setProfile} />
               <button
                 onClick={() => setShowEditModal(true)}
@@ -104,7 +110,7 @@ function Profilepage() {
               </button>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm border p-6 space-y-6">
+            <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-2xl shadow-sm p-6 space-y-6">
               <SkillSection
                 title="Skills You Can Teach"
                 skills={profile.skillsOffered || []}
@@ -127,12 +133,12 @@ function Profilepage() {
             {/* ABOUT + STATS */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* ABOUT */}
-              <div className="md:col-span-2 bg-white rounded-2xl shadow-sm border p-6">
+              <div className="md:col-span-2 bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
                 <About profile={profile} setProfile={setProfile} />
               </div>
 
               {/* STATS */}
-              <div className="bg-white rounded-2xl shadow-sm border p-6">
+              <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
                 <Stats profile={profile} />
               </div>
             </div>
@@ -147,7 +153,7 @@ function Profilepage() {
         backgroundPosition: "center",
       
       }}>
-              <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
+              <div className="bg-white/20 backdrop-blur-lg shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
                 <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
                 <form onSubmit={handleEditSubmit} className="space-y-4">
                   <div>
@@ -158,7 +164,7 @@ function Profilepage() {
                       onChange={(e) =>
                         setEditForm({ ...editForm, name: e.target.value })
                       }
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full rounded px-3 py-2"
                     />
                   </div>
                   <div>
@@ -169,7 +175,7 @@ function Profilepage() {
                       onChange={(e) =>
                         setEditForm({ ...editForm, tagline: e.target.value })
                       }
-                      className="w-full border rounded px-3 py-2"
+                      className="w-full  rounded px-3 py-2"
                     />
                   </div>
                   <div>
@@ -179,7 +185,7 @@ function Profilepage() {
                       onChange={(e) =>
                         setEditForm({ ...editForm, about: e.target.value })
                       }
-                      className="w-full border rounded px-3 py-2 h-24"
+                      className="w-full  rounded px-3 py-2 h-24"
                     />
                   </div>
                   <div>
@@ -208,7 +214,7 @@ function Profilepage() {
                             e.target.value = "";
                           }
                         }}
-                        className="flex-1 border rounded px-3 py-2"
+                        className="flex-1  rounded px-3 py-2"
                       />
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -244,7 +250,7 @@ function Profilepage() {
                             e.target.value = "";
                           }
                         }}
-                        className="flex-1 border rounded px-3 py-2"
+                        className="flex-1  rounded px-3 py-2"
                       />
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -275,7 +281,7 @@ function Profilepage() {
                     <button
                       type="button"
                       onClick={() => setShowEditModal(false)}
-                      className="border px-4 py-2 rounded hover:bg-gray-100"
+                      className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
                     >
                       Cancel
                     </button>
