@@ -6,6 +6,7 @@ import Profilepage from "./pages/Profilepage";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
+import Myuploads from "./pages/Myuploads";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />
         <Route path="/profilepage" element={<Profilepage />} />
+        <Route path="/myuploads" element={<Myuploads />} />
         <Route
           path="/dashboard"
           element={
