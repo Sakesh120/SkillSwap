@@ -6,6 +6,7 @@ import ProfileHeader from "../components/profilepage/ProfileHeader";
 import SkillSection from "../components/profilepage/SkillSection";
 import About from "../components/profilepage/About";
 import Stats from "../components/profilepage/Stats";
+import { useNavigate } from "react-router-dom";
 
 function Profilepage({ viewOnly = false, userId = null }) {
   const { id } = useParams();
@@ -13,6 +14,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
   const [profile, setProfile] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAvatarPreview, setShowAvatarPreview] = useState(false);
+  const navigate = useNavigate();
   const [editForm, setEditForm] = useState({
     name: "",
     tagline: "",
@@ -121,12 +123,19 @@ function Profilepage({ viewOnly = false, userId = null }) {
               />
 
               {!viewOnly && (
+                <div>
                 <button
                   onClick={() => setShowEditModal(true)}
                   className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                 >
                   Edit Profile
                 </button>
+                
+             <button onClick={() => navigate("/upload")} className="ml-4 mt-4 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600">
+                    Upload-video
+              </button>
+              
+                   </div>
               )}
             </div>
 

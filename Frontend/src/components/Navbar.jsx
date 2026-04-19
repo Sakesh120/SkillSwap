@@ -70,8 +70,15 @@ function Navbar() {
   />
 
 </div>
-          <Link to="/dashboard">Discover</Link>
-          <Link to="/myuploads">My-Uploads</Link>
+          <Link
+  to="/dashboard"
+  className="inline-block px-6 py-2 rounded-full text-white font-medium 
+  bg-linear-to-r from-blue-500 to-indigo-600 
+  hover:from-blue-600 hover:to-indigo-700 
+  transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+>
+  Discover
+</Link>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"
