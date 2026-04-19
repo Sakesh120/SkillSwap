@@ -8,15 +8,15 @@ import Activity from "../components/dashboard/Activity";
 
 function Dashboard() {
   return (
-    <div className=" min-h-screen min-w-screen bg-linear-to-br from-blue-50 via-white to-indigo-100"
-     style={{
+    <div
+      className="min-h-screen bg-linear-to-br from-blue-50 via-white to-indigo-100"
+      style={{
         backgroundImage: "url('/dashboardbg.jpg')", // put image in public folder
         backgroundSize: "cover",
         backgroundPosition: "center",
-      
       }}
-      >
-      <div className="lg:mt-24 mt-26 max-w-6xl mx-auto p-4 md:p-6 space-y-8 ">
+    >
+      <div className="page-shell space-y-6 pb-8 pt-24 sm:space-y-8 sm:pt-28 xl:pt-32">
         <SuggestedMatches />
         <RequestsOverview />
         <PromoCards />

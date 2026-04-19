@@ -1,48 +1,41 @@
 function Footer() {
   return (
-    <footer className="bg-white border-t mt-10">
-      
-      <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-        
-        {/* Logo / About */}
+    <footer className="mt-10 border-t bg-white">
+      <div className="app-shell grid grid-cols-1 gap-8 py-10 text-center md:grid-cols-3 md:text-left">
         <div>
           <h2 className="font-[Space_Grotesk] text-2xl font-bold text-gray-900">
             SkillSwap
           </h2>
-          <p className="text-gray-600 mt-2 text-sm">
-            Learn skills, teach skills, and grow together using a credit-based system.
+          <p className="mt-2 text-sm text-gray-600">
+            Learn skills, teach skills, and grow together using a credit-based
+            system.
           </p>
         </div>
 
-        {/* Links */}
         <div>
-          <h3 className="font-semibold text-gray-800 mb-3">Quick Links</h3>
+          <h3 className="mb-3 font-semibold text-gray-800">Quick Links</h3>
           <ul className="space-y-2 text-gray-600">
-            <li className="hover:text-blue-500 cursor-pointer">About</li>
-            <li className="hover:text-blue-500 cursor-pointer">Contact</li>
-            <li className="hover:text-blue-500 cursor-pointer">Login</li>
-            <li className="hover:text-blue-500 cursor-pointer">Sign Up</li>
+            <li className="cursor-pointer hover:text-blue-500">About</li>
+            <li className="cursor-pointer hover:text-blue-500">Contact</li>
+            <li className="cursor-pointer hover:text-blue-500">Login</li>
+            <li className="cursor-pointer hover:text-blue-500">Sign Up</li>
           </ul>
         </div>
 
-        {/* Contact / Social */}
         <div>
-          <h3 className="font-semibold text-gray-800 mb-3">Connect</h3>
+          <h3 className="mb-3 font-semibold text-gray-800">Connect</h3>
           <ul className="space-y-2 text-gray-600">
             <li>Email: skillswap@gmail.com</li>
-            <li className="hover:text-blue-500 cursor-pointer">Instagram</li>
-            <li className="hover:text-blue-500 cursor-pointer">LinkedIn</li>
-            <li className="hover:text-blue-500 cursor-pointer">Twitter</li>
+            <li className="cursor-pointer hover:text-blue-500">Instagram</li>
+            <li className="cursor-pointer hover:text-blue-500">LinkedIn</li>
+            <li className="cursor-pointer hover:text-blue-500">Twitter</li>
           </ul>
         </div>
-
       </div>
 
-      {/* Bottom Line */}
-      <div className="border-t text-center py-4 text-gray-500 text-sm">
+      <div className="border-t py-4 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} SkillSwap. All rights reserved.
       </div>
-
     </footer>
   );
 }

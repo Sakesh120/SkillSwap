@@ -3,29 +3,18 @@ import { Link } from "react-router-dom";
 
 function CTA() {
   return (
-    <div className=" flex flex-col items-center text-center mt-10 ">
-      <p className=" font-[Space_Grotesk] 
-text-3xl md:text-5xl 
-font-bold 
-bg-linear-to-r from-blue-600 via-purple-500 to-indigo-500 
-text-transparent bg-clip-text 
-tracking-tight
-text-center mb-4
-">
+    <div className="app-shell mt-10 flex flex-col items-center px-4 pb-12 text-center sm:pb-16">
+      <p className="mb-4 bg-linear-to-r from-blue-600 via-purple-500 to-indigo-500 bg-clip-text text-center font-[Space_Grotesk] text-3xl font-bold tracking-tight text-transparent sm:text-4xl lg:text-5xl xl:max-w-5xl">
         Start Learning Today Without Paying Money
       </p>
 
-      <p className="mb-6 font-[Poppins] 
-text-lg md:text-3xl 
-mt-4 
-text-gray-600 
-text-center 
-">
+      <p className="mb-6 mt-4 text-center font-[Poppins] text-lg text-gray-600 sm:text-2xl lg:text-3xl">
         Teach What You Know. Learn What You Want.
       </p>
 
-     <Link to="/signup"><Button text="Join SkillSwap" >  </Button>
-      </Link> 
+      <Link to="/signup">
+        <Button text="Join SkillSwap" />
+      </Link>
     </div>
   );
 }

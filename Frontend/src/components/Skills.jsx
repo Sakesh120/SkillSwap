@@ -7,33 +7,31 @@ function Skills() {
     "Photography",
     "Programming",
     "UI/UX Design",
-    "Language Learning"
+    "Language Learning",
   ];
 
   return (
     <div className="mt-1 text-center">
-      <h2 className="font-[Space_Grotesk] text-4xl font-bold text-center ">POPULAR SKILLS</h2>
+      <div className="app-shell">
+        <h2 className="text-center font-[Space_Grotesk] text-3xl font-bold sm:text-4xl xl:text-5xl">
+          POPULAR SKILLS
+        </h2>
+      </div>
 
-      <div className="overflow-hidden w-full py-6 bg-white">
-  <div className="scroll-right flex gap-12 whitespace-nowrap">
+      <div className="w-full overflow-hidden bg-white py-6">
+        <div className="scroll-right flex gap-8 whitespace-nowrap sm:gap-12">
+          {[...skills, ...skills].map((skill, index) => (
+            <span
+              key={index}
+              className="inline-block rounded-full border border-transparent bg-white bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-border px-4 py-2 text-sm font-medium text-gray-800 shadow-[0_0_15px_rgba(99,102,241,0.5)] transition hover:scale-105"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
 
-    {[...skills, ...skills].map((skill, index) => (
-      <span key={index} className=" px-4 py-2 rounded-full text-sm font-medium
-bg-white text-gray-800
-border border-transparent
-bg-linear-to-r from-blue-200 via-purple-200 to-pink-200
-bg-clip-border
-shadow-[0_0_15px_rgba(99,102,241,0.5)]
-hover:scale-105 transition tag inline-block">
-        {skill}
-      </span>
-    ))}
-
-  </div>
-</div>
-
-<div className="border-t text-center py-4 text-gray-500 text-sm mt-5"> </div>
-
+      <div className="mt-5 border-t py-4 text-center text-sm text-gray-500"></div>
     </div>
   );
 }

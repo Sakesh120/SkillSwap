@@ -119,9 +119,9 @@ function ActiveSessions() {
             return (
               <div
                 key={session._id}
-                className="flex items-center justify-between py-3"
+                className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
 
                   <div>
@@ -140,7 +140,7 @@ function ActiveSessions() {
                   </div>
                 </div>
 
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 sm:shrink-0">
                   <button
                     type="button"
                     className="text-xs bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition"

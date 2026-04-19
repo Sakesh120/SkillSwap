@@ -26,7 +26,7 @@ function PromoCards() {
       title: "SkillSwap App",
       subtitle: "Explore mobile experience",
       cta: "Explore",
-      image: "/promo-app.jpg",
+      image: "/SA.png",
     },
   ];
 
@@ -38,11 +38,11 @@ function PromoCards() {
       </h2>
 
       {/* GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
         {cards.map((card) => (
           <div
             key={card.id}
-            className="relative overflow-hidden rounded-xl p-4 flex flex-col justify-between h-40 hover:shadow-md hover:scale-[1.02] transition bg-slate-200"
+            className="relative flex h-44 flex-col justify-between overflow-hidden rounded-xl bg-slate-200 p-4 transition hover:scale-[1.02] hover:shadow-md xl:h-48"
             style={{
               backgroundImage: `url('${card.image}')`,
               backgroundSize: "cover",
@@ -53,14 +53,14 @@ function PromoCards() {
 
             {/* TEXT */}
             <div className="relative z-10">
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-base font-semibold text-white xl:text-lg">
                 {card.title}
               </h3>
-              <p className="text-xs text-white mt-1">{card.subtitle}</p>
+              <p className="mt-1 max-w-xs text-sm text-white">{card.subtitle}</p>
             </div>
 
             {/* CTA */}
-            <button className="relative z-10 mt-3 text-xs bg-white/85 text-gray-900 backdrop-blur px-3 py-1.5 rounded-lg hover:bg-white transition">
+            <button className="relative z-10 mt-3 w-fit rounded-lg bg-white/85 px-3 py-1.5 text-xs text-gray-900 backdrop-blur transition hover:bg-white sm:text-sm">
               {card.cta}
             </button>
           </div>

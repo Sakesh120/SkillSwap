@@ -86,7 +86,7 @@ function SuggestedMatches() {
   };
 
   return (
-   <div className="bg-white/20 backdrop-blur-lg border-white/30 rounded-2xl shadow-sm border p-6 h-max overflow-y-auto no-scrollbar">
+   <div className="h-max overflow-y-auto rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg no-scrollbar">
   <h2 className="text-lg font-semibold text-gray-800 mb-4">
     Suggested Matches
   </h2>
@@ -104,7 +104,7 @@ function SuggestedMatches() {
   {/* Cards Container */}
   <div
     ref={containerRef}
-    className="grid grid-rows-2 grid-flow-col auto-cols-[250px] gap-4 overflow-x-auto pb-2 scrollbar-hide no-scrollbar flex-1"
+    className="grid grid-flow-col auto-cols-[minmax(240px,1fr)] grid-rows-1 gap-4 overflow-x-auto pb-2 no-scrollbar sm:auto-cols-[280px] xl:auto-cols-[320px] 2xl:grid-rows-2"
     style={{ scrollSnapType: "x mandatory" }}
   >
   
@@ -113,7 +113,7 @@ function SuggestedMatches() {
       <div
         key={user._id}
         onClick={() => navigate(`/profile/${user._id}`)}
-        className="cursor-pointer bg-white/20 backdrop-blur-lg border-white/30 shadow-sm rounded-2xl p-4 border hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+        className="cursor-pointer rounded-2xl border border-white/30 bg-white/20 p-4 shadow-sm backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
         style={{ scrollSnapAlign: "start" }}
       >
         {/* User Info */}
@@ -127,7 +127,7 @@ function SuggestedMatches() {
                   "&background=random"
             }
             alt={user.name}
-            className="w-10 h-10 rounded-full object-cover border"
+            className="h-12 w-12 rounded-full border object-cover"
           />
           <h3 className="font-medium text-gray-800 truncate">
             {user.name}

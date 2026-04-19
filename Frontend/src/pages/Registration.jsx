@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 
 function Registration() {
@@ -76,11 +75,9 @@ function Registration() {
     }
   };
 
-  // 🚀 🔥 FINAL HANDLE SUBMIT (CONNECTED TO API)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔴 Validation
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -92,7 +89,6 @@ function Registration() {
     }
 
     try {
-      // ✅ Match backend format EXACTLY
       const payload = {
         name: formData.name,
         email: formData.email,
@@ -102,11 +98,7 @@ function Registration() {
       };
 
       console.log("Sending payload:", payload);
-
-      // 🔗 API call (via AuthContext)
       await register(payload);
-
-      // ✅ Redirect after success
       navigate("/profilepage");
     } catch (err) {
       console.log("Registration error:", err);
@@ -115,83 +107,82 @@ function Registration() {
   };
 
   return (
-    <div className=" relative min-h-screen  flex flex-col items-center justify-center "
-    style={{ backgroundImage: "url('/hero.png')", // put image in public folder
+    <div
+      className="relative min-h-screen"
+      style={{
+        backgroundImage: "url('/hero.png')",
         backgroundSize: "cover",
-        backgroundPosition: "center", }}>
-      <Navbar />
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-white/40"></div>
 
-{/* over lay */}
-       <div className="absolute  inset-0 bg-white/40 "></div>
-
-{/* 🔥 Content (above overlay) */}
-      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center overflow-y-hidden no-scrollbar  p-4">
-
-        <div className="w-full max-w-md max-h-[85vh] overflow-y-auto flex flex-col items-center  bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-xl p-8  no-scrollbar mt-20 ">
-          <img src={logo} alt="Logo" className="w-64 mb-6" />
-          <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
+      <div className="form-shell no-scrollbar relative z-10 flex min-h-screen items-center justify-center py-24">
+        <div className="no-scrollbar flex max-h-[calc(100vh-8rem)] w-full max-w-3xl flex-col items-center overflow-y-auto rounded-[2rem] border border-white/30 bg-white/25 p-6 shadow-lg backdrop-blur-lg sm:p-8 lg:p-10">
+          <img src={logo} alt="Logo" className="mb-6 w-40 sm:w-52" />
+          <h1 className="mb-6 text-center text-3xl font-bold sm:text-4xl">
+            Sign Up
+          </h1>
 
           <div className="input details w-full">
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="user credentials space-y-4">
+              <div className="user credentials grid gap-4 md:grid-cols-2">
                 <div className="name">
-                  <label className="block mb-1">Name :</label>
+                  <label className="mb-1 block">Name :</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 outline-none"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 outline-none"
                   />
                 </div>
 
                 <div className="email">
-                  <label className="block mb-1">Email :</label>
+                  <label className="mb-1 block">Email :</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 rounded-2xl  bg-linear-to-tr from-sky-100 via-white to-blue-100 outline-none"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 outline-none"
                   />
                 </div>
 
                 <div className="password">
-                  <label className="block mb-1">Password :</label>
+                  <label className="mb-1 block">Password :</label>
                   <input
                     type="password"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full p-2 rounded-2xl  bg-linear-to-tr from-sky-100 via-white to-blue-100 outline-none"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 outline-none"
                   />
                 </div>
 
                 <div className="confirm Pass">
-                  <label className="block mb-1">Confirm Password :</label>
+                  <label className="mb-1 block">Confirm Password :</label>
                   <input
                     type="password"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 outline-none"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 outline-none"
                   />
                 </div>
               </div>
 
-              {/* SKILLS UI SAME (no changes) */}
-
-              <div className="skills section space-y-4">
+              <div className="skills section grid gap-4 lg:grid-cols-2">
                 <div className="can teach">
-                  <label className="block mb-1">Skills you can teach :</label>
+                  <label className="mb-1 block">Skills you can teach :</label>
 
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="mb-3 flex flex-wrap gap-2">
                     {skills.map((skill, index) => (
                       <button
                         key={index}
                         type="button"
                         onClick={() => handleSelectTeach(skill)}
-                        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 rounded-2xl hover:bg-blue-500"
+                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -203,32 +194,32 @@ function Registration() {
                     value={teachInput}
                     onChange={(e) => setTeachInput(e.target.value)}
                     onKeyDown={handleAddTeach}
-                    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3"
                   />
 
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="mt-3 flex flex-wrap gap-2">
                     {teachSkills.map((skill, index) => (
                       <div
                         key={index}
-                        className="px-3 py-1 rounded-2xl flex items-center gap-2"
+                        className="flex items-center gap-2 rounded-2xl px-3 py-1"
                       >
                         {skill}
-                        <span onClick={() => removeTeachSkill(skill)}>✕</span>
+                        <span onClick={() => removeTeachSkill(skill)}>x</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="want-to-learn">
-                  <label className="block mb-1">Skills you want to learn :</label>
+                  <label className="mb-1 block">Skills you want to learn :</label>
 
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="mb-3 flex flex-wrap gap-2">
                     {skills.map((skill, index) => (
                       <button
                         key={index}
                         type="button"
                         onClick={() => handleSelectLearn(skill)}
-                        className="bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 rounded-2xl hover:bg-blue-500"
+                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -240,30 +231,30 @@ function Registration() {
                     value={learnInput}
                     onChange={(e) => setLearnInput(e.target.value)}
                     onKeyDown={handleAddLearn}
-                    className="w-full p-2 rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100"
+                    className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3"
                   />
 
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="mt-3 flex flex-wrap gap-2">
                     {learnSkills.map((skill, index) => (
                       <div
                         key={index}
-                        className="px-3 py-1 rounded-2xl flex items-center gap-2"
+                        className="flex items-center gap-2 rounded-2xl px-3 py-1"
                       >
                         {skill}
-                        <span onClick={() => removeLearnSkill(skill)}>✕</span>
+                        <span onClick={() => removeLearnSkill(skill)}>x</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <button className="w-full bg-linear-to-tr from-sky-100 via-white to-blue-100 p-2 rounded-2xl font-semibold">
+              <button className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 font-semibold">
                 Sign Up
               </button>
             </form>
           </div>
 
-          <Link to="/login" className="mt-4 text-center block text-sm">
+          <Link to="/login" className="mt-4 block text-center text-sm">
             Already have an account? Log in
           </Link>
         </div>

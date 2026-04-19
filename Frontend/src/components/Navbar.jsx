@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -14,10 +14,8 @@ function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        // scrolling down
         setShow(false);
       } else {
-        // scrolling up
         setShow(true);
       }
       setLastScrollY(window.scrollY);
@@ -26,7 +24,7 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleLogout = async () => {
     await logout();
@@ -35,64 +33,72 @@ function Navbar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 flex justify-between items-center px-8 bg-blue/30 backdrop-blur-sm z-50  transition-transform duration-300"
+      className="fixed top-0 left-0 right-0 z-50 px-3 pt-3 transition-transform duration-300 sm:px-4"
       style={{ transform: show ? "translateY(0)" : "translateY(-100%)" }}
     >
-      <Link to="/">
-        {" "}
-        <img src={logo} alt="Logo" className="w-30 h-30 object-contain " />{" "}
-      </Link>
+      <div className="app-shell rounded-3xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-2xl">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <Link to="/" className="shrink-0">
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-14 w-20 object-contain sm:h-16 sm:w-24 lg:h-18 lg:w-28"
+            />
+          </Link>
 
-      <div className="flex items-center space-x-8 text-xl  text-black">
-        {!user ? (
-          <div className="flex gap-4">
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/">How it works</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        ) : (
-          <div className="flex flex-row items-center gap-4">
-            <div className="group flex flex-row-reverse items-center bg-white/70 backdrop-blur-lg border border-white/40 shadow-lg rounded-full px-2 py-2 w-12 hover:w-[320px] overflow-hidden transition-all duration-500 ease-in-out">
-              {/* Search Icon */}
-              <button className="p-2 bg-linear-to-r from-blue-500 to-indigo-500 text-white rounded-full shrink-0">
-                <Search size={18} />
-              </button>
+          <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-black sm:gap-4 sm:text-base xl:text-lg">
+            {!user ? (
+              <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-5">
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/">How it works</Link>
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
+            ) : (
+              <div className="flex flex-1 flex-wrap items-center justify-end gap-3 sm:gap-4">
+                <div className="group hidden flex-row-reverse items-center overflow-hidden rounded-full border border-white/20 bg-white/10 px-2 py-2 shadow-lg backdrop-blur-2xl transition-all duration-500 ease-in-out lg:flex lg:w-12 lg:hover:w-[320px]">
+                  <button className="shrink-0 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 p-2 text-white">
+                    <Search size={18} />
+                  </button>
 
-              {/* Input */}
-              <input
-                type="text"
-                placeholder="Search skills..."
-                className="w-0 group-hover:w-full opacity-0 group-hover:opacity-100 transition-all duration-500 outline-none text-gray-700 placeholder-gray-400 px-3 bg-transparent"
-              />
-            </div>
-            <Link to="/dashboard">Discover</Link>
-            <Link to="/my-sessions">My-Sessions</Link>
-            <span>🔔</span>
-            <div
-              className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"
-              onClick={() => navigate("/profilepage")}
-              title="Go to profile"
-            >
-              {user?.avatar?.image ? (
-                <img
-                  src={`http://localhost:3000${user.avatar.image}`}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-lg">👤</span>
-              )}
-            </div>
-            <button
-              onClick={handleLogout}
-              className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-500  border-blue-950 hover:border-2"
-            >
-              Logout
-            </button>
+                  <input
+                    type="text"
+                    placeholder="Search skills..."
+                    className="w-0 bg-transparent px-3 text-gray-700 opacity-0 outline-none transition-all duration-500 placeholder:text-gray-400 group-hover:w-full group-hover:opacity-100"
+                  />
+                </div>
+
+                <Link to="/dashboard">Discover</Link>
+                <Link to="/my-sessions">My Sessions</Link>
+                <span className="hidden sm:inline">Alerts</span>
+
+                <div
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-400 bg-gray-300"
+                  onClick={() => navigate("/profilepage")}
+                  title="Go to profile"
+                >
+                  {user?.avatar?.image ? (
+                    <img
+                      src={`http://localhost:3000${user.avatar.image}`}
+                      alt="Profile"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm font-medium">You</span>
+                  )}
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="rounded-lg bg-red-400 px-3 py-2 text-sm text-white hover:bg-red-500 sm:px-4"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

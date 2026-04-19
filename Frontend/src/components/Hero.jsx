@@ -1,10 +1,8 @@
-import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import React, { useEffect, useState } from "react";
 
 function Hero() {
-
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -12,42 +10,42 @@ function Hero() {
   }, []);
 
   return (
-    
     <div
-    
-      className="h-screen flex flex-col justify-center items-center text-center text-white pt-20"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24 text-center text-white sm:px-6 lg:px-8"
       style={{
-        backgroundImage: "url('/hero.png')", // put image in public folder
+        backgroundImage: "url('/hero.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-      
       }}
     >
-        <Navbar />
-      {/* overlay */}
       <div className="absolute inset-0 bg-white/50"></div>
 
-        {/* 🔥 Content (above overlay) */}
-      <div className="relative z-10  flex flex-col justify-center items-center text-center px-4">
-    
-      <h1 className={`text-transparent bg-clip-text bg-linear-to-r to-emerald-500 from-sky-400 text-9xl font-bold mb-4 transition-all duration-1000 ease-out   ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20 "}`}>
+      <div className="app-shell relative z-10 flex flex-col items-center justify-center">
+        <h1
+          className={`mb-4 bg-linear-to-r from-sky-400 to-emerald-500 bg-clip-text text-center text-5xl font-bold text-transparent transition-all duration-1000 ease-out sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[7rem] ${
+            show ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+          }`}
+        >
           SKILL SWAP
         </h1>
 
-
-        <p className={`text-2xl italic font-medium leading-relaxed text-heading text-black mb-8 transition-all duration-2000 ease-out   ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"} `}>
+        <p
+          className={`mb-8 max-w-4xl text-lg font-medium italic leading-relaxed text-black transition-all duration-2000 ease-out sm:text-2xl xl:text-3xl ${
+            show ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+          }`}
+        >
           Learn Skills. Teach Skills. Earn Credits.
         </p>
 
-
- <Link to="/signup" className={`transition-all duration-3000 ease-out   ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}>
-        <Button  text="Get Started" 
+        <Link
+          to="/signup"
+          className={`transition-all duration-3000 ease-out ${
+            show ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+          }`}
         >
-       
-    </Button>
-      </Link>
-</div>
-
+          <Button text="Get Started" />
+        </Link>
+      </div>
     </div>
   );
 }

@@ -136,14 +136,14 @@ function MySessions() {
 
   return (
     <div
-      className="min-h-screen min-w-screen pt-24 mt-25 pb-12 px-4 md:px-6"
+      className="min-h-screen px-0 pb-12 pt-28"
       style={{
         backgroundImage: "url('/dashboardbg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="page-shell space-y-6">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">My sessions</h1>
           <p className="text-sm text-gray-600 mt-1">
@@ -170,7 +170,7 @@ function MySessions() {
           </div>
         )}
 
-        <div className="grid gap-4">
+        <div className="grid gap-4 xl:grid-cols-2">
           {sortedSessions.map((session) => {
             const partner = getPartner(session);
             const completed = session.status === "completed";
@@ -329,7 +329,7 @@ function MySessions() {
             }}
           />
 
-          <div className="relative z-10 w-full max-w-md rounded-2xl border border-white/40 bg-white shadow-xl p-6">
+          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-white/40 bg-white p-6 shadow-xl">
             <h3
               id="my-sessions-schedule-title"
               className="text-lg font-semibold text-gray-900 mb-1"

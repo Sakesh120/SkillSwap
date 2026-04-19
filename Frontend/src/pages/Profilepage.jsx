@@ -92,14 +92,9 @@ function Profilepage({ viewOnly = false, userId = null }) {
     });
   };
 
-  const handleUploadTutorial = () => {
-    console.log("Upload Tutorial");
-    navigate("/myuploads");
-  };
-
   return (
     <div
-      className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
+      className="no-scrollbar min-h-screen pt-24"
       style={{
         backgroundImage: "url('/profilebg.jpg')",
         backgroundSize: "cover",
@@ -118,7 +113,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
       ) : (
         <>
           <div
-            className={`mx-auto mt-5 max-w-6xl space-y-6 ${showAvatarPreview ? "blur-sm" : ""}`}
+            className={`page-shell mt-5 space-y-6 pb-10 ${showAvatarPreview ? "blur-sm" : ""}`}
           >
             <div className="rounded-2xl border border-white/30 bg-white/20 p-6 shadow-lg backdrop-blur-lg">
               <ProfileHeader
@@ -128,19 +123,21 @@ function Profilepage({ viewOnly = false, userId = null }) {
               />
 
               {!viewOnly && (
-                <div>
-                <button
-                  onClick={() => setShowEditModal(true)}
-                  className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                >
-                  Edit Profile
-                </button>
-                
-             <button onClick={() => navigate("/upload")} className="ml-4 mt-4 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600">
-                    Upload-video
-              </button>
-              
-                   </div>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => setShowEditModal(true)}
+                    className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  >
+                    Edit Profile
+                  </button>
+
+                  <button
+                    onClick={() => navigate("/upload")}
+                    className="rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                  >
+                    Upload Video
+                  </button>
+                </div>
               )}
             </div>
 
@@ -176,8 +173,8 @@ function Profilepage({ viewOnly = false, userId = null }) {
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <div className="md:col-span-2 rounded-xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.6fr_0.8fr]">
+              <div className="rounded-xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
                 <About
                   profile={profile}
                   setProfile={viewOnly ? undefined : setProfile}
@@ -200,10 +197,10 @@ function Profilepage({ viewOnly = false, userId = null }) {
                 backgroundPosition: "center",
               }}
             >
-              <div className="no-scrollbar max-h-[90vh] w-full max-w-md overflow-y-auto rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur-lg">
+              <div className="no-scrollbar max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur-lg sm:p-8">
                 <h2 className="mb-4 text-xl font-semibold">Edit Profile</h2>
 
-                <form onSubmit={handleEditSubmit} className="space-y-4">
+                <form onSubmit={handleEditSubmit} className="grid gap-4 md:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium">Name</label>
                     <input
@@ -228,7 +225,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                     />
                   </div>
 
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-sm font-medium">About</label>
                     <textarea
                       value={editForm.about}
@@ -251,7 +248,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                     />
                   </div>
 
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-sm font-medium">
                       Skills You Can Teach
                     </label>
@@ -289,7 +286,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-sm font-medium">
                       Skills You Want to Learn
                     </label>
@@ -327,7 +324,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 md:col-span-2">
                     <button
                       type="submit"
                       className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"

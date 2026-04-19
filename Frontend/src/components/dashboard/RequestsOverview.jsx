@@ -47,8 +47,8 @@ function RequestsOverview() {
 
       <div className="divide-y">
         {requests.map((req) => (
-          <div key={req._id} className="flex items-center justify-between py-3">
-            <div className="flex items-center gap-3">
+          <div key={req._id} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
 
               <div>
@@ -61,7 +61,7 @@ function RequestsOverview() {
               </div>
             </div>
 
-            <div className="flex gap-3 text-sm">
+            <div className="flex gap-3 text-sm sm:shrink-0">
               <button
                 onClick={() => handleResponse(req._id, "accepted")}
                 className="text-green-800 hover:underline"

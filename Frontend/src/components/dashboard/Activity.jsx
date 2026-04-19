@@ -33,9 +33,9 @@ function Activity() {
         <p className="text-sm text-gray-500">No recent activity.</p>
       )}
 
-      <div className="space-y-4">
+      <div className="grid gap-4 xl:grid-cols-2">
         {activities.map((item) => (
-          <div key={item._id} className="flex items-start gap-3">
+          <div key={item._id} className="flex items-start gap-3 rounded-xl bg-white/35 p-4">
             <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
             <div>
               <p className="text-sm text-gray-700">{item.text}</p>
