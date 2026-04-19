@@ -71,6 +71,7 @@ function Navbar() {
 
 </div>
           <Link to="/dashboard">Discover</Link>
+          <Link to="/myuploads">My-Uploads</Link>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"

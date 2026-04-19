@@ -38,4 +38,5 @@ app.use("/api/session", sessionRouter);
 app.use("/api/activity", activityRouter);
 app.use("/api/rating", ratingRouter);
 
+
 export default app;
