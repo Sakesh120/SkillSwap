@@ -60,15 +60,15 @@ function Navbar() {
                 <Search size={18} />
               </button>
 
-  {/* Input */}
-  <input
-    type="text"
-    placeholder="Search skills..."
-    className="w-0 group-hover:w-full opacity-0 group-hover:opacity-100 transition-all duration-500 outline-none text-gray-700 placeholder-gray-400 px-3 bg-transparent"
-  />
-
-</div>
-          <Link to="/dashboard">Discover</Link>
+              {/* Input */}
+              <input
+                type="text"
+                placeholder="Search skills..."
+                className="w-0 group-hover:w-full opacity-0 group-hover:opacity-100 transition-all duration-500 outline-none text-gray-700 placeholder-gray-400 px-3 bg-transparent"
+              />
+            </div>
+            <Link to="/dashboard">Discover</Link>
+            <Link to="/my-sessions">My-Sessions</Link>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"

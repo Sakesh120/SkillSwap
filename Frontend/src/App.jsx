@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import Myuploads from "./pages/Upload";
 import ViewProfile from "./pages/Viewprofile";
+import MySessions from "./pages/MySessions";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/my-sessions"
+          element={
+            <PrivateRoute>
+              <MySessions/>
             </PrivateRoute>
           }
         />
