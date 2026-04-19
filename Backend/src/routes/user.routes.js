@@ -1,6 +1,7 @@
 import express from "express";
 import { protect } from "../middleware/auth.middleware.js";
 import {
+  getAllTutorials,
   getOtherProfile,
   getProfile,
   updateProfile,
@@ -25,4 +26,5 @@ userRouter.post(
   uploadVideo.single("video"),
   uploadTutorial,
 );
+userRouter.get("/tutorials", protect, getAllTutorials);
 export default userRouter;

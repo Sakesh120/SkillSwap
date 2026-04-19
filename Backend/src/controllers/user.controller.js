@@ -110,6 +110,9 @@ export const uploadTutorial = async (req, res) => {
       });
     }
 
+    user.credits += 10;
+    await user.save();
+
     res.status(200).json({
       message: "Tutorial video uploaded successfully",
       videoUrl,
@@ -122,3 +125,16 @@ export const uploadTutorial = async (req, res) => {
     });
   }
 };
+
+// GET ALL TUTORIALS
+export const getAllTutorials = async (req, res) => {
+  try {
+    const tutorials = await userModel.find().select("tutorials");
+    res.json(tutorials);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+

@@ -5,12 +5,14 @@ import ProfileHeader from "../components/profilepage/ProfileHeader";
 import SkillSection from "../components/profilepage/SkillSection";
 import About from "../components/profilepage/About";
 import Stats from "../components/profilepage/Stats";
+import { useNavigate } from "react-router-dom";
 
 function Profilepage() {
   const { user, setUser, loading } = useAuth();
   const [profile, setProfile] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAvatarPreview, setShowAvatarPreview] = useState(false);
+  const navigate = useNavigate();
   const [editForm, setEditForm] = useState({
     name: "",
     tagline: "",
@@ -81,6 +83,11 @@ function Profilepage() {
     });
   };
 
+  const handleUploadTutorial = () => {
+    console.log("Upload Tutorial");
+    navigate("/myuploads");
+  };
+
   return (
     <div
       className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
@@ -112,9 +119,15 @@ function Profilepage() {
               />
               <button
                 onClick={() => setShowEditModal(true)}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer "
               >
                 Edit Profile
+              </button>
+              <button
+                onClick={handleUploadTutorial}
+                className="ml-2 mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer"
+              >
+                Upload Tutorial
               </button>
             </div>
 
