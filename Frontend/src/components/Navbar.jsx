@@ -44,23 +44,21 @@ function Navbar() {
       </Link>
 
       <div className="flex items-center space-x-8 text-xl  text-black">
-      
         {!user ? (
           <div className="flex gap-4">
-              <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/">How it works</Link>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/">How it works</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         ) : (
           <div className="flex flex-row items-center gap-4">
-           <div className="group flex flex-row-reverse items-center bg-white/70 backdrop-blur-lg border border-white/40 shadow-lg rounded-full px-2 py-2 w-12 hover:w-[320px] overflow-hidden transition-all duration-500 ease-in-out">
-
-  {/* Search Icon */}
-  <button className="p-2 bg-linear-to-r from-blue-500 to-indigo-500 text-white rounded-full shrink-0">
-    <Search size={18} />
-  </button>
+            <div className="group flex flex-row-reverse items-center bg-white/70 backdrop-blur-lg border border-white/40 shadow-lg rounded-full px-2 py-2 w-12 hover:w-[320px] overflow-hidden transition-all duration-500 ease-in-out">
+              {/* Search Icon */}
+              <button className="p-2 bg-linear-to-r from-blue-500 to-indigo-500 text-white rounded-full shrink-0">
+                <Search size={18} />
+              </button>
 
   {/* Input */}
   <input
@@ -70,15 +68,8 @@ function Navbar() {
   />
 
 </div>
-          <Link
-  to="/dashboard"
-  className="inline-block px-6 py-2 rounded-full text-white font-medium 
-  bg-linear-to-r from-blue-500 to-indigo-600 
-  hover:from-blue-600 hover:to-indigo-700 
-  transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
->
-  Discover
-</Link>
+          <Link to="/dashboard">Discover</Link>
+          <Link to="/myuploads">My-Uploads</Link>
             <span>🔔</span>
             <div
               className="w-10 h-10 rounded-full overflow-hidden bg-gray-300 cursor-pointer border-2 border-blue-400 flex items-center justify-center"

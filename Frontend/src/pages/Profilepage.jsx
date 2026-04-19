@@ -92,6 +92,11 @@ function Profilepage({ viewOnly = false, userId = null }) {
     });
   };
 
+  const handleUploadTutorial = () => {
+    console.log("Upload Tutorial");
+    navigate("/myuploads");
+  };
+
   return (
     <div
       className="min-h-screen pt-20 px-4 sm:px-6 lg:px-8 no-scrollbar mt-5"
@@ -141,23 +146,31 @@ function Profilepage({ viewOnly = false, userId = null }) {
 
             <div className="space-y-6 rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
               <SkillSection
-                title={viewOnly ? "Skills They Can Teach" : "Skills You Can Teach"}
+                title={
+                  viewOnly ? "Skills They Can Teach" : "Skills You Can Teach"
+                }
                 skills={profile.skillsOffered || []}
                 setSkills={
                   viewOnly
                     ? undefined
-                    : (skills) => setProfile({ ...profile, skillsOffered: skills })
+                    : (skills) =>
+                        setProfile({ ...profile, skillsOffered: skills })
                 }
                 type="primary"
               />
 
               <SkillSection
-                title={viewOnly ? "Skills They Want to Learn" : "Skills You Want to Learn"}
+                title={
+                  viewOnly
+                    ? "Skills They Want to Learn"
+                    : "Skills You Want to Learn"
+                }
                 skills={profile.skillsWanted || []}
                 setSkills={
                   viewOnly
                     ? undefined
-                    : (skills) => setProfile({ ...profile, skillsWanted: skills })
+                    : (skills) =>
+                        setProfile({ ...profile, skillsWanted: skills })
                 }
                 type="secondary"
               />
