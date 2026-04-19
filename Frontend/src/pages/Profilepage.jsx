@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getProfile, updateProfile } from "../api/user.api";
+import { getProfile, getUserById, updateProfile } from "../api/user.api";
 import ProfileHeader from "../components/profilepage/ProfileHeader";
 import SkillSection from "../components/profilepage/SkillSection";
 import About from "../components/profilepage/About";
 import Stats from "../components/profilepage/Stats";
 
-function Profilepage() {
-  const { user, setUser, loading } = useAuth();
+function Profilepage({ viewOnly = false, userId = null }) {
+  const { id } = useParams();
+  const { setUser, loading } = useAuth();
   const [profile, setProfile] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAvatarPreview, setShowAvatarPreview] = useState(false);
@@ -20,23 +22,30 @@ function Profilepage() {
     avatar: null,
   });
 
-  // Fetch profile data when component mounts or when loading finishes
   useEffect(() => {
-    if (!loading) {
-      const fetchProfile = async () => {
-        try {
-          const res = await getProfile();
-          setUser(res.data);
-          setProfile(res.data);
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-        }
-      };
-      fetchProfile();
-    }
-  }, [loading, setUser]);
+    if (loading) return;
 
-  // Update editForm when user/profile changes
+    const fetchProfile = async () => {
+      try {
+        const targetUserId = userId || id;
+        const res =
+          viewOnly && targetUserId
+            ? await getUserById(targetUserId)
+            : await getProfile();
+
+        if (!viewOnly) {
+          setUser(res.data);
+        }
+
+        setProfile(res.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [id, loading, setUser, userId, viewOnly]);
+
   useEffect(() => {
     if (profile && Object.keys(profile).length > 0) {
       setEditForm({
@@ -52,12 +61,12 @@ function Profilepage() {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await updateProfile(editForm, editForm.avatar);
       const updatedUser = res.data.user;
       setUser(updatedUser);
       setProfile(updatedUser);
-      // Update localStorage with latest data
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setShowEditModal(false);
     } catch (error) {
@@ -91,79 +100,87 @@ function Profilepage() {
       }}
     >
       {loading ? (
-        <div className="flex items-center justify-center min-h-screen ">
+        <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading your profile...</p>
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
+            <p className="text-gray-600">
+              {viewOnly ? "Loading profile..." : "Loading your profile..."}
+            </p>
           </div>
         </div>
       ) : (
         <>
-          {/* MAIN CONTAINER */}
           <div
-            className={`max-w-6xl mx-auto space-y-6 mt-5 ${showAvatarPreview ? "blur-sm" : ""}`}
+            className={`mx-auto mt-5 max-w-6xl space-y-6 ${showAvatarPreview ? "blur-sm" : ""}`}
           >
-            {/* PROFILE HEADER */}
-            <div className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-2xl  p-6">
+            <div className="rounded-2xl border border-white/30 bg-white/20 p-6 shadow-lg backdrop-blur-lg">
               <ProfileHeader
                 profile={profile}
-                setProfile={setProfile}
+                viewOnly={viewOnly}
                 onAvatarClick={() => setShowAvatarPreview(true)}
               />
-              <button
-                onClick={() => setShowEditModal(true)}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-              >
-                Edit Profile
-              </button>
+
+              {!viewOnly && (
+                <button
+                  onClick={() => setShowEditModal(true)}
+                  className="mt-4 rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                >
+                  Edit Profile
+                </button>
+              )}
             </div>
 
-            <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-2xl shadow-sm p-6 space-y-6">
+            <div className="space-y-6 rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
               <SkillSection
-                title="Skills You Can Teach"
+                title={viewOnly ? "Skills They Can Teach" : "Skills You Can Teach"}
                 skills={profile.skillsOffered || []}
-                setSkills={(skills) =>
-                  setProfile({ ...profile, skillsOffered: skills })
+                setSkills={
+                  viewOnly
+                    ? undefined
+                    : (skills) => setProfile({ ...profile, skillsOffered: skills })
                 }
                 type="primary"
               />
 
               <SkillSection
-                title="Skills You Want to Learn"
+                title={viewOnly ? "Skills They Want to Learn" : "Skills You Want to Learn"}
                 skills={profile.skillsWanted || []}
-                setSkills={(skills) =>
-                  setProfile({ ...profile, skillsWanted: skills })
+                setSkills={
+                  viewOnly
+                    ? undefined
+                    : (skills) => setProfile({ ...profile, skillsWanted: skills })
                 }
                 type="secondary"
               />
             </div>
 
-            {/* ABOUT + STATS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* ABOUT */}
-              <div className="md:col-span-2 bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
-                <About profile={profile} setProfile={setProfile} />
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div className="md:col-span-2 rounded-xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
+                <About
+                  profile={profile}
+                  setProfile={viewOnly ? undefined : setProfile}
+                  viewOnly={viewOnly}
+                />
               </div>
 
-              {/* STATS */}
-              <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl  shadow-sm  p-6">
+              <div className="rounded-xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
                 <Stats profile={profile} />
               </div>
             </div>
           </div>
 
-          {/* EDIT MODAL */}
-          {showEditModal && (
+          {!viewOnly && showEditModal && (
             <div
-              className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50"
               style={{
                 backgroundImage: "url('/editpage.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
             >
-              <div className="bg-white/20 backdrop-blur-lg shadow-lg rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
-                <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
+              <div className="no-scrollbar max-h-[90vh] w-full max-w-md overflow-y-auto rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur-lg">
+                <h2 className="mb-4 text-xl font-semibold">Edit Profile</h2>
+
                 <form onSubmit={handleEditSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium">Name</label>
@@ -176,6 +193,7 @@ function Profilepage() {
                       className="w-full rounded px-3 py-2"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium">Tagline</label>
                     <input
@@ -184,9 +202,10 @@ function Profilepage() {
                       onChange={(e) =>
                         setEditForm({ ...editForm, tagline: e.target.value })
                       }
-                      className="w-full  rounded px-3 py-2"
+                      className="w-full rounded px-3 py-2"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium">About</label>
                     <textarea
@@ -194,9 +213,10 @@ function Profilepage() {
                       onChange={(e) =>
                         setEditForm({ ...editForm, about: e.target.value })
                       }
-                      className="w-full  rounded px-3 py-2 h-24"
+                      className="h-24 w-full rounded px-3 py-2"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium">Avatar</label>
                     <input
@@ -208,11 +228,12 @@ function Profilepage() {
                       className="w-full"
                     />
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium">
                       Skills You Can Teach
                     </label>
-                    <div className="flex gap-2 mb-2">
+                    <div className="mb-2 flex gap-2">
                       <input
                         type="text"
                         placeholder="Add skill"
@@ -223,14 +244,15 @@ function Profilepage() {
                             e.target.value = "";
                           }
                         }}
-                        className="flex-1  rounded px-3 py-2"
+                        className="flex-1 rounded px-3 py-2"
                       />
                     </div>
+
                     <div className="flex flex-wrap gap-2">
                       {editForm.skillsOffered.map((skill, i) => (
                         <span
                           key={i}
-                          className="bg-blue-100 px-2 py-1 rounded flex items-center gap-1"
+                          className="flex items-center gap-1 rounded bg-blue-100 px-2 py-1"
                         >
                           {skill}
                           <button
@@ -238,17 +260,18 @@ function Profilepage() {
                             onClick={() => removeSkill("skillsOffered", skill)}
                             className="text-red-500"
                           >
-                            ×
+                            x
                           </button>
                         </span>
                       ))}
                     </div>
                   </div>
+
                   <div>
                     <label className="block text-sm font-medium">
                       Skills You Want to Learn
                     </label>
-                    <div className="flex gap-2 mb-2">
+                    <div className="mb-2 flex gap-2">
                       <input
                         type="text"
                         placeholder="Add skill"
@@ -259,14 +282,15 @@ function Profilepage() {
                             e.target.value = "";
                           }
                         }}
-                        className="flex-1  rounded px-3 py-2"
+                        className="flex-1 rounded px-3 py-2"
                       />
                     </div>
+
                     <div className="flex flex-wrap gap-2">
                       {editForm.skillsWanted.map((skill, i) => (
                         <span
                           key={i}
-                          className="bg-gray-100 px-2 py-1 rounded flex items-center gap-1"
+                          className="flex items-center gap-1 rounded bg-gray-100 px-2 py-1"
                         >
                           {skill}
                           <button
@@ -274,23 +298,24 @@ function Profilepage() {
                             onClick={() => removeSkill("skillsWanted", skill)}
                             className="text-red-500"
                           >
-                            ×
+                            x
                           </button>
                         </span>
                       ))}
                     </div>
                   </div>
+
                   <div className="flex gap-2">
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                      className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                     >
                       Save
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowEditModal(false)}
-                      className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                      className="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
                     >
                       Cancel
                     </button>
@@ -306,10 +331,10 @@ function Profilepage() {
               onClick={() => setShowAvatarPreview(false)}
             >
               <div
-                className="relative max-w-[90vw] max-h-[90vh] p-4"
+                className="relative max-h-[90vh] max-w-[90vw] p-4"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-slate-900/80 transform transition-all duration-300 ease-out scale-100 opacity-100">
+                <div className="scale-100 overflow-hidden rounded-3xl border border-white/20 bg-slate-900/80 opacity-100 shadow-2xl transition-all duration-300 ease-out">
                   <img
                     src={
                       profile?.avatar?.image
@@ -317,7 +342,7 @@ function Profilepage() {
                         : ""
                     }
                     alt="Profile Preview"
-                    className="max-h-[80vh] w-auto max-w-[90vw] object-contain block"
+                    className="block max-h-[80vh] max-w-[90vw] w-auto object-contain"
                   />
                 </div>
               </div>

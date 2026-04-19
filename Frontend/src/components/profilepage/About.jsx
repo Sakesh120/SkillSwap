@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
-function About({ profile, setProfile }) {
+function About({ profile, setProfile, viewOnly = false }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (e) => {
+    if (!setProfile) return;
+
     setProfile({
       ...profile,
       about: e.target.value,
@@ -11,40 +13,38 @@ function About({ profile, setProfile }) {
   };
 
   return (
-    <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-xl p-5 shadow-sm text-xl h-full">
-      {!isEditing ? (
-        // 🔹 VIEW MODE
+    <div className="h-full rounded-xl border border-white/30 bg-white/20 p-5 text-xl shadow-sm backdrop-blur-lg">
+      {!isEditing || viewOnly ? (
         <>
-          <div className="flex justify-between items-center mb-3 ">
-            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-              <span className="text-2xl">✍️</span> About
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="flex items-center gap-2 font-semibold text-gray-800">
+              <span className="text-2xl">About</span>
             </h3>
           </div>
 
-          <p className="text-sm text-gray-700 leading-relaxed">
-            {profile.about || "No bio added yet"}
+          <p className="text-sm leading-relaxed text-gray-700">
+            {profile?.about || "No bio added yet"}
           </p>
         </>
       ) : (
-        // 🔹 EDIT MODE
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-3">
           <textarea
             value={profile.about}
             onChange={handleChange}
-            className="p-3 rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="h-24 resize-none rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
 
           <div className="flex gap-2">
             <button
               onClick={() => setIsEditing(false)}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+              className="rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:bg-purple-700"
             >
               Save
             </button>
 
             <button
               onClick={() => setIsEditing(false)}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition"
+              className="rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition hover:bg-gray-300"
             >
               Cancel
             </button>

@@ -1,29 +1,35 @@
 import React from "react";
 
-function ProfileHeader({ profile, onAvatarClick }) {
+function ProfileHeader({ profile, onAvatarClick, viewOnly = false }) {
+  const hasAvatar = Boolean(profile?.avatar?.image);
+
   return (
-    <div className="bg-white/20 backdrop-blur-lg border border-white/30  rounded-xl p-6 shadow-sm">
-      <span className="font-semibold font text-gray-800 mb-3 flex items-center gap-2 ">
-        {" "}
-        🤵Profile
+    <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-sm">
+      <span className="mb-3 flex items-center gap-2 font-semibold text-gray-800">
+        Profile
       </span>
+
       <div className="flex items-center gap-4">
-        {/* PROFILE IMAGE */}
         <button
           type="button"
-          onClick={onAvatarClick}
-          className="w-24 h-24 rounded-full overflow-hidden bg-indigo-200 shadow-md border-2 cursor-pointer border-transparent transition-all duration-300 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          onClick={viewOnly ? undefined : onAvatarClick}
+          disabled={viewOnly || !hasAvatar}
+          className={`h-24 w-24 overflow-hidden rounded-full border-2 bg-indigo-200 shadow-md transition-all duration-300 ${
+            viewOnly
+              ? "cursor-default border-transparent"
+              : "cursor-pointer border-transparent hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          }`}
           aria-label="View profile avatar"
         >
-          {profile?.avatar?.image ? (
+          {hasAvatar ? (
             <img
               src={`http://localhost:3000${profile.avatar.image}`}
               alt="Profile"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-linear-to-br from-indigo-300 to-blue-400 flex items-center justify-center text-white text-3xl">
-              👤
+            <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-indigo-300 to-blue-400 text-3xl text-white">
+              U
             </div>
           )}
         </button>
@@ -32,7 +38,7 @@ function ProfileHeader({ profile, onAvatarClick }) {
           <h2 className="text-2xl font-bold text-gray-800">
             {profile?.name || "Name"}
           </h2>
-          <p className="text-indigo-600 font-medium">
+          <p className="font-medium text-indigo-600">
             {profile?.tagline || "Tagline"}
           </p>
         </div>

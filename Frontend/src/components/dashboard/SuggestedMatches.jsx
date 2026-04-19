@@ -1,11 +1,14 @@
 import { useEffect, useState, useRef  } from "react";
 import { getMatches, sendSwapRequest } from "../../api/match.api";
+import { useNavigate } from "react-router-dom";
+
 
 function SuggestedMatches() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   const scrollLeft = () => {
     if (containerRef.current) {
@@ -109,7 +112,8 @@ function SuggestedMatches() {
     users.map((user) => (
       <div
         key={user._id}
-        className="bg-white/20 backdrop-blur-lg border-white/30 shadow-sm rounded-2xl p-4 border hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+        onClick={() => navigate(`/profile/${user._id}`)}
+        className="cursor-pointer bg-white/20 backdrop-blur-lg border-white/30 shadow-sm rounded-2xl p-4 border hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
         style={{ scrollSnapAlign: "start" }}
       >
         {/* User Info */}
@@ -154,7 +158,11 @@ function SuggestedMatches() {
 
         {/* Button */}
         <button
-          onClick={() => handleRequest(user)}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRequest(user);
+          }}
           className="w-full text-sm bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
         >
           Request Swap
