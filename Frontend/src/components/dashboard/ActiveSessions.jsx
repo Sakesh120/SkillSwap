@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   getSessions,
   scheduleSession as scheduleSessionApi,
@@ -36,6 +36,11 @@ function ActiveSessions() {
 
     fetchSessions();
   }, []);
+
+  const activeSessions = useMemo(
+    () => (sessions || []).filter((s) => s.status !== "completed"),
+    [sessions],
+  );
 
   const getPartnerName = (session) => {
     if (!user || !session.users) return "Partner";
@@ -109,13 +114,12 @@ function ActiveSessions() {
         )}
         {error && <p className="text-sm text-red-500">{error}</p>}
 
-        {!loading && sessions.length === 0 && (
+        {!loading && activeSessions.length === 0 && (
           <p className="text-sm text-gray-500">No active sessions right now.</p>
         )}
 
         <div className="divide-y">
-          {sessions.map((session) => {
-            const isCompleted = session.status === "completed";
+          {activeSessions.map((session) => {
             return (
               <div
                 key={session._id}
@@ -149,9 +153,8 @@ function ActiveSessions() {
                   </button>
                   <button
                     type="button"
-                    disabled={isCompleted}
                     onClick={() => openScheduleModal(session)}
-                    className="text-xs bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="text-xs bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
                   >
                     {session.status === "scheduled"
                       ? "Reschedule"

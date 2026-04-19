@@ -4,6 +4,8 @@ import {
   scheduleSession as scheduleSessionApi,
   completeSession as completeSessionApi,
 } from "../api/session.api";
+import { giveRating as submitRatingApi } from "../api/rating.api";
+import { getUserById } from "../api/user.api";
 import { useAuth } from "../context/AuthContext";
 
 function MySessions() {
@@ -20,6 +22,13 @@ function MySessions() {
   const [scheduling, setScheduling] = useState(false);
 
   const [completingId, setCompletingId] = useState(null);
+
+  /** partner user id -> whether current user already rated them (persisted on partner profile) */
+  const [ratedPartnerById, setRatedPartnerById] = useState({});
+  /** session id -> { stars, review } draft */
+  const [ratingDraftBySession, setRatingDraftBySession] = useState({});
+  const [ratingSubmittingId, setRatingSubmittingId] = useState(null);
+  const [ratingError, setRatingError] = useState(null);
 
   const loadSessions = useCallback(async () => {
     const res = await getSessions();
@@ -40,6 +49,53 @@ function MySessions() {
     };
     run();
   }, [loadSessions]);
+
+  // Load whether we already rated each partner (for completed sessions)
+  useEffect(() => {
+    if (!user?._id || loading) return;
+
+    const completed = sessions.filter((s) => s.status === "completed");
+    const partnerIds = [
+      ...new Set(
+        completed
+          .map((s) => {
+            const p = s.users?.find((u) => String(u._id) !== String(user._id));
+            return p?._id ? String(p._id) : null;
+          })
+          .filter(Boolean),
+      ),
+    ];
+
+    if (partnerIds.length === 0) {
+      setRatedPartnerById({});
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      const next = {};
+      await Promise.all(
+        partnerIds.map(async (pid) => {
+          try {
+            const res = await getUserById(pid);
+            const partner = res.data;
+            const didRate = partner.rating?.some(
+              (r) => String(r.user) === String(user._id),
+            );
+            next[pid] = !!didRate;
+          } catch {
+            next[pid] = false;
+          }
+        }),
+      );
+      if (!cancelled) setRatedPartnerById(next);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sessions, user, loading]);
 
   const getPartner = (session) => {
     if (!user || !session.users?.length) return null;
@@ -122,6 +178,67 @@ function MySessions() {
     }
   };
 
+  const setRatingStars = (sessionId, stars) => {
+    setRatingDraftBySession((prev) => ({
+      ...prev,
+      [sessionId]: {
+        stars,
+        review: prev[sessionId]?.review ?? "",
+      },
+    }));
+  };
+
+  const setRatingReview = (sessionId, review) => {
+    setRatingDraftBySession((prev) => ({
+      ...prev,
+      [sessionId]: {
+        stars: prev[sessionId]?.stars ?? 0,
+        review,
+      },
+    }));
+  };
+
+  const handleRatingSubmit = async (session) => {
+    const partner = getPartner(session);
+    if (!partner?._id) return;
+
+    const draft = ratingDraftBySession[session._id];
+    const stars = draft?.stars;
+    if (!stars || stars < 1 || stars > 5) {
+      setRatingError("Please choose a rating from 1 to 5 stars.");
+      return;
+    }
+
+    setRatingError(null);
+    try {
+      setRatingSubmittingId(String(session._id));
+      await submitRatingApi({
+        sessionId: session._id,
+        rate: stars,
+        review: typeof draft?.review === "string" ? draft.review.trim() : "",
+        targetUserId: partner._id,
+      });
+      setRatedPartnerById((prev) => ({
+        ...prev,
+        [String(partner._id)]: true,
+      }));
+      setRatingDraftBySession((prev) => {
+        const next = { ...prev };
+        delete next[session._id];
+        return next;
+      });
+      setRatingError(null);
+    } catch (err) {
+      setRatingError(
+        err.response?.data?.message ||
+          err.message ||
+          "Could not submit rating.",
+      );
+    } finally {
+      setRatingSubmittingId(null);
+    }
+  };
+
   const statusStyles = {
     pending: "bg-amber-100 text-amber-800 border-amber-200",
     scheduled: "bg-blue-100 text-blue-800 border-blue-200",
@@ -161,6 +278,15 @@ function MySessions() {
           </div>
         )}
 
+        {ratingError && (
+          <div
+            className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+            role="alert"
+          >
+            {ratingError}
+          </div>
+        )}
+
         {loading && <p className="text-sm text-gray-600">Loading sessions…</p>}
         {error && <p className="text-sm text-red-600">{error}</p>}
 
@@ -180,6 +306,11 @@ function MySessions() {
 
             const canSchedule = !completed;
             const canComplete = isScheduled && !completed && !iConfirmed;
+            const partnerIdStr = partner?._id ? String(partner._id) : "";
+            const alreadyRatedPartner =
+              partnerIdStr && ratedPartnerById[partnerIdStr];
+            const draft = ratingDraftBySession[session._id];
+            const ratingBusy = ratingSubmittingId === String(session._id);
 
             return (
               <div
@@ -308,6 +439,95 @@ function MySessions() {
                     </span>
                   )}
                 </div>
+
+                {completed && partner && (
+                  <div className="mt-5 border-t border-gray-200 pt-4">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                      Rate {partner.name || "your partner"}
+                    </h3>
+                    <p className="text-xs text-gray-500 mb-3">
+                      1–5 stars. Your rating is saved to their profile.
+                    </p>
+
+                    {alreadyRatedPartner ? (
+                      <p className="text-sm text-gray-700">
+                        You’ve already submitted a rating for this person.
+                      </p>
+                    ) : (
+                      <div className="space-y-3">
+                        <div
+                          className="flex items-center gap-1"
+                          role="group"
+                          aria-label="Rate out of five stars"
+                        >
+                          {[1, 2, 3, 4, 5].map((n) => {
+                            const selected = (draft?.stars ?? 0) >= n;
+                            return (
+                              <button
+                                key={n}
+                                type="button"
+                                disabled={ratingBusy}
+                                onClick={() => {
+                                  setRatingError(null);
+                                  setRatingStars(session._id, n);
+                                }}
+                                className={`text-2xl leading-none p-0.5 rounded transition focus:outline-none focus:ring-2 focus:ring-amber-400/80 disabled:opacity-50 ${
+                                  selected
+                                    ? "text-amber-500"
+                                    : "text-gray-300 hover:text-amber-300"
+                                }`}
+                                aria-label={`${n} star${n === 1 ? "" : "s"}`}
+                                aria-pressed={selected}
+                              >
+                                ★
+                              </button>
+                            );
+                          })}
+                          <span className="text-sm text-gray-600 ml-2 tabular-nums">
+                            {draft?.stars
+                              ? `${draft.stars} / 5`
+                              : "Select stars"}
+                          </span>
+                        </div>
+
+                        <div>
+                          <label
+                            htmlFor={`review-${session._id}`}
+                            className="block text-xs font-medium text-gray-600 mb-1"
+                          >
+                            Short review (optional)
+                          </label>
+                          <textarea
+                            id={`review-${session._id}`}
+                            rows={2}
+                            value={draft?.review ?? ""}
+                            disabled={ratingBusy}
+                            onChange={(e) => {
+                              setRatingError(null);
+                              setRatingReview(session._id, e.target.value);
+                            }}
+                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-400 resize-y min-h-10"
+                            placeholder="How was the session?"
+                          />
+                        </div>
+
+                        <button
+                          type="button"
+                          disabled={
+                            ratingBusy ||
+                            !draft?.stars ||
+                            draft.stars < 1 ||
+                            draft.stars > 5
+                          }
+                          onClick={() => handleRatingSubmit(session)}
+                          className="text-sm font-medium bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          {ratingBusy ? "Submitting…" : "Submit rating"}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}

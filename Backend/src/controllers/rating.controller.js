@@ -36,8 +36,20 @@ export const giveRating = async (req, res) => {
       });
     }
 
+    const otherParticipant = session.users.find(
+      (uid) => uid.toString() !== String(req.user),
+    );
+    if (
+      !otherParticipant ||
+      otherParticipant.toString() !== String(targetUserId)
+    ) {
+      return res.status(400).json({
+        message: "Rating must be for the other participant in this session",
+      });
+    }
+
     //  Prevent self rating
-    if (req.user === targetUserId) {
+    if (String(req.user) === String(targetUserId)) {
       return res.status(400).json({
         message: "Cannot rate yourself",
       });
