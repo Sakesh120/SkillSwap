@@ -59,9 +59,7 @@ function MySessions() {
       ...new Set(
         completed
           .map((s) => {
-            const p = s.users?.find(
-              (u) => String(u._id) !== String(user._id),
-            );
+            const p = s.users?.find((u) => String(u._id) !== String(user._id));
             return p?._id ? String(p._id) : null;
           })
           .filter(Boolean),
@@ -508,7 +506,7 @@ function MySessions() {
                               setRatingError(null);
                               setRatingReview(session._id, e.target.value);
                             }}
-                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-400 resize-y min-h-[2.5rem]"
+                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-400 resize-y min-h-10"
                             placeholder="How was the session?"
                           />
                         </div>
