@@ -4,8 +4,10 @@ import {
   getOtherProfile,
   getProfile,
   updateProfile,
+  uploadTutorial,
 } from "../controllers/user.controller.js";
 import upload from "../config/multer.js";
+import uploadVideo from "../config/multerVideo.js";
 
 const userRouter = express.Router();
 
@@ -17,4 +19,10 @@ userRouter.put(
   updateProfile,
 );
 userRouter.get("/:id/profile", protect, getOtherProfile);
+userRouter.post(
+  "/upload-tutorial",
+  protect,
+  uploadVideo.single("video"),
+  uploadTutorial,
+);
 export default userRouter;
