@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api/axios";
 
 function UploadSection() {
   const [caption, setCaption] = useState("");
@@ -55,11 +55,7 @@ function UploadSection() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:3000/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await API.post("/users/upload-tutorial", formData);
 
       alert("Upload successful 🚀");
 

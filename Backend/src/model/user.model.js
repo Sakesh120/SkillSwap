@@ -47,8 +47,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "Knowledge TO Share",
     },
+    tutorials: [
+      {
+        url: { type: String, required: true },
+        caption: { type: String, default: "" },
+      },
+    ],
   },
-
   { timestamps: true },
 );
 
