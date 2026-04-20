@@ -33,10 +33,10 @@ function Navbar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 px-3 pt-3 transition-transform duration-300 sm:px-4"
+      className="fixed top-0 left-0 right-0 z-50  transition-transform duration-300 "
       style={{ transform: show ? "translateY(0)" : "translateY(-100%)" }}
     >
-      <div className="app-shell rounded-3xl border border-white/20 bg-white/10 shadow-lg backdrop-blur-2xl">
+      <div className="app-shell w-screen border border-white/20 bg-white/10 shadow-lg backdrop-blur-xl">
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <Link to="/" className="shrink-0">
             <img
