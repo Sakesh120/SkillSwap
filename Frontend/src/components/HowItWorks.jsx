@@ -47,6 +47,7 @@ function HowItWorks() {
 
   return (
     <div
+      id="how-it-works"
       className="overflow-x-hidden py-14 text-center sm:py-18"
       style={{
         backgroundImage: "url('/Howbg.png')",

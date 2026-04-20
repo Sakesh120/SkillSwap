@@ -51,7 +51,7 @@ function Navbar() {
               <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-5">
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
-                <Link to="/">How it works</Link>
+                <Link to="/#how-it-works">How it works</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
               </div>
@@ -71,7 +71,7 @@ function Navbar() {
 
                 <Link to="/dashboard">Discover</Link>
                 <Link to="/my-sessions">My Sessions</Link>
-                <span className="hidden sm:inline">Alerts</span>
+                <span className="hidden sm:inline">🔔</span>
 
                 <div
                   className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-400 bg-gray-300"
