@@ -117,8 +117,8 @@ function Registration() {
     >
       <div className="absolute inset-0 bg-white/40"></div>
 
-      <div className="form-shell no-scrollbar relative z-10 flex min-h-screen items-center justify-center py-24">
-        <div className="no-scrollbar flex max-h-[calc(100vh-8rem)] w-full max-w-3xl flex-col items-center overflow-y-auto rounded-[2rem] border border-white/30 bg-white/25 p-6 shadow-lg backdrop-blur-lg sm:p-8 lg:p-10">
+      <div className="form-shell no-scrollbar relative z-10 flex min-h-screen items-center justify-center mt-25 overflow-hidden">
+        <div className="no-scrollbar flex max-h-screen w-full max-w-3xl flex-col items-center overflow-y-auto rounded-4xl border border-white/30 bg-white/25 p-6 shadow-lg backdrop-blur-lg sm:p-8 lg:p-10">
           <img src={logo} alt="Logo" className="mb-6 w-40 sm:w-52" />
           <h1 className="mb-6 text-center text-3xl font-bold sm:text-4xl">
             Sign Up
@@ -126,7 +126,7 @@ function Registration() {
 
           <div className="input details w-full">
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="user credentials grid gap-4 md:grid-cols-2">
+              <div className="user credentials grid gap-4">
                 <div className="name">
                   <label className="mb-1 block">Name :</label>
                   <input
@@ -172,7 +172,7 @@ function Registration() {
                 </div>
               </div>
 
-              <div className="skills section grid gap-4 lg:grid-cols-2">
+              <div className="skills section grid gap-4">
                 <div className="can teach">
                   <label className="mb-1 block">Skills you can teach :</label>
 
