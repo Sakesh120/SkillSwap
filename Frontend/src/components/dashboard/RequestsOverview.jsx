@@ -64,13 +64,13 @@ function RequestsOverview() {
             <div className="text-fluid-label flex gap-3 sm:shrink-0">
               <button
                 onClick={() => handleResponse(req._id, "accepted")}
-                className="text-green-800 hover:underline"
+                className="cursor-pointer text-green-800 hover:underline"
               >
                 Accept
               </button>
               <button
                 onClick={() => handleResponse(req._id, "rejected")}
-                className="text-red-900 hover:underline"
+                className="cursor-pointer text-red-900 hover:underline"
               >
                 Reject
               </button>

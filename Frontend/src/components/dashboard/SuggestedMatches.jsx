@@ -163,7 +163,7 @@ function SuggestedMatches() {
             e.stopPropagation();
             handleRequest(user);
           }}
-          className="text-fluid-label w-full rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
+          className="text-fluid-label cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
         >
           Request Swap
         </button>
@@ -177,7 +177,7 @@ function SuggestedMatches() {
   {/* Left Button */}
   <button
     onClick={scrollLeft}
-    className="bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
+    className="cursor-pointer bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
     aria-label="Scroll left"
   >
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -188,7 +188,7 @@ function SuggestedMatches() {
   {/* Right Button */}
   <button
     onClick={scrollRight}
-    className="bg-linear-to-l from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
+    className="cursor-pointer bg-linear-to-l from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
     aria-label="Scroll right"
   >
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

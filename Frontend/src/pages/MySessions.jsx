@@ -407,7 +407,7 @@ function MySessions() {
                         type="button"
                         disabled={!canSchedule}
                         onClick={() => openScheduleModal(session)}
-                        className="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="text-sm cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         {isScheduled ? "Reschedule" : "Schedule"}
                       </button>
@@ -423,7 +423,7 @@ function MySessions() {
                               : undefined
                         }
                         onClick={() => handleComplete(session._id)}
-                        className="text-sm bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="text-sm cursor-pointer bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         {completingId === session._id
                           ? "Saving…"
@@ -471,7 +471,7 @@ function MySessions() {
                                   setRatingError(null);
                                   setRatingStars(session._id, n);
                                 }}
-                                className={`text-2xl leading-none p-0.5 rounded transition focus:outline-none focus:ring-2 focus:ring-amber-400/80 disabled:opacity-50 ${
+                                className={`text-2xl leading-none cursor-pointer p-0.5 rounded transition focus:outline-none focus:ring-2 focus:ring-amber-400/80 disabled:opacity-50 ${
                                   selected
                                     ? "text-amber-500"
                                     : "text-gray-300 hover:text-amber-300"
@@ -520,7 +520,7 @@ function MySessions() {
                             draft.stars > 5
                           }
                           onClick={() => handleRatingSubmit(session)}
-                          className="text-sm font-medium bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                          className="text-sm font-medium cursor-pointer bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
                         >
                           {ratingBusy ? "Submitting…" : "Submit rating"}
                         </button>
@@ -594,7 +594,7 @@ function MySessions() {
                 type="button"
                 onClick={closeScheduleModal}
                 disabled={scheduling}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
+                className="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -602,7 +602,7 @@ function MySessions() {
                 type="button"
                 onClick={handleScheduleSubmit}
                 disabled={scheduling}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {scheduling ? "Scheduling…" : "Schedule"}
               </button>

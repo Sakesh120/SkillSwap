@@ -8,8 +8,8 @@ function RequestItem({ name }) {
       </div>
 
       <div className="space-x-3 text-sm">
-        <button className="text-green-600">Accept</button>
-        <button className="text-red-500">Reject</button>
+        <button className="cursor-pointer text-green-600">Accept</button>
+        <button className="cursor-pointer text-red-500">Reject</button>
       </div>
 
     </div>

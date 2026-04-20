@@ -88,7 +88,7 @@ function Login() {
             </a>
 
             <button
-              className="log-in-button mt-4 w-full rounded bg-blue-500 p-3 text-white transition hover:bg-blue-600"
+              className="log-in-button cursor-pointer mt-4 w-full rounded bg-blue-500 p-3 text-white transition hover:bg-blue-600"
               type="submit"
             >
               Log in
@@ -101,7 +101,7 @@ function Login() {
             </a>
 
             <Link to="/signup">
-              <button>Sign Up</button>
+              <button className="cursor-pointer">Sign Up</button>
             </Link>
           </div>
         </div>

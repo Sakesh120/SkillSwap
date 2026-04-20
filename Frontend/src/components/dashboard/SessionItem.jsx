@@ -8,10 +8,10 @@ function SessionItem({ name }) {
       </div>
 
       <div className="space-x-2">
-        <button className="bg-gray-200 px-3 py-1 rounded">
+        <button className="cursor-pointer bg-gray-200 px-3 py-1 rounded">
           Open chat
         </button>
-        <button className="bg-blue-400 text-white px-3 py-1 rounded">
+        <button className="cursor-pointer bg-blue-400 text-white px-3 py-1 rounded">
           Join Session
         </button>
       </div>

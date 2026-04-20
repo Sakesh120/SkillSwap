@@ -117,10 +117,10 @@ function Registration() {
     >
       <div className="absolute inset-0 bg-white/40"></div>
 
-      <div className="form-shell no-scrollbar relative z-10 flex min-h-screen items-center justify-center mt-25 overflow-hidden">
+      <div className="form-shell no-scrollbar relative z-10 flex min-h-screen max-w-150 items-center justify-center mt-25 overflow-hidden">
         <div className="no-scrollbar flex max-h-screen w-full max-w-3xl flex-col items-center overflow-y-auto rounded-4xl border border-white/30 bg-white/25 p-6 shadow-lg backdrop-blur-lg sm:p-8 lg:p-10">
           <img src={logo} alt="Logo" className="mb-6 w-40 sm:w-52" />
-          <h1 className="text-fluid-h1 mb-6 text-center font-bold">
+          <h1 className="text-fluid-h2 mb-6 text-center font-bold">
             Sign Up
           </h1>
 
@@ -182,7 +182,7 @@ function Registration() {
                         key={index}
                         type="button"
                         onClick={() => handleSelectTeach(skill)}
-                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
+                        className="cursor-pointer rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -219,7 +219,7 @@ function Registration() {
                         key={index}
                         type="button"
                         onClick={() => handleSelectLearn(skill)}
-                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
+                        className="cursor-pointer rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -248,7 +248,7 @@ function Registration() {
                 </div>
               </div>
 
-              <button className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 font-semibold">
+              <button className="cursor-pointer w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 font-semibold">
                 Sign Up
               </button>
             </form>
