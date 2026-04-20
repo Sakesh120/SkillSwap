@@ -9,6 +9,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Myuploads from "./pages/Upload";
 import ViewProfile from "./pages/Viewprofile";
 import MySessions from "./pages/MySessions";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Landingpage />} />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />
         <Route path="/profilepage" element={<Profilepage />} />
