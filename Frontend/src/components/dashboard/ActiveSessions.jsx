@@ -145,14 +145,14 @@ function ActiveSessions() {
                 <div className="flex gap-2 sm:shrink-0">
                   <button
                     type="button"
-                    className="text-xs bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition"
+                    className="text-xs cursor-pointer bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition"
                   >
                     Chat
                   </button>
                   <button
                     type="button"
                     onClick={() => openScheduleModal(session)}
-                    className="text-xs bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
+                    className="text-xs cursor-pointer bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
                   >
                     {session.status === "scheduled"
                       ? "Reschedule"
@@ -225,7 +225,7 @@ function ActiveSessions() {
                 type="button"
                 onClick={closeScheduleModal}
                 disabled={scheduling}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
+                className="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -233,7 +233,7 @@ function ActiveSessions() {
                 type="button"
                 onClick={handleScheduleSubmit}
                 disabled={scheduling}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
+                className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {scheduling ? "Scheduling..." : "Schedule"}
               </button>

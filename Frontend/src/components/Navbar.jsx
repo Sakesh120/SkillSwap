@@ -58,7 +58,7 @@ function Navbar() {
             ) : (
               <div className="flex flex-1 flex-wrap items-center justify-end gap-3 sm:gap-4">
                 <div className="group hidden flex-row-reverse items-center overflow-hidden rounded-full border border-white/20 bg-white/10 px-2 py-2 shadow-lg backdrop-blur-2xl transition-all duration-500 ease-in-out lg:flex lg:w-12 lg:hover:w-[320px]">
-                  <button className="shrink-0 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 p-2 text-white">
+                  <button className="cursor-pointer shrink-0 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 p-2 text-white">
                     <Search size={18} />
                   </button>
 
@@ -91,7 +91,7 @@ function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="text-fluid-p rounded-lg bg-red-400 px-3 py-2 text-white hover:bg-red-500 sm:px-4"
+                  className="text-fluid-p cursor-pointer rounded-lg bg-red-400 px-3 py-2 text-white hover:bg-red-500 sm:px-4"
                 >
                   Logout
                 </button>

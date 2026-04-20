@@ -115,7 +115,7 @@ function UploadSection() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="text-fluid-label rounded-full bg-gray-300 px-8 py-2 shadow transition hover:bg-gray-400"
+                  className="text-fluid-label cursor-pointer rounded-full bg-gray-300 px-8 py-2 shadow transition hover:bg-gray-400"
                 >
                   {loading ? "Uploading..." : "Submit"}
                 </button>

@@ -182,7 +182,7 @@ function Registration() {
                         key={index}
                         type="button"
                         onClick={() => handleSelectTeach(skill)}
-                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
+                        className="cursor-pointer rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -219,7 +219,7 @@ function Registration() {
                         key={index}
                         type="button"
                         onClick={() => handleSelectLearn(skill)}
-                        className="rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
+                        className="cursor-pointer rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 px-3 py-1 hover:bg-blue-500"
                       >
                         {skill}
                       </button>
@@ -248,7 +248,7 @@ function Registration() {
                 </div>
               </div>
 
-              <button className="w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 font-semibold">
+              <button className="cursor-pointer w-full rounded-2xl bg-linear-to-tr from-sky-100 via-white to-blue-100 p-3 font-semibold">
                 Sign Up
               </button>
             </form>
