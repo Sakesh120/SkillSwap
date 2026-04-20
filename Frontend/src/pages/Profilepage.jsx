@@ -105,7 +105,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
         <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
             <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
-            <p className="text-fluid-p text-gray-600">
+            <p className="text-gray-600">
               {viewOnly ? "Loading profile..." : "Loading your profile..."}
             </p>
           </div>
@@ -126,7 +126,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
                     onClick={() => setShowEditModal(true)}
-                    className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                    className="rounded-lg bg-blue-500 px-4 py-2 text-white  hover:bg-blue-600"
                   >
                     Edit Profile
                   </button>
@@ -198,11 +198,14 @@ function Profilepage({ viewOnly = false, userId = null }) {
               }}
             >
               <div className="no-scrollbar max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur-lg sm:p-8">
-                <h2 className="text-fluid-h3 mb-4 font-semibold">Edit Profile</h2>
+                <h2 className="mb-4 text-xl font-semibold">Edit Profile</h2>
 
-                <form onSubmit={handleEditSubmit} className="grid gap-4 md:grid-cols-2">
+                <form
+                  onSubmit={handleEditSubmit}
+                  className="grid gap-4 md:grid-cols-2"
+                >
                   <div>
-                    <label className="text-fluid-label block font-medium">Name</label>
+                    <label className="block text-sm font-medium">Name</label>
                     <input
                       type="text"
                       value={editForm.name}
@@ -214,7 +217,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   </div>
 
                   <div>
-                    <label className="text-fluid-label block font-medium">Tagline</label>
+                    <label className="block text-sm font-medium">Tagline</label>
                     <input
                       type="text"
                       value={editForm.tagline}
@@ -226,7 +229,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="text-fluid-label block font-medium">About</label>
+                    <label className="block text-sm font-medium">About</label>
                     <textarea
                       value={editForm.about}
                       onChange={(e) =>
@@ -237,7 +240,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   </div>
 
                   <div>
-                    <label className="text-fluid-label block font-medium">Avatar</label>
+                    <label className="block text-sm font-medium">Avatar</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -249,7 +252,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="text-fluid-label block font-medium">
+                    <label className="block text-sm font-medium">
                       Skills You Can Teach
                     </label>
                     <div className="mb-2 flex gap-2">
@@ -287,7 +290,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="text-fluid-label block font-medium">
+                    <label className="block text-sm font-medium">
                       Skills You Want to Learn
                     </label>
                     <div className="mb-2 flex gap-2">

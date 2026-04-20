@@ -19,12 +19,12 @@ function Features() {
         backgroundPosition: "center",
       }}
     >
-      <div className="w-full overflow-hidden py-12 sm:py-16 xl:py-20">
+      <div className="app-shell overflow-hidden py-12 sm:py-16 xl:py-20 ">
         <h2 className="text-fluid-h2 mb-10 text-center font-[Space_Grotesk] font-bold">
           FEATURES
         </h2>
 
-        <div className="relative overflow-hidden px-2 sm:px-5">
+        <div className="relative overflow-hidden rounded-xl  p-2 sm:p-5">
           <div className="animate-scroll flex w-max gap-4 sm:gap-6">
             {[...features, ...features].map((item, index) => (
               <Card
