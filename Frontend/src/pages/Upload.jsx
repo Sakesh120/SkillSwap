@@ -63,15 +63,17 @@ function UploadSection() {
   return (
     <div className="min-h-screen bg-gray-200 px-4 pb-10 pt-28 sm:px-6">
       <div className="form-shell">
-        <div className="mx-auto w-full max-w-4xl rounded-[2rem] bg-gray-100 p-6 shadow-md sm:p-8 lg:p-10">
-          <h1 className="text-fluid-h2 mb-6 text-center font-serif">
+        <div className="mx-auto w-full max-w-4xl rounded-4xl bg-gray-100 p-6 shadow-md sm:p-8 lg:p-10">
+          <h1 className="text-fluid-h1 mb-6 text-center font-serif">
             Upload Your Video
           </h1>
 
           <div className="grid gap-6 rounded-xl bg-gray-200 p-6 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-6">
               <div>
-                <label className="text-fluid-h4 mb-2 block">Video Caption</label>
+                <label className="text-fluid-h3 mb-2 block">
+                  Video Caption
+                </label>
                 <input
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
@@ -81,7 +83,9 @@ function UploadSection() {
               </div>
 
               <div>
-                <label className="text-fluid-h4 mb-2 block">Select Skill Category</label>
+                <label className="text-fluid-h3 mb-2 block">
+                  Select Skill Category
+                </label>
 
                 <select
                   value={category}
@@ -115,7 +119,7 @@ function UploadSection() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="text-fluid-label cursor-pointer rounded-full bg-gray-300 px-8 py-2 shadow transition hover:bg-gray-400"
+                  className="text-fluid-label rounded-full bg-gray-300 px-8 py-2 shadow transition hover:bg-gray-400"
                 >
                   {loading ? "Uploading..." : "Submit"}
                 </button>
@@ -125,11 +129,11 @@ function UploadSection() {
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="flex min-h-[280px] flex-col items-center justify-center rounded-lg border border-gray-400 bg-gray-300 p-8 text-center"
+              className="flex min-h-70 flex-col items-center justify-center rounded-lg border border-gray-400 bg-gray-300 p-8 text-center"
             >
               {!preview ? (
                 <>
-                  <div className="text-fluid-h3 mb-2">Upload</div>
+                  <div className="text-fluid-h2 mb-2">Upload</div>
                   <p className="text-fluid-label mb-3">Drag & drop or</p>
 
                   <label className="cursor-pointer rounded-md bg-gray-200 px-4 py-2 hover:bg-gray-100">
@@ -142,7 +146,9 @@ function UploadSection() {
                     />
                   </label>
 
-                  <p className="text-fluid-caption mt-2">MP4 or MOV, max 500MB</p>
+                  <p className="text-fluid-caption mt-2">
+                    MP4 or MOV, max 500MB
+                  </p>
                 </>
               ) : (
                 <video
