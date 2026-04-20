@@ -87,7 +87,7 @@ function SuggestedMatches() {
 
   return (
    <div className="h-max overflow-y-auto rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg no-scrollbar">
-  <h2 className="text-lg font-semibold text-gray-800 mb-4">
+  <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
     Suggested Matches
   </h2>
 
@@ -129,29 +129,29 @@ function SuggestedMatches() {
             alt={user.name}
             className="h-12 w-12 rounded-full border object-cover"
           />
-          <h3 className="font-medium text-gray-800 truncate">
+          <h3 className="text-fluid-h3 font-semibold text-gray-800 truncate">
             {user.name}
           </h3>
         </div>
 
         {/* Rating */}
-        <div className="mb-3 text-sm text-gray-700 flex items-center gap-1 flex-wrap">
+        <div className="text-fluid-p mb-3 flex items-center gap-1 flex-wrap text-gray-700">
           {getRatingDisplay(user.averageRating).stars || "✨"}
           <span className="text-gray-600">
             {user.averageRating ? user.averageRating.toFixed(1) : "0"}
           </span>
-          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+          <span className="text-fluid-caption rounded bg-blue-100 px-2 py-0.5 text-blue-700">
             {getRatingDisplay(user.averageRating).label}
           </span>
         </div>
 
         {/* Skills */}
-        <p className="text-xs text-gray-600 line-clamp-2">
+        <p className="text-fluid-label line-clamp-2 text-gray-600">
           <span className="font-medium">Offers:</span>{" "}
           {(user.skillsOffered || []).join(", ")}
         </p>
 
-        <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+        <p className="text-fluid-label mb-3 line-clamp-2 text-gray-600">
           <span className="font-medium">Wants:</span>{" "}
           {(user.skillsWanted || []).join(", ")}
         </p>
@@ -163,7 +163,7 @@ function SuggestedMatches() {
             e.stopPropagation();
             handleRequest(user);
           }}
-          className="w-full text-sm bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+          className="text-fluid-label w-full rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
         >
           Request Swap
         </button>

@@ -33,7 +33,7 @@ function PromoCards() {
   return (
     <div className="bg-white/20 backdrop-blur-lg border-white/30 rounded-2xl shadow-sm border p-6">
       {/* HEADER */}
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
+      <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
         Explore Opportunities
       </h2>
 
@@ -53,10 +53,10 @@ function PromoCards() {
 
             {/* TEXT */}
             <div className="relative z-10">
-              <h3 className="text-base font-semibold text-white xl:text-lg">
+              <h3 className="text-fluid-h3 font-semibold text-white">
                 {card.title}
               </h3>
-              <p className="mt-1 max-w-xs text-sm text-white">{card.subtitle}</p>
+              <p className="text-fluid-p mt-1 max-w-xs text-white">{card.subtitle}</p>
             </div>
 
             {/* CTA */}

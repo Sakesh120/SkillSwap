@@ -13,16 +13,16 @@ function About({ profile, setProfile, viewOnly = false }) {
   };
 
   return (
-    <div className="h-full rounded-xl border border-white/30 bg-white/20 p-5 text-xl shadow-sm backdrop-blur-lg">
+    <div className="h-full rounded-xl border border-white/30 bg-white/20 p-5 shadow-sm backdrop-blur-lg">
       {!isEditing || viewOnly ? (
         <>
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="flex items-center gap-2 font-semibold text-gray-800">
+            <h3 className="text-fluid-h3 flex items-center gap-2 font-semibold text-gray-800">
               <span className="text-2xl">About</span>
             </h3>
           </div>
 
-          <p className="text-sm leading-relaxed text-gray-700">
+          <p className="text-fluid-p text-gray-700">
             {profile?.about || "No bio added yet"}
           </p>
         </>

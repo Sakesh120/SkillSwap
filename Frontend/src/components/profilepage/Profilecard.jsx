@@ -19,12 +19,12 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
         )}
       </div>
 
-      <h2 className="text-lg font-semibold">{profile.name}</h2>
-      <p className="text-gray-500 text-xs">{profile.tagline}</p>
+      <h2 className="text-fluid-h3 font-semibold">{profile.name}</h2>
+      <p className="text-fluid-caption text-gray-500">{profile.tagline}</p>
 
       {/* TEACH */}
       <div className="w-full mt-4 text-left">
-        <h3 className="font-semibold mb-1 text-sm">Skills You Can Teach</h3>
+        <h3 className="text-fluid-label mb-1 font-semibold">Skills You Can Teach</h3>
         <div className="flex flex-wrap gap-1">
           {teachSkills.map((s, i) => (
             <span 
@@ -39,7 +39,7 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
 
       {/* LEARN */}
       <div className="w-full mt-4 mb-4 text-left">
-        <h3 className="font-semibold mb-1 text-sm">Skills You Want to Learn</h3>
+        <h3 className="text-fluid-label mb-1 font-semibold">Skills You Want to Learn</h3>
         <div className="flex flex-wrap gap-1">
           {learnSkills.map((s, i) => (
             <span 
@@ -58,8 +58,8 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
           bg-white/20 backdrop-blur-lg shadow rounded-lg p-3
           transition hover:bg-white/30
         ">
-          <h3 className="font-semibold mb-1 text-sm">About</h3>
-          <p className="text-xs text-gray-600">
+          <h3 className="text-fluid-label mb-1 font-semibold">About</h3>
+          <p className="text-fluid-caption text-gray-600">
             {profile.about}
           </p>
         </div>
@@ -68,8 +68,8 @@ function Profilecard({ profile, teachSkills, learnSkills }) {
           bg-white/20 backdrop-blur-lg shadow rounded-lg p-3
           transition hover:bg-white/30
         ">
-          <h3 className="font-semibold mb-1 text-sm">Stats</h3>
-          <p className="text-xs text-gray-600">
+          <h3 className="text-fluid-label mb-1 font-semibold">Stats</h3>
+          <p className="text-fluid-caption text-gray-600">
             {profile.stats}
           </p>
         </div>

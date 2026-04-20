@@ -16,7 +16,7 @@ function SkillSection({ title, skills, setSkills, type }) {
 
   return (
     <div className={`bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-sm`}>
-      <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+      <h3 className="text-fluid-h3 mb-3 flex items-center gap-2 font-semibold text-gray-800">
         <span className="text-2xl">{emoji}</span> {title}
       </h3>
 
@@ -33,7 +33,7 @@ function SkillSection({ title, skills, setSkills, type }) {
             </div>
           ))
         ) : (
-          <p className="text-sm text-gray-500 italic">No skills added yet</p>
+          <p className="text-fluid-p italic text-gray-500">No skills added yet</p>
         )}
       </div>
     </div>

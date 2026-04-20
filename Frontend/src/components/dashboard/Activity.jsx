@@ -24,13 +24,13 @@ function Activity() {
 
   return (
     <div className="bg-white/20 backdrop-blur-lg border-white/30  rounded-2xl shadow-sm border p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">Activity</h2>
+      <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">Activity</h2>
 
-      {loading && <p className="text-sm text-gray-500">Loading activity...</p>}
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {loading && <p className="text-fluid-p text-gray-500">Loading activity...</p>}
+      {error && <p className="text-fluid-p text-red-500">{error}</p>}
 
       {!loading && activities.length === 0 && (
-        <p className="text-sm text-gray-500">No recent activity.</p>
+        <p className="text-fluid-p text-gray-500">No recent activity.</p>
       )}
 
       <div className="grid gap-4 xl:grid-cols-2">
@@ -38,8 +38,8 @@ function Activity() {
           <div key={item._id} className="flex items-start gap-3 rounded-xl bg-white/35 p-4">
             <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full"></div>
             <div>
-              <p className="text-sm text-gray-700">{item.text}</p>
-              <p className="text-xs text-gray-400">
+              <p className="text-fluid-p text-gray-700">{item.text}</p>
+              <p className="text-fluid-caption text-gray-400">
                 {new Date(item.time).toLocaleString()}
               </p>
             </div>

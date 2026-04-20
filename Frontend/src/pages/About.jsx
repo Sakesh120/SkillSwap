@@ -100,13 +100,13 @@ function About() {
       >
         <div className="page-shell">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-4 inline-block rounded-full border border-sky-500/30 bg-white/70 px-4 py-1 text-sm tracking-wide text-sky-700 backdrop-blur-sm">
+          <p className="text-fluid-label mb-4 inline-block rounded-full border border-sky-500/30 bg-white/70 px-4 py-1 tracking-wide text-sky-700 backdrop-blur-sm">
             About SkillSwap
           </p>
-          <h1 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
+          <h1 className="text-fluid-h1 mb-6 font-bold">
             Learn Faster by Sharing Skills Together
           </h1>
-          <p className="mx-auto max-w-3xl text-base text-slate-700 md:text-lg">
+          <p className="text-fluid-lead mx-auto max-w-3xl text-slate-700">
             SkillSwap is a collaborative platform where people teach and learn
             from each other through structured sessions, transparent credit
             exchange, and community support.
@@ -148,10 +148,10 @@ function About() {
                 }`}
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
-                <h2 className="mb-3 text-xl font-semibold text-sky-700">
+                <h2 className="text-fluid-h3 mb-3 font-semibold text-sky-700">
                   {card.title}
                 </h2>
-                <p className="text-slate-700">{card.description}</p>
+                <p className="text-fluid-p text-slate-700">{card.description}</p>
               </article>
             );
           })}
@@ -162,8 +162,8 @@ function About() {
       <section id="team" className="bg-white pb-20 pt-8 md:pb-28 md:pt-12">
         <div className="page-shell">
         <div className="mb-10 text-center md:mb-14">
-          <h2 className="text-3xl font-bold md:text-5xl">Our Team</h2>
-          <p className="mt-3 text-slate-700">
+          <h2 className="text-fluid-h2 font-bold">Our Team</h2>
+          <p className="text-fluid-p mt-3 text-slate-700">
             The people behind SkillSwap who turn ideas into a helpful learning
             experience.
           </p>
@@ -191,13 +191,13 @@ function About() {
                     .join("")
                     .slice(0, 2)}
                 </div>
-                <h3 className="text-xl font-semibold text-black">
+                <h3 className="text-fluid-h3 font-semibold text-black">
                   {member.name}
                 </h3>
-                <p className="mt-1 text-sm font-medium text-emerald-600">
+                <p className="text-fluid-label mt-1 font-medium text-emerald-600">
                   {member.role}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700">
+                <p className="text-fluid-p mt-4 text-slate-700">
                   {member.about}
                 </p>
               </article>

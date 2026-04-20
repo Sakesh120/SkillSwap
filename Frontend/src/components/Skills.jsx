@@ -13,7 +13,7 @@ function Skills() {
   return (
     <div className="mt-1 text-center">
       <div className="app-shell">
-        <h2 className="text-center font-[Space_Grotesk] text-3xl font-bold sm:text-4xl xl:text-5xl">
+        <h2 className="text-fluid-h2 text-center font-[Space_Grotesk] font-bold">
           POPULAR SKILLS
         </h2>
       </div>
@@ -23,7 +23,7 @@ function Skills() {
           {[...skills, ...skills].map((skill, index) => (
             <span
               key={index}
-              className="inline-block rounded-full border border-transparent bg-white bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-border px-4 py-2 text-sm font-medium text-gray-800 shadow-[0_0_15px_rgba(99,102,241,0.5)] transition hover:scale-105"
+              className="text-fluid-label inline-block rounded-full border border-transparent bg-white bg-linear-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-border px-4 py-2 font-medium text-gray-800 shadow-[0_0_15px_rgba(99,102,241,0.5)] transition hover:scale-105"
             >
               {skill}
             </span>
@@ -31,7 +31,7 @@ function Skills() {
         </div>
       </div>
 
-      <div className="mt-5 border-t py-4 text-center text-sm text-gray-500"></div>
+      <div className="text-fluid-caption mt-5 border-t py-4 text-center text-gray-500"></div>
     </div>
   );
 }

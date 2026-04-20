@@ -40,21 +40,20 @@ function Stats({ profile }) {
 
   return (
     <div className="space-y-4">
-      {/* RATING CARD */}
-      <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-            <span className="text-2xl">⭐</span> Rating
+      <div className="rounded-xl border border-white/30 bg-white/20 p-5 shadow-sm backdrop-blur-lg">
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-fluid-h3 flex items-center gap-2 font-semibold text-gray-800">
+            <span className="text-2xl">*</span> Rating
           </h3>
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-bold text-yellow-600">
+          <span className="text-fluid-h2 font-bold text-yellow-600">
             {averageRating.toFixed(1)}
           </span>
-          <span className="text-sm text-gray-600">/5.0</span>
+          <span className="text-fluid-label text-gray-600">/5.0</span>
         </div>
-        <div className="mt-3 text-xs text-gray-600 flex items-center gap-1">
-          <span>{"★".repeat(Math.round(averageRating))}</span>
+        <div className="text-fluid-caption mt-3 flex items-center gap-1 text-gray-600">
+          <span>{"*".repeat(Math.round(averageRating)) || "New"}</span>
           <span className="ml-1">
             {averageRating > 0
               ? `${Math.round(averageRating * 10) / 10} out of 5`
@@ -63,42 +62,40 @@ function Stats({ profile }) {
         </div>
       </div>
 
-      {/* CREDITS CARD */}
-      <div className="bg-linear-to-br from-green-50 to-emerald-100 rounded-xl p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-            <span className="text-2xl">💰</span> Credits
+      <div className="rounded-xl bg-linear-to-br from-green-50 to-emerald-100 p-5 shadow-sm">
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-fluid-h3 flex items-center gap-2 font-semibold text-gray-800">
+            <span className="text-2xl">$</span> Credits
           </h3>
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-bold text-green-600">{credits}</span>
-          <span className="text-sm text-gray-600">available</span>
+          <span className="text-fluid-h2 font-bold text-green-600">
+            {credits}
+          </span>
+          <span className="text-fluid-label text-gray-600">available</span>
         </div>
-        <div className="mt-3 text-xs text-gray-600">
+        <div className="text-fluid-caption mt-3 text-gray-600">
           Use credits for skill exchange sessions
         </div>
       </div>
 
-      {/* QUICK STATS */}
-      <div className="bg-linear-to-br from-blue-50 to-indigo-100 rounded-xl p-5 shadow-sm">
-        <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <span className="text-2xl">📊</span> Activity
+      <div className="rounded-xl bg-linear-to-br from-blue-50 to-indigo-100 p-5 shadow-sm">
+        <h3 className="text-fluid-h3 mb-3 flex items-center gap-2 font-semibold text-gray-800">
+          <span className="text-2xl">#</span> Activity
         </h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600">🔄 Skill Swaps Completed</span>
-            <span className="font-semibold text-gray-800">
-              {completedSwaps}
-            </span>
+        <div className="text-fluid-p space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600">Completed skill swaps</span>
+            <span className="font-semibold text-gray-800">{completedSwaps}</span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600">👥 Connections</span>
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600">Connections</span>
             <span className="font-semibold text-gray-800">
               {profile?.connections || 0}
             </span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-gray-600">📅 Member Since</span>
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600">Member since</span>
             <span className="font-semibold text-gray-800">
               {profile?.createdAt
                 ? new Date(profile.createdAt).getFullYear()

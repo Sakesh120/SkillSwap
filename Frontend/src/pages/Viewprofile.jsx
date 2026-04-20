@@ -72,7 +72,7 @@ function ViewProfile() {
       <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-violet-50 via-blue-50 to-indigo-100 px-4">
         <div className="flex flex-col items-center gap-4">
           <div className="h-12 w-12 animate-spin rounded-full border-4 border-violet-300/50 border-t-blue-500" />
-          <p className="text-sm uppercase tracking-[0.3em] text-violet-700">
+          <p className="text-fluid-label uppercase tracking-[0.3em] text-violet-700">
             Loading profile
           </p>
         </div>
@@ -84,7 +84,7 @@ function ViewProfile() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-violet-50 via-blue-50 to-indigo-100 px-4">
         <div className="max-w-md rounded-3xl border border-white/70 bg-white/70 p-8 text-center shadow-xl backdrop-blur-xl">
-          <p className="text-lg font-semibold text-slate-700">
+          <p className="text-fluid-h3 font-semibold text-slate-700">
             {error || "Profile not found."}
           </p>
         </div>
@@ -104,7 +104,7 @@ function ViewProfile() {
         <section className="grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
           <div className="overflow-hidden rounded-4xl border border-white/70 bg-linear-to-br from-white/85 via-violet-50/90 to-blue-100/80 shadow-[0_25px_70px_rgba(129,140,248,0.18)] backdrop-blur-xl">
             <div className="border-b border-violet-100/80 px-6 py-4 sm:px-8">
-              <p className="text-xs font-medium uppercase tracking-[0.35em] text-violet-600">
+              <p className="text-fluid-caption font-medium uppercase tracking-[0.35em] text-violet-600">
                 Public Profile
               </p>
             </div>
@@ -119,22 +119,22 @@ function ViewProfile() {
                   />
                 </div>
 
-                <div className="rounded-full border border-violet-200 bg-violet-100/80 px-4 py-1 text-xs uppercase tracking-[0.3em] text-violet-700">
+                <div className="text-fluid-caption rounded-full border border-violet-200 bg-violet-100/80 px-4 py-1 uppercase tracking-[0.3em] text-violet-700">
                   Open to swap
                 </div>
               </div>
 
               <div className="space-y-5">
                 <div className="space-y-3">
-                  <h1 className="text-4xl font-black leading-none text-slate-800 sm:text-5xl">
+                  <h1 className="text-fluid-h1 font-black text-slate-800">
                     {profile.name}
                   </h1>
-                  <p className="max-w-2xl text-lg text-slate-600">
+                  <p className="text-fluid-lead max-w-2xl text-slate-600">
                     {profile.tagline || "Building skills through practical exchange."}
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+                <div className="text-fluid-label flex flex-wrap gap-3 text-slate-600">
                   <div className="rounded-full border border-white/80 bg-white/70 px-4 py-2 shadow-sm">
                     Rating: {averageRating.toFixed(1)} / 5
                   </div>
@@ -147,10 +147,10 @@ function ViewProfile() {
                 </div>
 
                 <div className="rounded-[1.75rem] border border-white/80 bg-white/65 p-5 shadow-sm backdrop-blur-sm">
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-violet-600">
+                  <p className="text-fluid-caption mb-3 font-semibold uppercase tracking-[0.3em] text-violet-600">
                     About
                   </p>
-                  <p className="text-sm leading-7 text-slate-600">
+                  <p className="text-fluid-p text-slate-600">
                     {profile.about ||
                       "This member has not added a detailed bio yet, but you can still explore their teaching and learning interests below."}
                   </p>
@@ -165,11 +165,11 @@ function ViewProfile() {
                 key={card.label}
                 className="rounded-[1.75rem] border border-white/70 bg-white/65 p-5 shadow-xl backdrop-blur-xl"
               >
-                <p className="text-xs uppercase tracking-[0.25em] text-slate-500">
+                <p className="text-fluid-caption uppercase tracking-[0.25em] text-slate-500">
                   {card.label}
                 </p>
-                <p className="mt-3 text-4xl font-black text-slate-800">{card.value}</p>
-                <p className="mt-2 text-sm text-slate-600">{card.note}</p>
+                <p className="text-fluid-h2 mt-3 font-black text-slate-800">{card.value}</p>
+                <p className="text-fluid-p mt-2 text-slate-600">{card.note}</p>
               </div>
             ))}
           </aside>
@@ -191,7 +191,7 @@ function ViewProfile() {
           />
 
           <div className="rounded-4xl border border-white/70 bg-linear-to-b from-white/80 to-violet-50/80 p-6 shadow-xl backdrop-blur-xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-600">
+            <p className="text-fluid-caption font-semibold uppercase tracking-[0.3em] text-indigo-600">
               Snapshot
             </p>
 
@@ -245,23 +245,23 @@ function SkillPanel({ title, subtitle, skills = [], tone }) {
     <div
       className={`rounded-4xl border p-6 shadow-xl backdrop-blur-xl ${toneClasses}`}
     >
-      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-700">
+      <p className="text-fluid-caption font-semibold uppercase tracking-[0.3em] text-slate-700">
         {title}
       </p>
-      <p className="mt-3 text-sm text-slate-600">{subtitle}</p>
+      <p className="text-fluid-p mt-3 text-slate-600">{subtitle}</p>
 
       <div className="mt-6 flex flex-wrap gap-3">
         {skills.length > 0 ? (
           skills.map((skill, index) => (
             <span
               key={`${skill}-${index}`}
-              className="rounded-full border border-white/80 bg-white/75 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm"
+              className="text-fluid-label rounded-full border border-white/80 bg-white/75 px-4 py-2 font-medium text-slate-700 shadow-sm"
             >
               {skill}
             </span>
           ))
         ) : (
-          <p className="text-sm text-slate-500">No skills listed yet.</p>
+          <p className="text-fluid-p text-slate-500">No skills listed yet.</p>
         )}
       </div>
     </div>
@@ -271,8 +271,8 @@ function SkillPanel({ title, subtitle, skills = [], tone }) {
 function SnapshotRow({ label, value }) {
   return (
     <div className="border-b border-violet-100 pb-4 last:border-b-0 last:pb-0">
-      <p className="text-xs uppercase tracking-[0.25em] text-slate-500">{label}</p>
-      <p className="mt-2 text-sm leading-6 text-slate-700">{value}</p>
+      <p className="text-fluid-caption uppercase tracking-[0.25em] text-slate-500">{label}</p>
+      <p className="text-fluid-p mt-2 text-slate-700">{value}</p>
     </div>
   );
 }

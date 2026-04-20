@@ -262,8 +262,8 @@ function MySessions() {
     >
       <div className="page-shell space-y-6">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">My sessions</h1>
-          <p className="text-sm text-gray-600 mt-1">
+          <h1 className="text-fluid-h2 font-semibold text-gray-900">My sessions</h1>
+          <p className="text-fluid-p mt-1 text-gray-600">
             View details, schedule a time, then mark complete after the session
             happens.
           </p>
@@ -329,7 +329,7 @@ function MySessions() {
                         {session.status || "unknown"}
                       </span>
                     </div>
-                    <h2 className="text-lg font-semibold text-gray-900">
+                    <h2 className="text-fluid-h3 font-semibold text-gray-900">
                       Session with {getPartnerName(session)}
                     </h2>
                     {partner?.email && (
@@ -552,11 +552,11 @@ function MySessions() {
           <div className="relative z-10 w-full max-w-lg rounded-2xl border border-white/40 bg-white p-6 shadow-xl">
             <h3
               id="my-sessions-schedule-title"
-              className="text-lg font-semibold text-gray-900 mb-1"
+              className="text-fluid-h3 mb-1 font-semibold text-gray-900"
             >
               Schedule session
             </h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-fluid-p mb-4 text-gray-600">
               With{" "}
               <span className="font-medium">
                 {getPartnerName(selectedSession)}

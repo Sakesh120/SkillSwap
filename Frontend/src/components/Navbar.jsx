@@ -46,7 +46,7 @@ function Navbar() {
             />
           </Link>
 
-          <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-black sm:gap-4 sm:text-base xl:text-lg">
+          <div className="text-fluid-p flex flex-1 flex-wrap items-center justify-end gap-3 text-black sm:gap-4">
             {!user ? (
               <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-5">
                 <Link to="/">Home</Link>
@@ -85,13 +85,13 @@ function Navbar() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <span className="text-sm font-medium">You</span>
+                    <span className="text-fluid-p font-medium">You</span>
                   )}
                 </div>
 
                 <button
                   onClick={handleLogout}
-                  className="rounded-lg bg-red-400 px-3 py-2 text-sm text-white hover:bg-red-500 sm:px-4"
+                  className="text-fluid-p rounded-lg bg-red-400 px-3 py-2 text-white hover:bg-red-500 sm:px-4"
                 >
                   Logout
                 </button>

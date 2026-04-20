@@ -56,7 +56,7 @@ function HowItWorks() {
       }}
     >
       <div className="app-shell">
-        <h2 className="mb-10 font-[Space_Grotesk] text-3xl font-bold sm:text-4xl xl:text-5xl">
+        <h2 className="text-fluid-h2 mb-10 font-[Space_Grotesk] font-bold">
           HOW IT WORKS
         </h2>
 

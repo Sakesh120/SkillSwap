@@ -120,7 +120,7 @@ function Registration() {
       <div className="form-shell no-scrollbar relative z-10 flex min-h-screen items-center justify-center mt-25 overflow-hidden">
         <div className="no-scrollbar flex max-h-screen w-full max-w-3xl flex-col items-center overflow-y-auto rounded-4xl border border-white/30 bg-white/25 p-6 shadow-lg backdrop-blur-lg sm:p-8 lg:p-10">
           <img src={logo} alt="Logo" className="mb-6 w-40 sm:w-52" />
-          <h1 className="mb-6 text-center text-3xl font-bold sm:text-4xl">
+          <h1 className="text-fluid-h1 mb-6 text-center font-bold">
             Sign Up
           </h1>
 
@@ -128,7 +128,7 @@ function Registration() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="user credentials grid gap-4">
                 <div className="name">
-                  <label className="mb-1 block">Name :</label>
+                  <label className="text-fluid-label mb-1 block">Name :</label>
                   <input
                     type="text"
                     name="name"
@@ -139,7 +139,7 @@ function Registration() {
                 </div>
 
                 <div className="email">
-                  <label className="mb-1 block">Email :</label>
+                  <label className="text-fluid-label mb-1 block">Email :</label>
                   <input
                     type="email"
                     name="email"
@@ -150,7 +150,7 @@ function Registration() {
                 </div>
 
                 <div className="password">
-                  <label className="mb-1 block">Password :</label>
+                  <label className="text-fluid-label mb-1 block">Password :</label>
                   <input
                     type="password"
                     name="password"
@@ -161,7 +161,7 @@ function Registration() {
                 </div>
 
                 <div className="confirm Pass">
-                  <label className="mb-1 block">Confirm Password :</label>
+                  <label className="text-fluid-label mb-1 block">Confirm Password :</label>
                   <input
                     type="password"
                     name="confirmPassword"
@@ -174,7 +174,7 @@ function Registration() {
 
               <div className="skills section grid gap-4">
                 <div className="can teach">
-                  <label className="mb-1 block">Skills you can teach :</label>
+                  <label className="text-fluid-label mb-1 block">Skills you can teach :</label>
 
                   <div className="mb-3 flex flex-wrap gap-2">
                     {skills.map((skill, index) => (
@@ -211,7 +211,7 @@ function Registration() {
                 </div>
 
                 <div className="want-to-learn">
-                  <label className="mb-1 block">Skills you want to learn :</label>
+                  <label className="text-fluid-label mb-1 block">Skills you want to learn :</label>
 
                   <div className="mb-3 flex flex-wrap gap-2">
                     {skills.map((skill, index) => (
@@ -254,7 +254,7 @@ function Registration() {
             </form>
           </div>
 
-          <Link to="/login" className="mt-4 block text-center text-sm">
+          <Link to="/login" className="text-fluid-label mt-4 block text-center">
             Already have an account? Log in
           </Link>
         </div>

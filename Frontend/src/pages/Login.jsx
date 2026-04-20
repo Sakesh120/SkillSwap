@@ -51,14 +51,14 @@ function Login() {
             className="h-28 w-28 object-contain sm:h-36 sm:w-36"
           />
 
-          <h1 className="mb-6 text-3xl font-bold sm:text-4xl">Log in</h1>
+          <h1 className="text-fluid-h1 mb-6 text-center font-bold">Log in</h1>
 
           <form
             onSubmit={handleSubmit}
             className="signup-section flex w-full max-w-xl flex-col items-center justify-center rounded-2xl border border-white/30 bg-white/30 p-6 shadow-lg backdrop-blur-lg sm:p-8"
           >
             <div className="email mb-4 w-full">
-              <label htmlFor="email" className="mb-1 block">
+              <label htmlFor="email" className="text-fluid-label mb-1 block">
                 Email :
               </label>
               <input
@@ -71,7 +71,7 @@ function Login() {
             </div>
 
             <div className="password mb-4 w-full">
-              <label htmlFor="pass" className="mb-1 block">
+              <label htmlFor="pass" className="text-fluid-label mb-1 block">
                 Password :
               </label>
               <input
@@ -83,7 +83,7 @@ function Login() {
               />
             </div>
 
-            <a href="" className="forgot-pass-text text-sm text-blue-400">
+            <a href="" className="forgot-pass-text text-fluid-label text-blue-400">
               Forgot Password?
             </a>
 
@@ -95,7 +95,7 @@ function Login() {
             </button>
           </form>
 
-          <div className="sign-up-section-on-login mt-4 text-center">
+          <div className="text-fluid-p sign-up-section-on-login mt-4 text-center">
             <a href="" className="mb-2 block">
               Don't have an account?
             </a>

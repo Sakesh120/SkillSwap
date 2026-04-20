@@ -27,7 +27,7 @@ function Card({
             className="max-h-full w-auto max-w-full object-contain"
           />
         </div>
-        <p className="px-4 text-center text-base font-semibold sm:text-lg">{text}</p>
+        <p className="text-fluid-h3 px-4 text-center font-semibold">{text}</p>
       </div>
 
       {enableHoverEffect && (
@@ -41,7 +41,7 @@ function Card({
           <div className="absolute inset-0 bg-linear-to-r from-blue-400/80 via-blue-300/70 to-blue-200/60"></div>
 
           <div className="relative z-10 flex h-full items-center justify-center px-6">
-            <p className="text-center text-base font-semibold text-white opacity-0 transition-all duration-500 group-hover:opacity-100 sm:text-lg xl:text-xl">
+            <p className="text-fluid-h3 text-center font-semibold text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
               Learn more about <span className="font-bold">{text}</span> in
               SkillSwap.
             </p>

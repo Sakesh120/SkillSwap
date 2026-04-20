@@ -34,15 +34,15 @@ function RequestsOverview() {
 
   return (
     <div className="bg-white/20 backdrop-blur-lg border-white/30  rounded-2xl shadow-sm border p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">
+      <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
         Requests Overview
       </h2>
 
-      {loading && <p className="text-sm text-gray-500">Loading requests...</p>}
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {loading && <p className="text-fluid-p text-gray-500">Loading requests...</p>}
+      {error && <p className="text-fluid-p text-red-500">{error}</p>}
 
       {!loading && requests.length === 0 && (
-        <p className="text-sm text-gray-500">No requests available.</p>
+        <p className="text-fluid-p text-gray-500">No requests available.</p>
       )}
 
       <div className="divide-y">
@@ -52,7 +52,7 @@ function RequestsOverview() {
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
 
               <div>
-                <p className="text-sm text-gray-700">
+                <p className="text-fluid-p text-gray-700">
                   <span className="font-medium">
                     {req.sender?.name || "Unknown"}
                   </span>
@@ -61,7 +61,7 @@ function RequestsOverview() {
               </div>
             </div>
 
-            <div className="flex gap-3 text-sm sm:shrink-0">
+            <div className="text-fluid-label flex gap-3 sm:shrink-0">
               <button
                 onClick={() => handleResponse(req._id, "accepted")}
                 className="text-green-800 hover:underline"
@@ -80,7 +80,7 @@ function RequestsOverview() {
       </div>
 
       {!loading && requests.length > 0 && (
-        <p className="text-center text-blue-500 mt-4 text-sm cursor-pointer hover:underline">
+        <p className="text-fluid-label mt-4 cursor-pointer text-center text-blue-500 hover:underline">
           View All
         </p>
       )}

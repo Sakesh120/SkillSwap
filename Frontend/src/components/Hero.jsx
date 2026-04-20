@@ -22,7 +22,7 @@ function Hero() {
 
       <div className="app-shell relative z-10 flex flex-col items-center justify-center">
         <h1
-          className={`mb-4 bg-linear-to-r from-sky-400 to-emerald-500 bg-clip-text text-center text-5xl font-bold text-transparent transition-all duration-1000 ease-out sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[7rem] ${
+          className={`text-fluid-display mb-4 bg-linear-to-r from-sky-400 to-emerald-500 bg-clip-text text-center font-bold text-transparent transition-all duration-1000 ease-out ${
             show ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
         >
@@ -30,7 +30,7 @@ function Hero() {
         </h1>
 
         <p
-          className={`mb-8 max-w-4xl text-lg font-medium italic leading-relaxed text-black transition-all duration-2000 ease-out sm:text-2xl xl:text-3xl ${
+          className={`text-fluid-lead mb-8 max-w-4xl font-medium italic text-black transition-all duration-2000 ease-out ${
             show ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
         >

@@ -5,7 +5,7 @@ function ProfileHeader({ profile, onAvatarClick, viewOnly = false }) {
 
   return (
     <div className="bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-sm">
-      <span className="mb-3 flex items-center gap-2 font-semibold text-gray-800">
+      <span className="text-fluid-label mb-3 flex items-center gap-2 font-semibold text-gray-800">
         Profile
       </span>
 
@@ -35,10 +35,10 @@ function ProfileHeader({ profile, onAvatarClick, viewOnly = false }) {
         </button>
 
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2 className="text-fluid-h2 font-bold text-gray-800">
             {profile?.name || "Name"}
           </h2>
-          <p className="font-medium text-indigo-600">
+          <p className="text-fluid-p font-medium text-indigo-600">
             {profile?.tagline || "Tagline"}
           </p>
         </div>
