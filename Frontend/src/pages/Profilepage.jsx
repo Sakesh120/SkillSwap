@@ -126,14 +126,14 @@ function Profilepage({ viewOnly = false, userId = null }) {
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
                     onClick={() => setShowEditModal(true)}
-                    className="rounded-lg bg-blue-500 px-4 py-2 text-white  hover:bg-blue-600"
+                    className="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white  hover:bg-blue-600"
                   >
                     Edit Profile
                   </button>
 
                   <button
                     onClick={() => navigate("/upload")}
-                    className="rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+                    className="cursor-pointer rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
                   >
                     Upload Video
                   </button>
@@ -280,7 +280,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                           <button
                             type="button"
                             onClick={() => removeSkill("skillsOffered", skill)}
-                            className="text-red-500"
+                            className="cursor-pointer text-red-500"
                           >
                             x
                           </button>
@@ -318,7 +318,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                           <button
                             type="button"
                             onClick={() => removeSkill("skillsWanted", skill)}
-                            className="text-red-500"
+                            className="cursor-pointer text-red-500"
                           >
                             x
                           </button>
@@ -330,14 +330,14 @@ function Profilepage({ viewOnly = false, userId = null }) {
                   <div className="flex gap-2 md:col-span-2">
                     <button
                       type="submit"
-                      className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                      className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
                     >
                       Save
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowEditModal(false)}
-                      className="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+                      className="cursor-pointer rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
                     >
                       Cancel
                     </button>

@@ -60,7 +60,7 @@ function PromoCards() {
             </div>
 
             {/* CTA */}
-            <button className="relative z-10 mt-3 w-fit rounded-lg bg-white/85 px-3 py-1.5 text-xs text-gray-900 backdrop-blur transition hover:bg-white sm:text-sm">
+            <button className="cursor-pointer relative z-10 mt-3 w-fit rounded-lg bg-white/85 px-3 py-1.5 text-xs text-gray-900 backdrop-blur transition hover:bg-white sm:text-sm">
               {card.cta}
             </button>
           </div>

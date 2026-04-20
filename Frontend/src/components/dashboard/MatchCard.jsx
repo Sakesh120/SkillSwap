@@ -23,7 +23,7 @@ function MatchCard({ user, onRequest }) {
       {/* CTA */}
       <button
         onClick={() => onRequest(user._id)}
-        className="w-full text-sm bg-blue-500 text-white py-1.5 rounded-lg hover:bg-blue-600 transition"
+        className="cursor-pointer w-full text-sm bg-blue-500 text-white py-1.5 rounded-lg hover:bg-blue-600 transition"
       >
         Request Swap
       </button>
