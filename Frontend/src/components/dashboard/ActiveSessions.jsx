@@ -108,11 +108,15 @@ function ActiveSessions() {
           Active Sessions
         </h2>
 
-        {loading && <p className="text-fluid-p text-gray-500">Loading sessions...</p>}
+        {loading && (
+          <p className="text-fluid-p text-gray-500">Loading sessions...</p>
+        )}
         {error && <p className="text-fluid-p text-red-500">{error}</p>}
 
         {!loading && activeSessions.length === 0 && (
-          <p className="text-fluid-p text-gray-500">No active sessions right now.</p>
+          <p className="text-fluid-p text-gray-500">
+            No active sessions right now.
+          </p>
         )}
 
         <div className="divide-y">
@@ -142,31 +146,29 @@ function ActiveSessions() {
                 </div>
               </div>
 
-                <div className="flex gap-2 sm:shrink-0">
-                  <button
-                    type="button"
-                    className="text-xs cursor-pointer bg-gray-100 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition"
-                  >
-                    Chat
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => openScheduleModal(session)}
-                    className="text-xs cursor-pointer bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
-                  >
-                    {session.status === "scheduled"
-                      ? "Reschedule"
-                      : "Schedule"}
-                  </button>
-                </div>
+              <div className="flex gap-2 sm:shrink-0">
+                <button
+                  type="button"
+                  className="text-xs bg-gray-100 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-gray-200 transition"
+                >
+                  Chat
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openScheduleModal(session)}
+                  className="text-xs bg-blue-500 text-white cursor-pointer px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
+                >
+                  {session.status === "scheduled" ? "Reschedule" : "Schedule"}
+                </button>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
 
       {scheduleModalOpen && selectedSession && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-labelledby="schedule-modal-title"
@@ -187,7 +189,10 @@ function ActiveSessions() {
               Schedule session
             </h3>
             <p className="text-fluid-p mb-4 text-gray-600">
-              With <span className="font-medium">{getPartnerName(selectedSession)}</span>
+              With{" "}
+              <span className="font-medium">
+                {getPartnerName(selectedSession)}
+              </span>
               {" | "}
               {getTopic(selectedSession)}
             </p>
@@ -225,7 +230,7 @@ function ActiveSessions() {
                 type="button"
                 onClick={closeScheduleModal}
                 disabled={scheduling}
-                className="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
+                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -233,7 +238,7 @@ function ActiveSessions() {
                 type="button"
                 onClick={handleScheduleSubmit}
                 disabled={scheduling}
-                className="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-50"
               >
                 {scheduling ? "Scheduling..." : "Schedule"}
               </button>
