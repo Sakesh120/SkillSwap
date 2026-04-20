@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getSessions } from "../../api/session.api";
 
 function Stats({ profile }) {
   const averageRating = profile?.averageRating || 0;
   const credits = profile?.credits || 0;
+  const [completedSwaps, setCompletedSwaps] = useState(
+    profile?.skillSwapsCompleted || 0,
+  );
+
+  useEffect(() => {
+    setCompletedSwaps(profile?.skillSwapsCompleted || 0);
+  }, [profile?.skillSwapsCompleted]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadCompletedSwaps = async () => {
+      try {
+        const res = await getSessions();
+        const sessions = Array.isArray(res?.data) ? res.data : [];
+        const completedCount = sessions.filter(
+          (session) => session?.status === "completed",
+        ).length;
+
+        if (isMounted) {
+          setCompletedSwaps(completedCount);
+        }
+      } catch (error) {
+        console.error("Error loading completed swaps:", error);
+      }
+    };
+
+    loadCompletedSwaps();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -54,7 +88,7 @@ function Stats({ profile }) {
           <div className="flex justify-between items-center">
             <span className="text-gray-600">🔄 Skill Swaps Completed</span>
             <span className="font-semibold text-gray-800">
-              {profile?.skillSwapsCompleted || 0}
+              {completedSwaps}
             </span>
           </div>
           <div className="flex justify-between items-center">
