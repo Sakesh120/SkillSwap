@@ -14,7 +14,7 @@ function ProfileHeader({ profile, onAvatarClick, viewOnly = false }) {
           type="button"
           onClick={viewOnly ? undefined : onAvatarClick}
           disabled={viewOnly || !hasAvatar}
-          className={`h-24 w-24 overflow-hidden rounded-full border-2 bg-indigo-200 shadow-md transition-all duration-300 ${
+          className={`h-24 w-24  overflow-hidden rounded-full border-2 bg-indigo-200 shadow-md transition-all duration-300 ${
             viewOnly
               ? "cursor-default border-transparent"
               : "cursor-pointer border-transparent hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -35,10 +35,10 @@ function ProfileHeader({ profile, onAvatarClick, viewOnly = false }) {
         </button>
 
         <div className="flex-1">
-          <h2 className="text-fluid-h2 font-bold text-gray-800">
+          <h2 className="text-fluid-h3 font-bold text-gray-800">
             {profile?.name || "Name"}
           </h2>
-          <p className="text-fluid-p font-medium text-indigo-600">
+          <p className="text-fluid-p md:text-[18px] font-medium text-indigo-600">
             {profile?.tagline || "Tagline"}
           </p>
         </div>
