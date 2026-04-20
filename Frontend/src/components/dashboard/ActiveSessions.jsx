@@ -160,8 +160,7 @@ function ActiveSessions() {
                   </button>
                 </div>
               </div>
-            );
-          })}
+            ))}
         </div>
       </div>
 
