@@ -19,7 +19,7 @@ function Features() {
         backgroundPosition: "center",
       }}
     >
-      <div className="app-shell overflow-hidden py-12 sm:py-16 xl:py-20 ">
+      <div className="w-full overflow-hidden py-12 sm:py-16 xl:py-20">
         <h2 className="text-fluid-h2 mb-10 text-center font-[Space_Grotesk] font-bold">
           FEATURES
         </h2>
