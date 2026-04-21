@@ -81,7 +81,7 @@ function HowItWorks() {
                     text={step}
                     align={index % 2 === 0 ? "left" : "right"}
                     enableHoverEffect={true}
-                    className={`h-64 w-full  sm:w-[80%] lg:w-[60%] transition-all duration-700 ease-out sm:h-72 xl:h-80  ${
+                    className={`h-64 w-[90%] sm:w-[65%] lg:w-[45%] transition-all duration-700 ease-out sm:h-72 xl:h-80  ${
                       visibleCards.includes(index.toString())
                         ? "translate-x-0 opacity-100"
                         : index % 2 === 0
