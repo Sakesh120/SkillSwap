@@ -89,7 +89,7 @@ function About() {
   const isVisible = (id) => visibleItems.has(id);
 
   return (
-    <main className="min-h-screen bg-white pt-28 text-black">
+    <main className="min-h-screen bg-white pt-20 text-black">
       <section
         className="py-12 md:py-20"
         style={{

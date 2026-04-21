@@ -55,7 +55,7 @@ function HowItWorks() {
         backgroundPosition: "center",
       }}
     >
-      <div className="app-shell">
+      <div className="w-full px-4 sm:px-6">
         <h2 className="text-fluid-h2 mb-10 font-[Space_Grotesk] font-bold">
           HOW IT WORKS
         </h2>
@@ -70,25 +70,27 @@ function HowItWorks() {
                 data-index={index}
                 className="mb-8 flex items-center justify-center sm:mb-10"
               >
-                <div
-                  className={`flex w-full ${
-                    index % 2 === 0 ? "justify-start" : "justify-end"
-                  }`}
-                >
+              <div className="flex w-full">
+              <div
+                className={`w-full flex ${
+                  index % 2 === 0 ? "justify-start" : "justify-end"
+                }`}
+              >
                   <Card
                     image={image}
                     text={step}
                     align={index % 2 === 0 ? "left" : "right"}
                     enableHoverEffect={true}
-                    className={`h-64 w-full max-w-xl transition-all duration-700 ease-out sm:h-72 xl:h-80 xl:max-w-2xl ${
+                    className={`h-64 w-full  sm:w-[80%] lg:w-[60%] transition-all duration-700 ease-out sm:h-72 xl:h-80  ${
                       visibleCards.includes(index.toString())
                         ? "translate-x-0 opacity-100"
                         : index % 2 === 0
-                          ? "-translate-x-24 opacity-0"
-                          : "translate-x-24 opacity-0"
+                            ? "-translate-x-[120%] opacity-0"
+                            : "translate-x-[120%] opacity-0"
                     }`}
                     style={{ transitionDelay: `${index * 100}ms` }}
                   />
+                </div>
                 </div>
               </div>
             );

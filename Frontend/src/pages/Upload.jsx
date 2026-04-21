@@ -61,14 +61,20 @@ function UploadSection() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 px-4 pb-10 pt-28 sm:px-6">
+    <div className="min-h-screen px-4 pb-10 pt-28 sm:px-6"
+    style={{
+        backgroundImage: "url('/profilebg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      >
       <div className="form-shell">
-        <div className="mx-auto w-full max-w-4xl rounded-4xl bg-gray-100 p-6 shadow-md sm:p-8 lg:p-10">
+        <div className="mx-auto w-full max-w-4xl rounded-4xl bg-white/20 p-6 shadow-lg backdrop-blur-lg  sm:p-8 lg:p-10">
           <h1 className="text-fluid-h1 mb-6 text-center font-serif">
             Upload Your Video
           </h1>
 
-          <div className="grid gap-6 rounded-xl bg-gray-200 p-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid gap-6 rounded-xl bg-white/20 p-6 shadow-lg backdrop-blur-lg  lg:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-6">
               <div>
                 <label className="text-fluid-h3 mb-2 block">
@@ -77,7 +83,7 @@ function UploadSection() {
                 <input
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
-                  className="w-full rounded-md bg-gray-300 p-3 outline-none"
+                  className="w-full rounded-md bg-white/20 p-3 shadow-lg backdrop-blur-lg  outline-none"
                   placeholder="Add a caption..."
                 />
               </div>
@@ -95,7 +101,7 @@ function UploadSection() {
                       setCustomCategory("");
                     }
                   }}
-                  className="w-full rounded-md bg-gray-300 p-3 outline-none"
+                  className="w-full rounded-md bg-white/20  shadow-lg backdrop-blur-lg p-3 outline-none"
                 >
                   <option value="">Choose a skill...</option>
                   <option value="Web Development">Web Development</option>
@@ -110,7 +116,7 @@ function UploadSection() {
                     value={customCategory}
                     onChange={(e) => setCustomCategory(e.target.value)}
                     placeholder="Enter your skill"
-                    className="mt-2 w-full rounded-md bg-gray-300 p-3 outline-none"
+                    className="mt-2 w-full rounded-md bg-white/20  shadow-lg backdrop-blur-lg p-3 outline-none"
                   />
                 )}
               </div>
@@ -119,7 +125,7 @@ function UploadSection() {
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="text-fluid-label rounded-full bg-gray-300 px-8 py-2 shadow transition hover:bg-gray-400"
+                  className="text-fluid-label rounded-full bg-white/20 p-6 shadow-lg backdrop-blur-lg px-8 py-2  transition hover:bg-gray-400"
                 >
                   {loading ? "Uploading..." : "Submit"}
                 </button>
@@ -129,7 +135,7 @@ function UploadSection() {
             <div
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="flex min-h-70 flex-col items-center justify-center rounded-lg border border-gray-400 bg-gray-300 p-8 text-center"
+              className="flex min-h-70 flex-col items-center justify-center rounded-lg  bg-white/20 p-6 shadow-lg backdrop-blur-lg  text-center"
             >
               {!preview ? (
                 <>

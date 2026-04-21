@@ -108,6 +108,19 @@ function Navbar() {
               )}
             </div>
 
+{/* MOBILE SEARCH */}
+{user && (
+  <div className="lg:hidden flex items-center bg-white/70 backdrop-blur-md rounded-full px-2 py-1">
+    <Search size={16} className="text-gray-600" />
+    <input
+      type="text"
+      placeholder="Search..."
+      className="bg-transparent outline-none text-sm px-2 w-24"
+    />
+  </div>
+)}
+
+
             {/* 🍔 HAMBURGER (MOBILE ONLY) */}
             <button
               className="lg:hidden flex flex-col gap-1"
