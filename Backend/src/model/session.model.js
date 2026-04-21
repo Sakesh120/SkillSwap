@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const sessionSchema = new mongoose.Schema(
   {
@@ -11,6 +11,11 @@ const sessionSchema = new mongoose.Schema(
     skillsOffered: String,
     skillRequested: String,
     scheduledAt: Date,
+    platform: {
+      type: String,
+      enum: ["", "ZOOM", "GMEET", "WHATSAPP CALL"],
+      default: "",
+    },
     status: {
       type: String,
       enum: ["pending", "scheduled", "completed"],
