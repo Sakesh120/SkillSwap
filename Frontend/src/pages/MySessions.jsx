@@ -3,6 +3,7 @@ import {
   getSessions,
   scheduleSession as scheduleSessionApi,
   completeSession as completeSessionApi,
+  updateSessionPlatform as updateSessionPlatformApi,
 } from "../api/session.api";
 import { giveRating as submitRatingApi } from "../api/rating.api";
 import { getUserById } from "../api/user.api";
@@ -22,6 +23,8 @@ function MySessions() {
   const [scheduling, setScheduling] = useState(false);
 
   const [completingId, setCompletingId] = useState(null);
+  const [platformDraftBySession, setPlatformDraftBySession] = useState({});
+  const [platformSavingId, setPlatformSavingId] = useState(null);
 
   /** partner user id -> whether current user already rated them (persisted on partner profile) */
   const [ratedPartnerById, setRatedPartnerById] = useState({});
@@ -178,6 +181,37 @@ function MySessions() {
     }
   };
 
+  const setPlatformDraft = (sessionId, platform) => {
+    setPlatformDraftBySession((prev) => ({
+      ...prev,
+      [sessionId]: platform,
+    }));
+  };
+
+  const handlePlatformSave = async (sessionId) => {
+    const platform = platformDraftBySession[sessionId];
+
+    if (!platform) {
+      setActionError("Please select a platform first.");
+      return;
+    }
+
+    setActionError(null);
+    try {
+      setPlatformSavingId(sessionId);
+      await updateSessionPlatformApi(sessionId, platform);
+      await loadSessions();
+    } catch (err) {
+      setActionError(
+        err.response?.data?.message ||
+          err.message ||
+          "Could not update platform.",
+      );
+    } finally {
+      setPlatformSavingId(null);
+    }
+  };
+
   const setRatingStars = (sessionId, stars) => {
     setRatingDraftBySession((prev) => ({
       ...prev,
@@ -305,12 +339,16 @@ function MySessions() {
             const iConfirmed = userMarkedComplete(session);
 
             const canSchedule = !completed;
+            const canSelectPlatform = !completed;
             const canComplete = isScheduled && !completed && !iConfirmed;
             const partnerIdStr = partner?._id ? String(partner._id) : "";
             const alreadyRatedPartner =
               partnerIdStr && ratedPartnerById[partnerIdStr];
             const draft = ratingDraftBySession[session._id];
             const ratingBusy = ratingSubmittingId === String(session._id);
+            const selectedPlatform =
+              platformDraftBySession[session._id] ?? session.platform ?? "";
+            const isSavingPlatform = platformSavingId === session._id;
 
             return (
               <div
@@ -366,6 +404,12 @@ function MySessions() {
                     </dd>
                   </div>
                   <div>
+                    <dt className="text-gray-500">Platform</dt>
+                    <dd className="font-medium text-gray-900 mt-0.5">
+                      {session.platform || "Not selected yet"}
+                    </dd>
+                  </div>
+                  <div>
                     <dt className="text-gray-500">Created</dt>
                     <dd className="font-medium text-gray-900 mt-0.5">
                       {session.createdAt
@@ -403,6 +447,36 @@ function MySessions() {
                 <div className="flex flex-wrap items-center gap-2 mt-5">
                   {!completed && (
                     <>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <select
+                          value={selectedPlatform}
+                          disabled={!canSelectPlatform || isSavingPlatform}
+                          onChange={(e) => {
+                            setActionError(null);
+                            setPlatformDraft(session._id, e.target.value);
+                          }}
+                          className="min-w-44 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-sky-500/30 focus:border-sky-400 disabled:opacity-50"
+                        >
+                          <option value="">Select platform</option>
+                          <option value="ZOOM">ZOOM</option>
+                          <option value="GMEET">GMEET</option>
+                          <option value="WHATSAPP CALL">WHATSAPP CALL</option>
+                        </select>
+
+                        <button
+                          type="button"
+                          disabled={
+                            !canSelectPlatform ||
+                            !selectedPlatform ||
+                            isSavingPlatform
+                          }
+                          onClick={() => handlePlatformSave(session._id)}
+                          className="text-sm cursor-pointer bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          {isSavingPlatform ? "Saving..." : "Select platform"}
+                        </button>
+                      </div>
+
                       <button
                         type="button"
                         disabled={!canSchedule}

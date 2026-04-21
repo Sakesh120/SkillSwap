@@ -37,6 +37,40 @@ export const scheduleSession = async (req, res) => {
   }
 };
 
+// UPDATE SESSION PLATFORM
+export const updateSessionPlatform = async (req, res) => {
+  try {
+    const { sessionId, platform } = req.body;
+    const allowedPlatforms = ["ZOOM", "GMEET", "WHATSAPP CALL"];
+
+    if (!platform || !allowedPlatforms.includes(platform)) {
+      return res.status(400).json({ message: "Invalid platform selected" });
+    }
+
+    const session = await Session.findById(sessionId);
+    if (!session) {
+      return res.status(404).json({ message: "Session not found" });
+    }
+
+    if (!session.users.some((user) => user.toString() === req.user)) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    if (session.status === "completed") {
+      return res
+        .status(400)
+        .json({ message: "Platform cannot be changed after completion" });
+    }
+
+    session.platform = platform;
+    await session.save();
+
+    res.json({ message: "Platform updated", session });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 ///// SESSION COMPLETION
 export const completeSession = async (req, res) => {
   try {
