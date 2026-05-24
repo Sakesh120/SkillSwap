@@ -95,8 +95,18 @@ export const uploadTutorial = async (req, res) => {
     const videoUrl = `/uploads/videos/${req.file.filename}`;
     const caption =
       typeof req.body.caption === "string" ? req.body.caption.trim() : "";
+    const skillCategory =
+      typeof req.body.skillCategory === "string"
+        ? req.body.skillCategory.trim()
+        : "";
 
-    const tutorial = { url: videoUrl, caption };
+    if (!skillCategory) {
+      return res.status(400).json({
+        message: "Skill category is required",
+      });
+    }
+
+    const tutorial = { url: videoUrl, caption, skillCategory };
 
     const user = await userModel.findByIdAndUpdate(
       req.user,
@@ -115,8 +125,7 @@ export const uploadTutorial = async (req, res) => {
 
     res.status(200).json({
       message: "Tutorial video uploaded successfully",
-      videoUrl,
-      caption,
+      tutorial,
       user,
     });
   } catch (error) {
@@ -166,6 +175,7 @@ export const getAllTutorials = async (req, res) => {
         userAvatar: user.avatar?.image || null,
         url: tutorial.url,
         caption: tutorial.caption,
+        skillCategory: tutorial.skillCategory || "",
       })),
     );
 

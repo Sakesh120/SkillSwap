@@ -42,7 +42,7 @@ function UploadSection() {
     const formData = new FormData();
     formData.append("video", file);
     formData.append("caption", caption);
-    formData.append("category", finalCategory);
+    formData.append("skillCategory", finalCategory);
 
     try {
       setLoading(true);
@@ -61,13 +61,14 @@ function UploadSection() {
   };
 
   return (
-    <div className="min-h-screen px-4 pb-10 pt-28 sm:px-6"
-    style={{
+    <div
+      className="min-h-screen px-4 pb-10 pt-28 sm:px-6"
+      style={{
         backgroundImage: "url('/profilebg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       <div className="form-shell">
         <div className="mx-auto w-full max-w-4xl rounded-4xl bg-white/20 p-6 shadow-lg backdrop-blur-lg  sm:p-8 lg:p-10">
           <h1 className="text-fluid-h1 mb-6 text-center font-serif">

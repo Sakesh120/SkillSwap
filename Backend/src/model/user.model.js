@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema(
       {
         url: { type: String, required: true },
         caption: { type: String, default: "" },
+        skillCategory: { type: String, default: "" },
       },
     ],
   },
