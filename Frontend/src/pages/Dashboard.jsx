@@ -5,6 +5,7 @@ import RequestsOverview from "../components/dashboard/RequestsOverview";
 import PromoCards from "../components/dashboard/PromoCards";
 import ActiveSessions from "../components/dashboard/ActiveSessions";
 import Activity from "../components/dashboard/Activity";
+import TutorialCards from "../components/dashboard/TutorialCards";
 
 function Dashboard() {
   return (
@@ -21,6 +22,7 @@ function Dashboard() {
         <RequestsOverview />
         <PromoCards />
         <ActiveSessions />
+        <TutorialCards />
         <Activity />
       </div>
     </div>
