@@ -126,11 +126,25 @@ export const uploadTutorial = async (req, res) => {
   }
 };
 
-// GET ALL TUTORIALS
-export const getAllTutorials = async (req, res) => {
+// GET USER'S OWN TUTORIALS
+export const getUserTutorials = async (req, res) => {
   try {
-    const tutorials = await userModel.find().select("tutorials");
-    res.json(tutorials);
+    const user = await userModel
+      .findById(req.user)
+      .select("name avatar tutorials");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      userId: user._id,
+      userName: user.name,
+      userAvatar: user.avatar?.image || null,
+      tutorials: user.tutorials,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -138,3 +152,27 @@ export const getAllTutorials = async (req, res) => {
   }
 };
 
+// GET ALL TUTORIALS
+export const getAllTutorials = async (req, res) => {
+  try {
+    const usersWithTutorials = await userModel
+      .find({ "tutorials.0": { $exists: true } })
+      .select("name avatar tutorials");
+
+    const tutorials = usersWithTutorials.flatMap((user) =>
+      user.tutorials.map((tutorial) => ({
+        userId: user._id,
+        userName: user.name,
+        userAvatar: user.avatar?.image || null,
+        url: tutorial.url,
+        caption: tutorial.caption,
+      })),
+    );
+
+    res.json(tutorials);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

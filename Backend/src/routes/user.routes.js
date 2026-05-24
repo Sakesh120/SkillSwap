@@ -4,6 +4,7 @@ import {
   getAllTutorials,
   getOtherProfile,
   getProfile,
+  getUserTutorials,
   updateProfile,
   uploadTutorial,
 } from "../controllers/user.controller.js";
@@ -26,5 +27,6 @@ userRouter.post(
   uploadVideo.single("video"),
   uploadTutorial,
 );
+userRouter.get("/tutorials/me", protect, getUserTutorials);
 userRouter.get("/tutorials", protect, getAllTutorials);
 export default userRouter;

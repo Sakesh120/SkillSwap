@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema(
     },
     tagline: {
       type: String,
-      default: "Knowledge TO Share",
+      default: "Knowledge To Share",
     },
     tutorials: [
       {
