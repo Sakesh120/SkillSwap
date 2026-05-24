@@ -1,4 +1,6 @@
 function Card({
+   hoverTitle,
+    hoverDesc,
   image,
   text,
   className = "",
@@ -42,12 +44,16 @@ function Card({
 
           <div className="relative z-10 flex h-full items-center justify-center px-6">
             <p className="text-fluid-h3 text-center font-semibold text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
-              Learn more about <span className="font-bold">{text}</span> in
-              SkillSwap.
+           <p> {hoverTitle}
+            </p> 
+              {hoverDesc}
             </p>
           </div>
         </div>
       )}
+
+
+
     </div>
   );
 }
