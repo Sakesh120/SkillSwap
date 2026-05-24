@@ -7,6 +7,7 @@ import SkillSection from "../components/profilepage/SkillSection";
 import About from "../components/profilepage/About";
 import Stats from "../components/profilepage/Stats";
 import { useNavigate } from "react-router-dom";
+import MyUploads from "../components/profilepage/MyUploads";
 
 function Profilepage({ viewOnly = false, userId = null }) {
   const { id } = useParams();
@@ -172,6 +173,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
                 type="secondary"
               />
             </div>
+            <MyUploads />
 
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.6fr_0.8fr]">
               <div className="rounded-xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">

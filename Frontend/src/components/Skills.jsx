@@ -31,7 +31,7 @@ function Skills() {
         </div>
       </div>
 
-      <div className="text-fluid-caption mt-5 border-t py-4 text-center text-gray-500"></div>
+      <div className="text-fluid-caption mt-5 border-t py-4 text-center text-gray-100"></div>
     </div>
   );
 }
