@@ -1,34 +1,32 @@
+import { useEffect, useState } from "react";
+import { getAllTutorials } from "../../api/tutorial.api";
+
 function TutorialCards() {
-  const cards = [
-    {
-      id: 1,
-      title: "Programming Skills",
-      subtitle: "Swap coding skills with others",
-      cta: "Swap Skill",
-      image: "/PS.png",
-    },
-    {
-      id: 2,
-      title: "Theory Subjects",
-      subtitle: "Learn and teach concepts",
-      cta: "Request Swap",
-      image: "/TS.png",
-    },
-    {
-      id: 3,
-      title: "IT Technology",
-      subtitle: "Connect with tech experts",
-      cta: "Connect & Swap",
-      image: "/IT.png",
-    },
-    {
-      id: 4,
-      title: "SkillSwap App",
-      subtitle: "Explore mobile experience",
-      cta: "Explore",
-      image: "/SA.png",
-    },
-  ];
+  const [allTutorials, setAllTutorials] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchAllTutorials = async () => {
+      try {
+        const res = await getAllTutorials();
+        const tutorials = res.data || [];
+        setAllTutorials(tutorials);
+      } catch (error) {
+        console.error("Failed to load the tutorials", error);
+      }
+    };
+
+    fetchAllTutorials();
+  }, []);
+
+  const getVideoSrc = (url) => {
+    if (!url) return "";
+    return url.startsWith("http") ? url : `http://localhost:3000${url}`;
+  };
+
+  const handlePlay = (index) => {
+    setActiveIndex(index === activeIndex ? null : index);
+  };
 
   return (
     <div className="bg-white/20 backdrop-blur-lg border-white/30 rounded-2xl shadow-sm border p-6">
@@ -37,37 +35,76 @@ function TutorialCards() {
         Tutorial Suggestions
       </h2>
 
-      {/* GRID */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            className="relative flex h-44 flex-col justify-between overflow-hidden rounded-xl bg-slate-200 p-4 transition hover:scale-[1.02] hover:shadow-md xl:h-48"
-            style={{
-              backgroundImage: `url('${card.image}')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <div className="absolute inset-0 bg-black/20" />
+      {allTutorials.length === 0 ? (
+        <p className="text-sm text-gray-600">No tutorials available yet.</p>
+      ) : (
+        <div
+          className="flex gap-4 overflow-x-auto pb-4"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+          onScroll={(e) => {
+            if (e.target.style) {
+              e.target.style.scrollbarWidth = "none";
+              e.target.style.msOverflowStyle = "none";
+            }
+          }}
+        >
+          <style>{`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+          {allTutorials.map((tutorial, index) => {
+            const isActive = index === activeIndex;
+            const videoSrc = getVideoSrc(tutorial.url);
 
-            {/* TEXT */}
-            <div className="relative z-10">
-              <h3 className="text-fluid-h3 font-semibold text-white">
-                {card.title}
-              </h3>
-              <p className="text-fluid-p mt-1 max-w-xs text-white">
-                {card.subtitle}
-              </p>
-            </div>
+            return (
+              <div
+                key={index}
+                className="relative shrink-0 w-72 overflow-hidden rounded-3xl bg-slate-900/70 p-4 shadow-lg ring-1 ring-white/10"
+              >
+                <div className="relative h-52 overflow-hidden rounded-3xl bg-black">
+                  {isActive ? (
+                    <video
+                      className="h-full w-full object-cover"
+                      src={videoSrc}
+                      controls
+                      autoPlay
+                      playsInline
+                      onEnded={() => setActiveIndex(null)}
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-black/60 text-white">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-white"
+                        onClick={() => handlePlay(index)}
+                      >
+                        <span>Play</span>
+                        <span aria-hidden="true">▶</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
 
-            {/* CTA */}
-            <button className="cursor-pointer relative z-10 mt-3 w-fit rounded-lg bg-white/85 px-3 py-1.5 text-xs text-gray-900 backdrop-blur transition hover:bg-white sm:text-sm">
-              {card.cta}
-            </button>
-          </div>
-        ))}
-      </div>
+                <div className="mt-4 space-y-2">
+                  <h3 className="text-fluid-h3 font-semibold text-white">
+                    {tutorial.caption || "No caption"}
+                  </h3>
+                  <p className="text-fluid-p text-gray-300">
+                    {tutorial.skillCategory || "No category"}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {tutorial.userName ? `By ${tutorial.userName}` : "Tutorial"}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
