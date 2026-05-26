@@ -63,43 +63,61 @@ function TutorialCards() {
             return (
               <div
                 key={index}
-                className="relative shrink-0 w-72 overflow-hidden rounded-3xl bg-slate-900/70 p-4 shadow-lg ring-1 ring-white/10"
+                className="relative shrink-0 w-72 overflow-hidden rounded-lg shadow-lg cursor-pointer group"
               >
-                <div className="relative h-52 overflow-hidden rounded-3xl bg-black">
-                  {isActive ? (
+                {isActive ? (
+                  <video
+                    className="h-40 w-full object-cover"
+                    src={videoSrc}
+                    controls
+                    autoPlay
+                    playsInline
+                    onEnded={() => setActiveIndex(null)}
+                  />
+                ) : (
+                  <>
                     <video
-                      className="h-full w-full object-cover"
+                      className="h-40 w-full object-cover"
                       src={videoSrc}
-                      controls
-                      autoPlay
-                      playsInline
-                      onEnded={() => setActiveIndex(null)}
+                      onLoadedMetadata={(e) => {
+                        // Capture video thumbnail
+                        const canvas = document.createElement("canvas");
+                        canvas.width = e.target.videoWidth;
+                        canvas.height = e.target.videoHeight;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(e.target, 0, 0);
+                      }}
                     />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-black/60 text-white">
+
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         type="button"
-                        className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-white"
+                        className="rounded-full bg-white/90 p-3 transition hover:bg-white"
                         onClick={() => handlePlay(index)}
                       >
-                        <span>Play</span>
-                        <span aria-hidden="true">▶</span>
+                        <span className="block h-0 w-0 border-l-6 border-l-transparent border-r-6 border-r-transparent border-t-6 border-t-slate-900" />
                       </button>
                     </div>
-                  )}
-                </div>
+                  </>
+                )}
 
-                <div className="mt-4 space-y-2">
-                  <h3 className="text-fluid-h3 font-semibold text-white">
-                    {tutorial.caption || "No caption"}
-                  </h3>
-                  <p className="text-fluid-p text-gray-300">
-                    {tutorial.skillCategory || "No category"}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {tutorial.userName ? `By ${tutorial.userName}` : "Tutorial"}
-                  </p>
-                </div>
+                {/* Text Overlay */}
+                {!isActive && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/50 to-transparent px-3 py-3">
+                    <h3 className="text-sm font-semibold text-white line-clamp-2">
+                      {tutorial.caption || "No caption"}
+                    </h3>
+                    <p className="text-xs text-gray-300 mt-1">
+                      {tutorial.skillCategory || "No category"}
+                    </p>
+                    {tutorial.userName && (
+                      <p className="text-xs text-gray-400 mt-1">
+                        {tutorial.userName}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
