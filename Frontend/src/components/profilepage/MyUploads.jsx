@@ -47,40 +47,62 @@ function MyUploads() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+      <div
+        className="flex gap-4 overflow-x-auto pb-4"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+        onScroll={(e) => {
+          if (e.target.style) {
+            e.target.style.scrollbarWidth = "none";
+            e.target.style.msOverflowStyle = "none";
+          }
+        }}
+      >
+        <style>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
         {tutorials.map((tutorial, index) => (
           <div
             key={`${tutorial.url}-${index}`}
-            className="flex min-h-65 flex-col justify-between overflow-hidden rounded-xl bg-slate-200 p-4 transition hover:scale-[1.02] hover:shadow-md"
+            className="relative shrink-0 w-72 overflow-hidden rounded-lg shadow-lg  group"
           >
-            <div className="flex h-40 items-center justify-center rounded-3xl opacity-91 bg-slate-900 text-white">
-              <div className="flex flex-col items-center gap-2 text-center">
-                <div
-                  onClick={() => setSelectedTutorial(tutorial)}
-                  className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-3xl cursor-pointer"
-                >
-                  ▶
-                </div>
-                <span className="text-sm text-gray-300">Tutorial Preview</span>
-              </div>
+            <video
+              className="h-40 w-full object-cover"
+              src={getVideoSrc(tutorial.url)}
+              onLoadedMetadata={(e) => {
+                // Capture video thumbnail
+                const canvas = document.createElement("canvas");
+                canvas.width = e.target.videoWidth;
+                canvas.height = e.target.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(e.target, 0, 0);
+              }}
+            />
+
+            {/* Play Button Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                type="button"
+                className="rounded-full bg-white/90 p-3 transition hover:bg-white cursor-pointer"
+                onClick={() => setSelectedTutorial(tutorial)}
+              >
+                <span className="block h-0 w-0 border-l-6 border-l-transparent border-r-6 border-r-transparent border-t-6 border-t-slate-900" />
+              </button>
             </div>
 
-            <div className="mt-4">
-              <h3 className="text-fluid-h5 font-semibold text-gray-900 uppercase ">
+            {/* Text Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/50 to-transparent px-3 py-3">
+              <h3 className="text-sm font-semibold text-white line-clamp-2">
                 {tutorial.caption || "Untitled tutorial"}
               </h3>
-              <p className="text-fluid-p mt-2 text-gray-600">
+              <p className="text-xs text-gray-300 mt-1">
                 {tutorial.skillCategory || "No category"}
               </p>
             </div>
-
-            <button
-              onClick={() => setSelectedTutorial(tutorial)}
-              className="mt-4 w-fit rounded-lg cursor-pointer bg-white/85 hover:bg-white/30 hover:shadow-2xl shadow-gray-700 transition-[] px-4 py-2 text-xs font-semibold text-gray-900 backdrop-blur transition sm:text-sm"
-              s
-            >
-              Watch Now
-            </button>
           </div>
         ))}
       </div>
@@ -110,7 +132,7 @@ function MyUploads() {
                 src={getVideoSrc(selectedTutorial.url)}
                 controls
                 autoPlay
-                className="w-full rounded-3xl xl:h-[43vh] bg-black"
+                className="w-full rounded-3xl xl:h-[30vh] bg-black"
               />
             </div>
           </div>
