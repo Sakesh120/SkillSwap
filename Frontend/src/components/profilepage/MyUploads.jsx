@@ -53,9 +53,12 @@ function MyUploads() {
             key={`${tutorial.url}-${index}`}
             className="flex min-h-65 flex-col justify-between overflow-hidden rounded-xl bg-slate-200 p-4 transition hover:scale-[1.02] hover:shadow-md"
           >
-            <div className="flex h-40 items-center justify-center rounded-3xl bg-slate-900 text-white">
+            <div className="flex h-40 items-center justify-center rounded-3xl opacity-91 bg-slate-900 text-white">
               <div className="flex flex-col items-center gap-2 text-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-3xl">
+                <div
+                  onClick={() => setSelectedTutorial(tutorial)}
+                  className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-3xl cursor-pointer"
+                >
                   ▶
                 </div>
                 <span className="text-sm text-gray-300">Tutorial Preview</span>
@@ -63,7 +66,7 @@ function MyUploads() {
             </div>
 
             <div className="mt-4">
-              <h3 className="text-fluid-h5 font-semibold text-gray-900">
+              <h3 className="text-fluid-h5 font-semibold text-gray-900 uppercase ">
                 {tutorial.caption || "Untitled tutorial"}
               </h3>
               <p className="text-fluid-p mt-2 text-gray-600">
@@ -73,7 +76,8 @@ function MyUploads() {
 
             <button
               onClick={() => setSelectedTutorial(tutorial)}
-              className="mt-4 w-fit rounded-lg bg-white/85 px-4 py-2 text-xs font-semibold text-gray-900 backdrop-blur transition hover:bg-white sm:text-sm"
+              className="mt-4 w-fit rounded-lg cursor-pointer bg-white/85 hover:bg-white/30 hover:shadow-2xl shadow-gray-700 transition-[] px-4 py-2 text-xs font-semibold text-gray-900 backdrop-blur transition sm:text-sm"
+              s
             >
               Watch Now
             </button>
@@ -95,7 +99,7 @@ function MyUploads() {
               </div>
               <button
                 onClick={() => setSelectedTutorial(null)}
-                className="rounded-full bg-slate-100 px-4 py-2 text-sm text-slate-700 transition hover:bg-slate-200"
+                className="rounded-full bg-slate-100 px-4 py-2 text-sm cursor-pointer text-slate-700 transition hover:bg-slate-200"
               >
                 Close
               </button>
@@ -105,7 +109,8 @@ function MyUploads() {
               <video
                 src={getVideoSrc(selectedTutorial.url)}
                 controls
-                className="w-full rounded-3xl bg-black"
+                autoPlay
+                className="w-full rounded-3xl xl:h-[43vh] bg-black"
               />
             </div>
           </div>
