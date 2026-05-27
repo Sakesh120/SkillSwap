@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserById } from "../api/user.api";
+import { sendSwapRequest } from "../api/match.api";
+import { useAuth } from "../context/AuthContext";
 
 function ViewProfile() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [requestLoading, setRequestLoading] = useState(false);
+  const [requestMessage, setRequestMessage] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -43,6 +48,39 @@ function ViewProfile() {
     : `https://ui-avatars.com/api/?name=${encodeURIComponent(
         profile?.name || "Skill Swap",
       )}&background=C7D2FE&color=4338CA&size=256`;
+  const isOwnProfile = user?._id && profile?._id && user._id === profile._id;
+  const canRequestSwap =
+    !isOwnProfile &&
+    (profile?.skillsWanted?.length || 0) > 0 &&
+    (profile?.skillsOffered?.length || 0) > 0;
+
+  const handleRequestSwap = async () => {
+    if (!profile?._id || !canRequestSwap) {
+      setRequestMessage(
+        isOwnProfile
+          ? "You cannot send a swap request to yourself."
+          : "This user needs at least one offered and wanted skill before you can request a swap.",
+      );
+      return;
+    }
+
+    setRequestLoading(true);
+    setRequestMessage("");
+
+    try {
+      await sendSwapRequest({
+        receiverId: profile._id,
+        skillOffered: profile.skillsWanted?.[0] || "",
+        skillWanted: profile.skillsOffered?.[0] || "",
+      });
+      setRequestMessage("Swap request sent successfully.");
+    } catch (err) {
+      console.error("Failed to send swap request", err);
+      setRequestMessage("Unable to send request. Please try again.");
+    } finally {
+      setRequestLoading(false);
+    }
+  };
 
   const statCards = [
     {
@@ -154,6 +192,23 @@ function ViewProfile() {
                     {profile.about ||
                       "This member has not added a detailed bio yet, but you can still explore their teaching and learning interests below."}
                   </p>
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  {!isOwnProfile && (
+                    <button
+                      type="button"
+                      onClick={handleRequestSwap}
+                      disabled={requestLoading || !canRequestSwap}
+                      className="text-fluid-label rounded-full bg-linear-to-r from-blue-500 to-violet-500 px-6 py-3 font-semibold text-white shadow-lg transition hover:from-blue-600 hover:to-violet-600 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {requestLoading ? "Sending Request..." : "Request Swap"}
+                    </button>
+                  )}
+
+                  {requestMessage && (
+                    <p className="text-fluid-p text-slate-600">{requestMessage}</p>
+                  )}
                 </div>
               </div>
             </div>
