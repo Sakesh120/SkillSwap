@@ -82,6 +82,49 @@ export const getOtherProfile = async (req, res) => {
   }
 };
 
+// SEARCH USERS BY NAME OR SKILLS
+export const searchUsers = async (req, res) => {
+  try {
+    const query = (req.query.q || "").trim();
+
+    if (!query) {
+      return res.json({ data: [] });
+    }
+
+    const searchRegex = new RegExp(query, "i");
+
+    const users = await userModel
+      .find({
+        _id: { $ne: req.user },
+        $or: [
+          { name: { $regex: searchRegex } },
+          { skillsOffered: { $regex: searchRegex } },
+          { skillsWanted: { $regex: searchRegex } },
+        ],
+      })
+      .select(
+        "name avatar skillsOffered skillsWanted tagline about averageRating",
+      );
+
+    const results = users.map((user) => ({
+      userId: user._id,
+      userName: user.name,
+      userAvatar: user.avatar?.image || null,
+      skillsOffered: user.skillsOffered,
+      skillsWanted: user.skillsWanted,
+      tagline: user.tagline,
+      about: user.about,
+      averageRating: user.averageRating,
+    }));
+
+    res.json({ data: results });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 // UPLOAD TUTORIAL VIDEO
 export const uploadTutorial = async (req, res) => {
   try {

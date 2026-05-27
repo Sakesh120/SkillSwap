@@ -5,6 +5,7 @@ import {
   getOtherProfile,
   getProfile,
   getUserTutorials,
+  searchUsers,
   updateProfile,
   uploadTutorial,
 } from "../controllers/user.controller.js";
@@ -20,6 +21,7 @@ userRouter.put(
   upload.single("avatar"),
   updateProfile,
 );
+userRouter.get("/search", protect, searchUsers);
 userRouter.get("/:id/profile", protect, getOtherProfile);
 userRouter.post(
   "/upload-tutorial",

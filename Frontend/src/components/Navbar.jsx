@@ -10,7 +10,9 @@ function Navbar() {
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false); // ✅ NEW
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [mobileSearchQuery, setMobileSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +33,15 @@ function Navbar() {
     navigate("/login");
   };
 
+  const handleSearch = (e, query) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query)}`);
+      setSearchQuery("");
+      setMobileSearchQuery("");
+    }
+  };
+
   return (
     <div
       className="fixed top-0 left-0 right-0 z-50 transition-transform duration-300"
@@ -38,7 +49,6 @@ function Navbar() {
     >
       <div className="app-shell w-screen border border-white/20 bg-white/10 shadow-lg backdrop-blur-xl">
         <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-
           {/* LOGO */}
           <Link to="/" className="shrink-0">
             <img
@@ -50,20 +60,27 @@ function Navbar() {
 
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-3">
-
             {/* 🔍 SEARCH (DESKTOP ONLY) */}
             {user && (
-              <div className="group hidden flex-row-reverse items-center overflow-hidden rounded-full border border-white/20 bg-white/10 px-2 py-2 shadow-lg backdrop-blur-2xl transition-all duration-500 ease-in-out lg:flex lg:w-12 lg:hover:w-[320px]">
-                <button className="cursor-pointer shrink-0 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 p-2 text-white">
+              <form
+                onSubmit={(e) => handleSearch(e, searchQuery)}
+                className="group hidden flex-row-reverse items-center overflow-hidden rounded-full border border-white/20 bg-white/10 px-2 py-2 shadow-lg backdrop-blur-2xl transition-all duration-500 ease-in-out lg:flex lg:w-12 lg:hover:w-[320px]"
+              >
+                <button
+                  type="submit"
+                  className="cursor-pointer shrink-0 rounded-full bg-linear-to-r from-blue-500 to-indigo-500 p-2 text-white hover:from-blue-600 hover:to-indigo-600 transition"
+                >
                   <Search size={18} />
                 </button>
 
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search skills..."
                   className="w-0 bg-transparent px-3 text-gray-700 opacity-0 outline-none transition-all duration-500 placeholder:text-gray-400 group-hover:w-full group-hover:opacity-100"
                 />
-              </div>
+              </form>
             )}
 
             {/* 🖥️ DESKTOP MENU */}
@@ -100,7 +117,7 @@ function Navbar() {
 
                   <button
                     onClick={handleLogout}
-                    className="cursor-pointer rounded-lg bg-red-400 px-3 py-2 text-white hover:bg-red-500"
+                    className="cursor-pointer rounded-lg bg-red-400 px-3 py-2 text-white hover:bg-red-500 transition"
                   >
                     Logout
                   </button>
@@ -108,18 +125,22 @@ function Navbar() {
               )}
             </div>
 
-{/* MOBILE SEARCH */}
-{user && (
-  <div className="lg:hidden flex items-center bg-white/70 backdrop-blur-md rounded-full px-2 py-1">
-    <Search size={16} className="text-gray-600" />
-    <input
-      type="text"
-      placeholder="Search..."
-      className="bg-transparent outline-none text-sm px-2 w-24"
-    />
-  </div>
-)}
-
+            {/* MOBILE SEARCH */}
+            {user && (
+              <form
+                onSubmit={(e) => handleSearch(e, mobileSearchQuery)}
+                className="lg:hidden flex items-center bg-white/70 backdrop-blur-md rounded-full px-2 py-1"
+              >
+                <Search size={16} className="text-gray-600" />
+                <input
+                  type="text"
+                  value={mobileSearchQuery}
+                  onChange={(e) => setMobileSearchQuery(e.target.value)}
+                  placeholder="Search..."
+                  className="bg-transparent outline-none text-sm px-2 w-24 text-gray-900 placeholder:text-gray-600"
+                />
+              </form>
+            )}
 
             {/* 🍔 HAMBURGER (MOBILE ONLY) */}
             <button
@@ -133,65 +154,92 @@ function Navbar() {
           </div>
         </div>
 
-       {/* 📱 MOBILE MENU */}
-{menuOpen && (
-  <div className="lg:hidden bg-white/90 backdrop-blur-xl px-6 py-4 shadow-md text-black flex flex-col divide-y divide-gray-300">
+        {/* 📱 MOBILE MENU */}
+        {menuOpen && (
+          <div className="lg:hidden bg-white/90 backdrop-blur-xl px-6 py-4 shadow-md text-black flex flex-col divide-y divide-gray-300">
+            {!user ? (
+              <>
+                <Link
+                  to="/"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  Home
+                </Link>
 
-    {!user ? (
-      <>
-        <Link to="/" onClick={() => setMenuOpen(false)} className="py-3">
-          Home
-        </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  About
+                </Link>
 
-        <Link to="/about" onClick={() => setMenuOpen(false)} className="py-3">
-          About
-        </Link>
+                <Link
+                  to="/#how-it-works"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  How it works
+                </Link>
 
-        <Link to="/#how-it-works" onClick={() => setMenuOpen(false)} className="py-3">
-          How it works
-        </Link>
+                <Link
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  Login
+                </Link>
 
-        <Link to="/login" onClick={() => setMenuOpen(false)} className="py-3">
-          Login
-        </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  Sign Up
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  Discover
+                </Link>
 
-        <Link to="/signup" onClick={() => setMenuOpen(false)} className="py-3">
-          Sign Up
-        </Link>
-      </>
-    ) : (
-      <>
-        <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="py-3">
-          Discover
-        </Link>
+                <Link
+                  to="/my-sessions"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3"
+                >
+                  My Sessions
+                </Link>
 
-        <Link to="/my-sessions" onClick={() => setMenuOpen(false)} className="py-3">
-          My Sessions
-        </Link>
+                <button
+                  onClick={() => {
+                    navigate("/profilepage");
+                    setMenuOpen(false);
+                  }}
+                  className="text-left py-3 w-full"
+                >
+                  Profile
+                </button>
 
-        <button
-          onClick={() => {
-            navigate("/profilepage");
-            setMenuOpen(false);
-          }}
-          className="text-left py-3 w-full"
-        >
-          Profile
-        </button>
-
-        <button
-          onClick={() => {
-            handleLogout();
-            setMenuOpen(false);
-          }}
-          className="text-left py-3 w-full text-red-500"
-        >
-          Logout
-        </button>
-      </>
-    )}
-  </div>
-)}
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMenuOpen(false);
+                  }}
+                  className="text-left py-3 w-full text-red-500"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

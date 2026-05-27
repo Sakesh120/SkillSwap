@@ -10,6 +10,7 @@ import Myuploads from "./pages/Upload";
 import ViewProfile from "./pages/Viewprofile";
 import MySessions from "./pages/MySessions";
 import About from "./pages/About";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Registration />} />
         <Route path="/profilepage" element={<Profilepage />} />
         <Route path="/upload" element={<Myuploads />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route
           path="/profile/:id"
           element={
@@ -42,7 +44,7 @@ function App() {
           path="/my-sessions"
           element={
             <PrivateRoute>
-              <MySessions/>
+              <MySessions />
             </PrivateRoute>
           }
         />
