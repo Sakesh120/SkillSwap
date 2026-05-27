@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef  } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getMatches, sendSwapRequest } from "../../api/match.api";
 import { useNavigate } from "react-router-dom";
-
 
 function SuggestedMatches() {
   const [users, setUsers] = useState([]);
@@ -86,118 +85,123 @@ function SuggestedMatches() {
   };
 
   return (
-   <div className="h-max overflow-y-auto rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg no-scrollbar">
-  <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
-    Suggested Matches
-  </h2>
+    <div className="h-max overflow-hidden rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg no-scrollbar">
+      <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
+        Suggested Matches
+      </h2>
 
-  {loading && <p className="text-sm text-gray-500">Loading matches...</p>}
-  {error && <p className="text-sm text-red-500">{error}</p>}
+      {loading && <p className="text-sm text-gray-500">Loading matches...</p>}
+      {error && <p className="text-sm text-red-500">{error}</p>}
 
-  {!loading && users.length === 0 && (
-    <p className="text-sm text-gray-500">No matches available right now.</p>
-  )}
+      {!loading && users.length === 0 && (
+        <p className="text-sm text-gray-500">No matches available right now.</p>
+      )}
 
-  {/* Cards Container with Scroll Buttons */}
-  <div className="flex flex-col gap-4">
-
-  {/* Cards Container */}
-  <div
-    ref={containerRef}
-    className="grid grid-flow-col auto-cols-[minmax(240px,1fr)] grid-rows-1 gap-4 overflow-x-auto pb-2 no-scrollbar sm:auto-cols-[280px] xl:auto-cols-[320px] 2xl:grid-rows-2"
-    style={{ scrollSnapType: "x mandatory" }}
-  >
-  
-  {!loading &&
-    users.map((user) => (
-      <div
-        key={user._id}
-        onClick={() => navigate(`/profile/${user._id}`)}
-        className="cursor-pointer rounded-2xl border border-white/30 bg-white/20 p-4 shadow-sm backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-        style={{ scrollSnapAlign: "start" }}
-      >
-        {/* User Info */}
-        <div className="flex items-center gap-3 mb-3 cursor-pointer">
-          <img
-            src={
-              user.avatar?.image
-                ? `http://localhost:3000${user.avatar.image}`
-                : "https://ui-avatars.com/api/?name=" +
-                  encodeURIComponent(user.name) +
-                  "&background=random"
-            }
-            alt={user.name}
-            className="h-12 w-12 rounded-full border object-cover"
-          />
-          <h3 className="text-fluid-h3 font-semibold text-gray-800 truncate">
-            {user.name}
-          </h3>
-        </div>
-
-        {/* Rating */}
-        <div className="text-fluid-p mb-3 flex items-center gap-1 flex-wrap text-gray-700">
-          {getRatingDisplay(user.averageRating).stars || "✨"}
-          <span className="text-gray-600">
-            {user.averageRating ? user.averageRating.toFixed(1) : "0"}
-          </span>
-          <span className="text-fluid-caption rounded bg-blue-100 px-2 py-0.5 text-blue-700">
-            {getRatingDisplay(user.averageRating).label}
-          </span>
-        </div>
-
-        {/* Skills */}
-        <p className="text-fluid-label line-clamp-2 text-gray-600">
-          <span className="font-medium">Offers:</span>{" "}
-          {(user.skillsOffered || []).join(", ")}
-        </p>
-
-        <p className="text-fluid-label mb-3 line-clamp-2 text-gray-600">
-          <span className="font-medium">Wants:</span>{" "}
-          {(user.skillsWanted || []).join(", ")}
-        </p>
-
-        {/* Button */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleRequest(user);
-          }}
-          className="text-fluid-label cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
+      {/* Cards Container with Scroll Buttons */}
+      <div className="flex flex-col gap-4">
+        {/* Cards Container */}
+        <div
+          ref={containerRef}
+          className="flex flex-row gap-4 overflow-x-auto pb-2 no-scrollbar"
+          style={{ scrollSnapType: "x mandatory" }}
         >
-          Request Swap
-        </button>
+          {!loading &&
+            users.map((user) => (
+              <div
+                key={user._id}
+                onClick={() => navigate(`/profile/${user._id}`)}
+                className="min-w-60 sm:min-w-70 xl:min-w-[320px] cursor-pointer rounded-2xl border border-white/30 bg-white/20 p-4 shadow-sm backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                style={{ scrollSnapAlign: "start" }}
+              >
+                {/* User Info */}
+                <div className="flex items-center gap-3 mb-3 cursor-pointer">
+                  <img
+                    src={
+                      user.avatar?.image
+                        ? `http://localhost:3000${user.avatar.image}`
+                        : "https://ui-avatars.com/api/?name=" +
+                          encodeURIComponent(user.name) +
+                          "&background=random"
+                    }
+                    alt={user.name}
+                    className="h-12 w-12 rounded-full border object-cover"
+                  />
+                  <h3 className="text-fluid-h3 font-semibold text-gray-800 truncate">
+                    {user.name}
+                  </h3>
+                </div>
+
+                {/* Rating */}
+                <div className="text-fluid-p mb-3 flex items-center gap-1 flex-wrap text-gray-700">
+                  {getRatingDisplay(user.averageRating).stars || "✨"}
+                  <span className="text-gray-600">
+                    {user.averageRating ? user.averageRating.toFixed(1) : "0"}
+                  </span>
+                  <span className="text-fluid-caption rounded bg-blue-100 px-2 py-0.5 text-blue-700">
+                    {getRatingDisplay(user.averageRating).label}
+                  </span>
+                </div>
+
+                {/* Skills */}
+                <p className="text-fluid-label line-clamp-2 text-gray-600">
+                  <span className="font-medium">Offers:</span>{" "}
+                  {(user.skillsOffered || []).join(", ")}
+                </p>
+
+                <p className="text-fluid-label mb-3 line-clamp-2 text-gray-600">
+                  <span className="font-medium">Wants:</span>{" "}
+                  {(user.skillsWanted || []).join(", ")}
+                </p>
+
+                {/* Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRequest(user);
+                  }}
+                  className="text-fluid-label cursor-pointer w-full rounded-lg bg-blue-500 py-2 text-white transition hover:bg-blue-600"
+                >
+                  Request Swap
+                </button>
+              </div>
+            ))}
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-center gap-4 mt-2">
+          {/* Left Button */}
+          <button
+            onClick={scrollLeft}
+            className="cursor-pointer bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
+            aria-label="Scroll left"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+
+          {/* Right Button */}
+          <button
+            onClick={scrollRight}
+            className="cursor-pointer bg-linear-to-l from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
+            aria-label="Scroll right"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-    ))}
-  </div>
-
-
-{/* Buttons */}
-<div className="flex justify-center gap-4 mt-2">
-  {/* Left Button */}
-  <button
-    onClick={scrollLeft}
-    className="cursor-pointer bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
-    aria-label="Scroll left"
-  >
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-      <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-    </svg>
-  </button>
-
-  {/* Right Button */}
-  <button
-    onClick={scrollRight}
-    className="cursor-pointer bg-linear-to-l from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 active:scale-95"
-    aria-label="Scroll right"
-  >
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-    </svg>
-  </button>
-</div>
-  </div>
-</div>
+    </div>
   );
 }
 
