@@ -63,7 +63,7 @@ function TutorialCards() {
             return (
               <div
                 key={index}
-                className="relative shrink-0 w-72 overflow-hidden rounded-lg shadow-lg cursor-pointer group"
+                className="relative shrink-0 w-72 overflow-hidden rounded-lg shadow-lg group"
               >
                 {isActive ? (
                   <video
@@ -93,7 +93,7 @@ function TutorialCards() {
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         type="button"
-                        className="rounded-full bg-white/90 p-3 transition hover:bg-white"
+                        className="rounded-full bg-white/90 p-3 transition cursor-pointer hover:bg-white"
                         onClick={() => handlePlay(index)}
                       >
                         <span className="block h-0 w-0 border-l-6 border-l-transparent border-r-6 border-r-transparent border-t-6 border-t-slate-900" />
