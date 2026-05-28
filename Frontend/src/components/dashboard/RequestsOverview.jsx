@@ -10,7 +10,9 @@ function RequestsOverview() {
     const fetchRequests = async () => {
       try {
         const res = await getReceivedRequests();
-        setRequests(res.data || []);
+        setRequests(
+          (res.data || []).filter((request) => request.status === "pending"),
+        );
       } catch (err) {
         console.error("Error fetching requests", err);
         setError("Unable to load requests.");
@@ -38,7 +40,9 @@ function RequestsOverview() {
         Requests Overview
       </h2>
 
-      {loading && <p className="text-fluid-p text-gray-500">Loading requests...</p>}
+      {loading && (
+        <p className="text-fluid-p text-gray-500">Loading requests...</p>
+      )}
       {error && <p className="text-fluid-p text-red-500">{error}</p>}
 
       {!loading && requests.length === 0 && (
@@ -47,7 +51,10 @@ function RequestsOverview() {
 
       <div className="divide-y">
         {requests.map((req) => (
-          <div key={req._id} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <div
+            key={req._id}
+            className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+          >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
 
