@@ -275,6 +275,96 @@ function Navbar() {
               </form>
             )}
 
+            <div ref={notificationsRef} className="relative lg:hidden">
+              <button
+                onClick={() => setNotificationsOpen((prev) => !prev)}
+                className="relative text-2xl transition hover:text-blue-600"
+                aria-label="Notifications"
+              >
+                <span>🔔</span>
+                {notifCount > 0 && (
+                  <span className="absolute -right-2 -top-2 inline-flex min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+                    {notifCount}
+                  </span>
+                )}
+              </button>
+
+              {notificationsOpen && (
+                <div className="absolute right-0 top-full z-50 mt-3 w-85 overflow-hidden rounded-3xl border border-gray-200 bg-white/95 shadow-2xl backdrop-blur-xl text-black">
+                  <div className="border-b border-gray-200 px-4 py-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="font-semibold">Notifications</p>
+                      <span className="text-sm text-gray-500">
+                        {notifCount} new
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="max-h-90 overflow-y-auto">
+                    {loadingNotifications && (
+                      <div className="p-4 text-sm text-gray-600">
+                        Loading notifications...
+                      </div>
+                    )}
+
+                    {notificationsError && (
+                      <div className="p-4 text-sm text-red-500">
+                        {notificationsError}
+                      </div>
+                    )}
+
+                    {!loadingNotifications && notifications.length === 0 && (
+                      <div className="p-4 text-sm text-gray-600">
+                        No session requests yet.
+                      </div>
+                    )}
+
+                    {notifications.map((notif) => (
+                      <div
+                        key={notif._id}
+                        className="border-b border-gray-200 px-4 py-4 last:border-b-0"
+                      >
+                        <p className="text-sm text-gray-700">
+                          <span className="font-semibold">
+                            {notif.sender?.name || "Someone"}
+                          </span>{" "}
+                          requested a session
+                        </p>
+                        <p className="mt-2 text-sm text-gray-600">
+                          Offers{" "}
+                          <span className="font-medium text-gray-800">
+                            {notif.skillOffered || "a skill"}
+                          </span>
+                          , wants{" "}
+                          <span className="font-medium text-gray-800">
+                            {notif.skillWanted || "a skill"}
+                          </span>
+                        </p>
+                        <p className="mt-1 text-xs text-gray-500">
+                          {new Date(notif.createdAt).toLocaleString()}
+                        </p>
+                        <span
+                          className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${notif.status === "pending" ? "bg-amber-100 text-amber-800" : notif.status === "accepted" ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"}`}
+                        >
+                          {notif.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setNotificationsOpen(false);
+                      navigate("/dashboard");
+                    }}
+                    className="w-full border-t border-gray-200 bg-slate-50 px-4 py-3 text-left text-sm font-medium text-blue-600 hover:bg-slate-100"
+                  >
+                    View all requests
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* 🍔 HAMBURGER (MOBILE ONLY) */}
             <button
               className="lg:hidden flex flex-col gap-1"
