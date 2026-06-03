@@ -29,30 +29,28 @@ function HowItWorks() {
     return () => observer.disconnect();
   }, []);
 
-
   const hoverInfo = [
-  {
-    title: "Get 50 credits on joining 🚀",
-    desc: "Start teaching what you know and learn what you love.",
-  },
-  {
-    title: "Share your skills 🎯",
-    desc: "Help others grow while building your own reputation.",
-  },
-  {
-    title: "Earn credits effortlessly 💰",
-    desc: "Every session you teach adds value to your account.",
-  },
-  {
-    title: "Spend credits smartly ⚡",
-    desc: "Use them to learn skills from other talented users.",
-  },
-  {
-    title: "Grow beyond limits 📚",
-    desc: "Explore new skills and expand your knowledge network.",
-  },
-];
-
+    {
+      title: "Get 50 credits on joining",
+      desc: "Start teaching what you know and learn what you love.",
+    },
+    {
+      title: "Share your skills",
+      desc: "Help others grow while building your own reputation.",
+    },
+    {
+      title: "Earn credits effortlessly",
+      desc: "Every session you teach adds value to your account.",
+    },
+    {
+      title: "Spend credits smartly",
+      desc: "Use them to learn skills from other talented users.",
+    },
+    {
+      title: "Grow beyond limits",
+      desc: "Explore new skills and expand your knowledge network.",
+    },
+  ];
 
   const steps = [
     "Sign Up",
@@ -89,36 +87,39 @@ function HowItWorks() {
           {steps.map((step, index) => {
             const image = images[index] || images[0];
             const info = hoverInfo[index];
+
             return (
               <div
-                key={index}
-                ref={(el) => (sectionRef.current[index] = el)}
+                key={step}
+                ref={(el) => {
+                  sectionRef.current[index] = el;
+                }}
                 data-index={index}
                 className="mb-8 flex items-center justify-center sm:mb-10"
               >
-              <div className="flex w-full">
-              <div
-                className={`w-full flex ${
-                  index % 2 === 0 ? "justify-start" : "justify-end"
-                }`}
-              >
-                 <Card
-                    image={image}
-                    text={step}
-                    hoverTitle={info.title}
-                    hoverDesc={info.desc}
-                    align={index % 2 === 0 ? "left" : "right"}
-                    enableHoverEffect={true}
-                    className={`h-64 w-[90%] sm:w-[65%] lg:w-[45%] transition-all duration-700 ease-out sm:h-72 xl:h-80 ${
-                      visibleCards.includes(index.toString())
-                        ? "translate-x-0 opacity-100"
-                        : index % 2 === 0
-                          ? "-translate-x-[120%] opacity-0"
-                          : "translate-x-[120%] opacity-0"
+                <div className="flex w-full">
+                  <div
+                    className={`w-full flex ${
+                      index % 2 === 0 ? "justify-start" : "justify-end"
                     }`}
-                    style={{ transitionDelay: `${index * 100}ms` }}
-                  />
-                </div>
+                  >
+                    <Card
+                      image={image}
+                      text={step}
+                      hoverTitle={info.title}
+                      hoverDesc={info.desc}
+                      align={index % 2 === 0 ? "left" : "right"}
+                      enableHoverEffect
+                      className={`h-64 w-[90%] transition-all duration-700 ease-out sm:h-72 sm:w-[65%] lg:h-80 lg:w-[45%] ${
+                        visibleCards.includes(index.toString())
+                          ? "translate-x-0 opacity-100"
+                          : index % 2 === 0
+                            ? "-translate-x-[120%] opacity-0"
+                            : "translate-x-[120%] opacity-0"
+                      }`}
+                      style={{ transitionDelay: `${index * 100}ms` }}
+                    />
+                  </div>
                 </div>
               </div>
             );

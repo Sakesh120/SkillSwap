@@ -11,6 +11,7 @@ import ViewProfile from "./pages/Viewprofile";
 import MySessions from "./pages/MySessions";
 import About from "./pages/About";
 import SearchResults from "./pages/SearchResults";
+import HowitWorks from "./pages/howitworks";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/how-it-works" element={<HowitWorks />} />
       </Routes>
     </>
   );

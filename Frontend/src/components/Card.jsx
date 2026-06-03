@@ -1,6 +1,6 @@
 function Card({
-   hoverTitle,
-    hoverDesc,
+  hoverTitle,
+  hoverDesc,
   image,
   text,
   className = "",
@@ -14,7 +14,7 @@ function Card({
       style={style}
     >
       {enableHoverEffect && (
-        <div className="absolute inset-0 bg-black/30 opacity-0 transition-all duration-500 group-hover:opacity-100"></div>
+        <div className="absolute inset-0 bg-black/30 opacity-0 transition-all duration-500 group-hover:opacity-100" />
       )}
 
       <div
@@ -40,20 +40,18 @@ function Card({
               : "translate-x-full group-hover:translate-x-0"
           }`}
         >
-          <div className="absolute inset-0 bg-linear-to-r from-blue-400/80 via-blue-300/70 to-blue-200/60"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-blue-400/80 via-blue-300/70 to-blue-200/60" />
 
           <div className="relative z-10 flex h-full items-center justify-center px-6">
-            <p className="text-fluid-h3 text-center font-semibold text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
-           <p> {hoverTitle}
-            </p> 
-              {hoverDesc}
-            </p>
+            <div className="max-w-xs text-center text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
+              <p className="text-fluid-h3 font-semibold">{hoverTitle}</p>
+              <p className="mt-3 text-sm leading-relaxed text-white/90">
+                {hoverDesc}
+              </p>
+            </div>
           </div>
         </div>
       )}
-
-
-
     </div>
   );
 }
