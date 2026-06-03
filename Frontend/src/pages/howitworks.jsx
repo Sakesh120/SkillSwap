@@ -216,9 +216,9 @@ function HowitWorks() {
   return (
     <div className="relative overflow-hidden bg-[#fcfbff] text-slate-800">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-160px] top-[-120px] h-[420px] w-[420px] rounded-full bg-violet-200/60 blur-3xl" />
-        <div className="absolute right-[-120px] top-[12%] h-[360px] w-[360px] rounded-full bg-fuchsia-100/70 blur-3xl" />
-        <div className="absolute bottom-[-140px] left-[22%] h-[380px] w-[380px] rounded-full bg-white blur-3xl" />
+        <div className="absolute left-40 top-30 h-105 w-105 rounded-full bg-violet-200/60 blur-3xl" />
+        <div className="absolute right-30 top-[12%] h-90 w-90 rounded-full bg-fuchsia-100/70 blur-3xl" />
+        <div className="absolute bottom-35 left-[22%] h-95 w-95 rounded-full bg-white blur-3xl" />
       </div>
 
       <section className="relative z-10 mx-auto max-w-7xl px-6 pb-10 pt-20 text-center md:pt-28">
@@ -226,7 +226,7 @@ function HowitWorks() {
 
         <h1 className="mx-auto max-w-4xl text-5xl font-black leading-tight tracking-tight md:text-7xl">
           How{" "}
-          <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-400 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-violet-500 via-fuchsia-500 to-violet-400 bg-clip-text text-transparent">
             SkillSwap
           </span>{" "}
           works
@@ -243,7 +243,7 @@ function HowitWorks() {
         className="relative z-10 mx-auto max-w-7xl px-6 pb-24 pt-8 md:pb-32"
       >
         <div className="relative">
-          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-violet-200 via-violet-300 to-fuchsia-200 md:block" />
+          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-linear-to-b from-violet-200 via-violet-300 to-fuchsia-200 md:block" />
 
           <svg
             className="pointer-events-none absolute inset-0 hidden h-full w-full overflow-visible md:block"
@@ -344,13 +344,13 @@ function HowitWorks() {
                   className={`flex ${alignRight ? "md:justify-end" : "md:justify-start"}`}
                 >
                   <article
-                    className="group relative w-full max-w-[21rem] [perspective:1600px] sm:max-w-[23rem]"
+                    className="group relative w-full max-w-84 [perspective-1600px] sm:max-w-92"
                     ref={(node) => {
                       cardRefs.current[index] = node;
                     }}
                   >
                     <div
-                      className="relative h-[28rem] w-full [transform-style:preserve-3d] transition-transform duration-700 hover:-translate-y-2 group-hover:[transform:rotateY(180deg)]"
+                      className="relative h-112 w-full transform-3d transition-transform duration-700 hover:-translate-y-2 group-hover:transform-[rotateY(180deg)]"
                       style={{
                         transformStyle: "preserve-3d",
                         WebkitTransformStyle: "preserve-3d",
@@ -364,15 +364,15 @@ function HowitWorks() {
                         }}
                       >
                         <div
-                          className={`absolute inset-0 bg-gradient-to-br ${step.accent} opacity-90`}
+                          className={`absolute inset-0 bg-linear-to-br ${step.accent} opacity-90`}
                         />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.9),_rgba(255,255,255,0.35)_45%,_transparent_80%)]" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),rgba(255,255,255,0.35)_45%,transparent_80%)]" />
                         <div className="absolute left-4 top-4 rounded-full border border-violet-200 bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.25em] text-violet-600">
                           {step.badge}
                         </div>
 
                         <div className="absolute inset-0 p-6">
-                          <div className="flex h-full w-full flex-col justify-between rounded-[2rem] border border-white/60 bg-white/55 p-6 text-left shadow-inner shadow-white/50">
+                          <div className="flex h-full w-full flex-col justify-between rounded-4xl border border-white/60 bg-white/55 p-6 text-left shadow-inner shadow-white/50">
                             <div className="flex items-center justify-between">
                               <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-violet-700">
                                 {step.kicker}
@@ -409,7 +409,7 @@ function HowitWorks() {
                       </div>
 
                       <div
-                        className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-violet-200/80 bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-[0_28px_70px_rgba(168,85,247,0.14)] ring-1 ring-violet-100/80 backdrop-blur-xl"
+                        className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-violet-200/80 bg-linear-to-br from-white via-violet-50 to-fuchsia-50 shadow-[0_28px_70px_rgba(168,85,247,0.14)] ring-1 ring-violet-100/80 backdrop-blur-xl"
                         style={{
                           backfaceVisibility: "hidden",
                           WebkitBackfaceVisibility: "hidden",
@@ -422,7 +422,7 @@ function HowitWorks() {
                         </div>
 
                         <div className="absolute inset-0 p-6">
-                          <div className="flex h-full w-full flex-col justify-between rounded-[2rem] border border-white/80 bg-white/70 p-6 text-left shadow-inner shadow-violet-100/70">
+                          <div className="flex h-full w-full flex-col justify-between rounded-4xl border border-white/80 bg-white/70 p-6 text-left shadow-inner shadow-violet-100/70">
                             <div className="flex items-center justify-between">
                               <span className="rounded-full border border-violet-200 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-violet-700">
                                 Detailed view
