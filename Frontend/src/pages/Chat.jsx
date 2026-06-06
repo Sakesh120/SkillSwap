@@ -147,6 +147,9 @@ function Chat() {
                         isMine ? "items-end" : "items-start"
                       }`}
                     >
+                      <div className="font-medium text-black">
+                        {isMine ? "You" : message.sender?.name || "Partner"}
+                      </div>
                       <div
                         className={`max-w-[85%] rounded-3xl px-4 py-3 text-sm leading-6 shadow-sm ${
                           isMine
@@ -154,9 +157,6 @@ function Chat() {
                             : "bg-white text-slate-900"
                         }`}
                       >
-                        <div className="font-medium">
-                          {isMine ? "You" : message.sender?.name || "Partner"}
-                        </div>
                         <p className="mt-1 wrap-break-words">
                           {message.content}
                         </p>
