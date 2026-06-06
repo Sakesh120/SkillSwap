@@ -14,6 +14,29 @@ export const getSession = async (req, res) => {
   }
 };
 
+// GET specific session by ID
+export const getSessionById = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const session = await Session.findById(sessionId).populate(
+      "users",
+      "name email",
+    );
+
+    if (!session) {
+      return res.status(404).json({ message: "Session not found" });
+    }
+
+    if (!session.users.some((user) => user._id.toString() === req.user)) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // SCHEDULE SESSION
 export const scheduleSession = async (req, res) => {
   try {

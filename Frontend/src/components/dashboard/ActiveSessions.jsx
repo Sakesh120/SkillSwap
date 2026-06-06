@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getSessions,
   scheduleSession as scheduleSessionApi,
@@ -10,6 +11,7 @@ function ActiveSessions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
@@ -104,9 +106,18 @@ function ActiveSessions() {
   return (
     <>
       <div className="rounded-2xl border border-white/30 bg-white/20 p-6 shadow-sm backdrop-blur-lg">
-        <h2 className="text-fluid-h3 mb-4 font-semibold text-gray-800">
-          Active Sessions
-        </h2>
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-fluid-h3 font-semibold text-gray-800">
+            Active Sessions
+          </h2>
+          <button
+            type="button"
+            onClick={() => navigate("/chats")}
+            className="text-xs bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition"
+          >
+            View all chats
+          </button>
+        </div>
 
         {loading && (
           <p className="text-fluid-p text-gray-500">Loading sessions...</p>
@@ -149,6 +160,7 @@ function ActiveSessions() {
               <div className="flex gap-2 sm:shrink-0">
                 <button
                   type="button"
+                  onClick={() => navigate(`/chat/${session._id}`)}
                   className="text-xs bg-gray-100 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-gray-200 transition"
                 >
                   Chat

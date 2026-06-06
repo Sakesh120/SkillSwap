@@ -12,6 +12,8 @@ import MySessions from "./pages/MySessions";
 import About from "./pages/About";
 import SearchResults from "./pages/SearchResults";
 import HowitWorks from "./pages/howitworks";
+import Chat from "./pages/Chat";
+import Chats from "./pages/Chats";
 
 function App() {
   return (
@@ -46,6 +48,22 @@ function App() {
           element={
             <PrivateRoute>
               <MySessions />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chat/:sessionId"
+          element={
+            <PrivateRoute>
+              <Chat />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <PrivateRoute>
+              <Chats />
             </PrivateRoute>
           }
         />
