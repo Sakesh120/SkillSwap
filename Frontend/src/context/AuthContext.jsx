@@ -16,9 +16,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await getCurrentUser();
       setUser(res.data);
-      localStorage.setItem("user", JSON.stringify(res.data)); // ✅ persist
+      localStorage.setItem("user", JSON.stringify(res.data));
     } catch {
       setUser(null);
+      localStorage.removeItem("user");
     } finally {
       setLoading(false);
     }
@@ -40,10 +41,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      // remove token
       localStorage.removeItem("token");
-
-      // clear userState
+      localStorage.removeItem("user");
       setUser(null);
     } catch (error) {
       console.log("Logout error:", error);
@@ -51,14 +50,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const initializeAuth = async () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (storedUser) {
-      setUser(storedUser);
-      setLoading(false);
-    } else {
-      fetchUser();
-    }
+      if (storedUser) {
+        setUser(storedUser);
+      }
+
+      await fetchUser();
+    };
+
+    initializeAuth();
   }, []);
 
   return (

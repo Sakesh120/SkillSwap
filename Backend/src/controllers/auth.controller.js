@@ -105,14 +105,7 @@ export const getUser = async (req, res) => {
         message: "User not found",
       });
     }
-    res.json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      skillsOffered: user.skillsOffered,
-      skillsWanted: user.skillsWanted,
-      credits: user.credits,
-    });
+    res.json(user);
   } catch (error) {
     res.status(500).json({
       message: error.message,
