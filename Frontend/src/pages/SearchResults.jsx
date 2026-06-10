@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchTutorials, searchUsers } from "../api/search.api";
+import WorkFlow from "../components/WorkFlow";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -204,6 +205,7 @@ function SearchResults() {
           </div>
         </div>
       )}
+      <WorkFlow />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { useAuth } from "../context/AuthContext";
 import { getChatHistory, getSessionById } from "../api/chat.api";
+import WorkFlow from "../components/WorkFlow";
 
 const CHAT_SERVER_URL = "http://localhost:3000";
 
@@ -190,6 +191,7 @@ function Chat() {
           </div>
         )}
       </div>
+      <WorkFlow />
     </div>
   );
 }

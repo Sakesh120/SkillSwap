@@ -290,7 +290,7 @@ function Navbar() {
               </button>
 
               {notificationsOpen && (
-                <div className="absolute right-0 top-full z-50 mt-3 w-85 overflow-hidden rounded-3xl border border-gray-200 bg-white/95 shadow-2xl backdrop-blur-xl text-black">
+                <div className="absolute md:right-0 -right-8  top-full z-50 mt-3 w-85 overflow-hidden rounded-3xl border border-gray-200 bg-white/95 shadow-2xl backdrop-blur-xl text-black">
                   <div className="border-b border-gray-200 px-4 py-3">
                     <div className="flex items-center justify-between gap-3">
                       <p className="font-semibold">Notifications</p>

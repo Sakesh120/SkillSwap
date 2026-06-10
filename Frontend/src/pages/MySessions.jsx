@@ -8,6 +8,7 @@ import {
 import { giveRating as submitRatingApi } from "../api/rating.api";
 import { getUserById } from "../api/user.api";
 import { useAuth } from "../context/AuthContext";
+import WorkFlow from "../components/WorkFlow";
 
 function MySessions() {
   const { user } = useAuth();
@@ -296,7 +297,9 @@ function MySessions() {
     >
       <div className="page-shell space-y-6">
         <div>
-          <h1 className="text-fluid-h2 font-semibold text-gray-900">My sessions</h1>
+          <h1 className="text-fluid-h2 font-semibold text-gray-900">
+            My sessions
+          </h1>
           <p className="text-fluid-p mt-1 text-gray-600">
             View details, schedule a time, then mark complete after the session
             happens.
@@ -684,6 +687,7 @@ function MySessions() {
           </div>
         </div>
       )}
+      <WorkFlow />
     </div>
   );
 }

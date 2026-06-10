@@ -8,6 +8,7 @@ import About from "../components/profilepage/About";
 import Stats from "../components/profilepage/Stats";
 import { useNavigate } from "react-router-dom";
 import MyUploads from "../components/profilepage/MyUploads";
+import WorkFlow from "../components/WorkFlow";
 
 function Profilepage({ viewOnly = false, userId = null }) {
   const { id } = useParams();
@@ -374,6 +375,7 @@ function Profilepage({ viewOnly = false, userId = null }) {
           )}
         </>
       )}
+      <WorkFlow />
     </div>
   );
 }

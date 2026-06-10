@@ -6,6 +6,7 @@ import PromoCards from "../components/dashboard/PromoCards";
 import ActiveSessions from "../components/dashboard/ActiveSessions";
 import Activity from "../components/dashboard/Activity";
 import TutorialCards from "../components/dashboard/TutorialCards";
+import WorkFlow from "../components/WorkFlow";
 
 function Dashboard() {
   return (
@@ -24,6 +25,7 @@ function Dashboard() {
         <ActiveSessions />
         <TutorialCards />
         <Activity />
+        <WorkFlow />
       </div>
     </div>
   );

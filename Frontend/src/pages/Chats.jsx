@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSessions } from "../api/session.api";
 import { useAuth } from "../context/AuthContext";
+import WorkFlow from "../components/WorkFlow";
 
 function Chats() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Chats() {
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-5xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xl">
+      <div className="mx-auto w-full max-w-5xl mt-20 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.24em] text-blue-600">
@@ -107,6 +108,7 @@ function Chats() {
           </div>
         )}
       </div>
+      <WorkFlow />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import SearchResults from "./pages/SearchResults";
 import HowitWorks from "./pages/howitworks";
 import Chat from "./pages/Chat";
 import Chats from "./pages/Chats";
+import WorkFlow from "./components/WorkFlow";
 
 function App() {
   return (
