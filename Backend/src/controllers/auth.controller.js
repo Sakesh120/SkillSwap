@@ -9,7 +9,7 @@ export async function register(req, res) {
     return res.status(400).send("All fields are required");
   }
   try {
-    // Check if user already exists (onlly email)
+    // Check if user already exists (only email)
     const existingUser = await userModel.findOne({ email: email });
 
     if (existingUser) {
