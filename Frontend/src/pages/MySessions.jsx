@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getSessions,
   scheduleSession as scheduleSessionApi,
   completeSession as completeSessionApi,
+  createSessionRoom as createSessionRoomApi,
   updateSessionPlatform as updateSessionPlatformApi,
 } from "../api/session.api";
 import { giveRating as submitRatingApi } from "../api/rating.api";
@@ -24,8 +26,12 @@ function MySessions() {
   const [scheduling, setScheduling] = useState(false);
 
   const [completingId, setCompletingId] = useState(null);
+  const [startingId, setStartingId] = useState(null);
+  const [startModal, setStartModal] = useState({ open: false, message: "" });
   const [platformDraftBySession, setPlatformDraftBySession] = useState({});
   const [platformSavingId, setPlatformSavingId] = useState(null);
+
+  const navigate = useNavigate();
 
   /** partner user id -> whether current user already rated them (persisted on partner profile) */
   const [ratedPartnerById, setRatedPartnerById] = useState({});
@@ -110,6 +116,24 @@ function MySessions() {
 
   const getTopic = (session) =>
     session.skillRequested || session.skillsOffered || "Skill session";
+
+  const getSessionTimeMeta = (session) => {
+    const scheduledAt = session.scheduledAt
+      ? new Date(session.scheduledAt)
+      : null;
+    const now = Date.now();
+    if (!scheduledAt) {
+      return { isStartable: false, isLate: false, scheduledAt };
+    }
+
+    const start = scheduledAt.getTime();
+    const end = start + 60 * 60 * 1000;
+    return {
+      isStartable: now >= start && now <= end,
+      isLate: now > end,
+      scheduledAt,
+    };
+  };
 
   const userMarkedComplete = (session) =>
     session.completeBy?.some((id) => String(id) === String(user?._id));
@@ -211,6 +235,53 @@ function MySessions() {
     } finally {
       setPlatformSavingId(null);
     }
+  };
+
+  const handleStartSession = async (session) => {
+    setActionError(null);
+    setStartModal({ open: false, message: "" });
+    const { isStartable, isLate } = getSessionTimeMeta(session);
+
+    if (
+      isLate ||
+      session.status === "expired" ||
+      session.status === "abandoned"
+    ) {
+      setActionError("You got late. Session has been discarded.");
+      return;
+    }
+
+    if (!isStartable) {
+      setActionError("This session is not ready to start yet.");
+      return;
+    }
+
+    if (session.platform !== "SKILLSWAP") {
+      setStartModal({
+        open: true,
+        message: `Please start your session on ${session.platform || "your selected platform"}`,
+      });
+      return;
+    }
+
+    try {
+      setStartingId(session._id);
+      const roomPayload = await createSessionRoomApi(session._id);
+      const { roomId } = roomPayload.data;
+      navigate(`/session/${roomId}`);
+    } catch (err) {
+      setActionError(
+        err.response?.data?.message ||
+          err.message ||
+          "Could not start the SkillSwap session.",
+      );
+    } finally {
+      setStartingId(null);
+    }
+  };
+
+  const closeStartModal = () => {
+    setStartModal({ open: false, message: "" });
   };
 
   const setRatingStars = (sessionId, stars) => {
@@ -352,6 +423,7 @@ function MySessions() {
             const selectedPlatform =
               platformDraftBySession[session._id] ?? session.platform ?? "";
             const isSavingPlatform = platformSavingId === session._id;
+            const { isStartable, isLate } = getSessionTimeMeta(session);
 
             return (
               <div
@@ -464,14 +536,13 @@ function MySessions() {
                           <option value="ZOOM">ZOOM</option>
                           <option value="GMEET">GMEET</option>
                           <option value="WHATSAPP CALL">WHATSAPP CALL</option>
+                          <option value="SKILLSWAP">SKILLSWAP</option>
                         </select>
 
                         <button
                           type="button"
                           disabled={
-                            !canSelectPlatform ||
-                            !selectedPlatform ||
-                            isSavingPlatform
+                            !canSelectPlatform || !selectedPlatform || isSavingPlatform
                           }
                           onClick={() => handlePlatformSave(session._id)}
                           className="text-sm cursor-pointer bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition disabled:opacity-40 disabled:cursor-not-allowed"
@@ -489,9 +560,40 @@ function MySessions() {
                         {isScheduled ? "Reschedule" : "Schedule"}
                       </button>
 
+                      {session.status === "live" && session.sessionRoomId ? (
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/session/${session.sessionRoomId}`)}
+                          className="text-sm cursor-pointer px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                        >
+                          Join session
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={!isStartable || isLate || completed}
+                          onClick={() => handleStartSession(session)}
+                          className={`text-sm cursor-pointer px-4 py-2 rounded-lg transition ${
+                            isLate || completed
+                              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                              : isStartable
+                                ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                                : "bg-blue-600 text-white hover:bg-blue-700"
+                          }`}
+                        >
+                          {startingId === session._id
+                            ? "Starting…"
+                            : isLate
+                              ? "Expired"
+                              : isStartable
+                                ? "Start Session"
+                                : "Scheduled"}
+                        </button>
+                      )}
+
                       <button
                         type="button"
-                        disabled={!canComplete}
+                        disabled={!canComplete || session.status !== "live"}
                         title={
                           isPending
                             ? "Schedule the session first"
@@ -687,6 +789,40 @@ function MySessions() {
           </div>
         </div>
       )}
+
+      {startModal.open && (
+        <div
+          className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="my-sessions-start-modal-title"
+        >
+          <div
+            className="absolute inset-0"
+            aria-hidden="true"
+            onClick={() => closeStartModal()}
+          />
+          <div className="relative z-10 w-full max-w-md rounded-2xl border border-white/40 bg-white p-6 shadow-xl">
+            <h3
+              id="my-sessions-start-modal-title"
+              className="text-fluid-h3 mb-3 font-semibold text-gray-900"
+            >
+              Start session
+            </h3>
+            <p className="text-sm text-gray-600 mb-4">{startModal.message}</p>
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => closeStartModal()}
+                className="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <WorkFlow />
     </div>
   );

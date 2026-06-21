@@ -9,6 +9,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Myuploads from "./pages/Upload";
 import ViewProfile from "./pages/Viewprofile";
 import MySessions from "./pages/MySessions";
+import SessionRoom from "./pages/SessionRoom";
 import About from "./pages/About";
 import SearchResults from "./pages/SearchResults";
 import HowitWorks from "./pages/howitworks";
@@ -49,6 +50,14 @@ function App() {
           element={
             <PrivateRoute>
               <MySessions />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/session/:roomId"
+          element={
+            <PrivateRoute>
+              <SessionRoom />
             </PrivateRoute>
           }
         />

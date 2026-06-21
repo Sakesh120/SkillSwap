@@ -10,6 +10,7 @@ import sessionRouter from "./routes/session.routes.js";
 import ratingRouter from "./routes/rating.routes.js";
 import activityRouter from "./routes/activity.routes.js";
 import chatRouter from "./routes/chat.routes.js";
+import notificationRouter from "./routes/notification.routes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -37,6 +38,7 @@ app.use("/api/users", userRouter);
 app.use("/api/request", requestRouter);
 app.use("/api/session", sessionRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/notification", notificationRouter);
 app.use("/api/activity", activityRouter);
 app.use("/api/rating", ratingRouter);
 

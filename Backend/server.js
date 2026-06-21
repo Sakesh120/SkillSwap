@@ -4,6 +4,10 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import Session from "./src/model/session.model.js";
 import ChatMessage from "./src/model/chat.model.js";
+import {
+  initSessionSocket,
+  startSessionScheduler,
+} from "./src/socket/sessionSocket.js";
 
 connectDB();
 
@@ -15,6 +19,11 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+
+initSessionSocket(io);
+
+// make io available to controllers via req.app.get('io')
+app.set("io", io);
 
 io.on("connection", (socket) => {
   console.log("Socket connected:", socket.id);
@@ -68,6 +77,8 @@ io.on("connection", (socket) => {
     console.log("Socket disconnected:", socket.id);
   });
 });
+
+startSessionScheduler(io);
 
 server.listen(3000, () => {
   console.log("The server is running on http://localhost:3000");

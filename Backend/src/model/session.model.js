@@ -13,13 +13,28 @@ const sessionSchema = new mongoose.Schema(
     scheduledAt: Date,
     platform: {
       type: String,
-      enum: ["", "ZOOM", "GMEET", "WHATSAPP CALL"],
+      enum: ["", "ZOOM", "GMEET", "WHATSAPP CALL", "SKILLSWAP"],
       default: "",
     },
     status: {
       type: String,
-      enum: ["pending", "scheduled", "completed"],
+      enum: [
+        "pending",
+        "scheduled",
+        "live",
+        "completed",
+        "expired",
+        "abandoned",
+      ],
       default: "pending",
+    },
+    sessionRoomId: {
+      type: String,
+      default: "",
+    },
+    startNotificationSent: {
+      type: Boolean,
+      default: false,
     },
     completeBy: [
       {
