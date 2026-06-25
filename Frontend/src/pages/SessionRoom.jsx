@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FiMessageCircle } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { useAuth } from "../context/AuthContext";
@@ -26,7 +27,7 @@ function SessionRoom() {
   const [cameraOn, setCameraOn] = useState(true);
   const [micOn, setMicOn] = useState(true);
   const [peerConnected, setPeerConnected] = useState(false);
-  const [showMobileChat, setShowMobileChat] = useState(false);
+  const [showChatPanel, setShowChatPanel] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
 
@@ -287,7 +288,10 @@ function SessionRoom() {
 
       try {
         // Add tracks if they're not already present
-        const senders = pcRef.current.getSenders().map((s) => s.track).filter(Boolean);
+        const senders = pcRef.current
+          .getSenders()
+          .map((s) => s.track)
+          .filter(Boolean);
         localStream.getTracks().forEach((track) => {
           if (!senders.includes(track)) {
             try {
@@ -412,187 +416,184 @@ function SessionRoom() {
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8 mt-[10vh]">
-      <div className="mx-auto w-full max-w-7xl space-y-6">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-3xl font-semibold text-slate-900">
-                SkillSwap meeting
-              </h1>
-              <p className="mt-2 text-sm text-slate-500">
-                {session?.skillRequested ||
-                  session?.skillsOffered ||
-                  "Skill session"}
-                {partner ? ` with ${partner.name}` : ""}.
-              </p>
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold text-slate-900">
+              SkillSwap meeting
+            </h1>
+            <p className="mt-2 text-sm text-slate-500">
+              {session?.skillRequested ||
+                session?.skillsOffered ||
+                "Skill session"}
+              {partner ? ` with ${partner.name}` : ""}.
+            </p>
+          </div>
+          <div className="space-y-2 text-right">
+            <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">
+              {session?.status || "live"}
+            </span>
+            <p className="text-sm text-slate-500">{statusMessage}</p>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+          <div className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-4">
+            <div className="grid gap-4 xl:grid-cols-[2fr_1fr]">
+              {/* Partner (larger) */}
+              <div className="rounded-3xl bg-black p-2 order-2 xl:order-1">
+                <video
+                  ref={remoteVideoRef}
+                  autoPlay
+                  playsInline
+                  className="h-96 w-full rounded-3xl object-cover bg-slate-900"
+                />
+                <p className="mt-2 text-sm text-slate-400">Partner camera</p>
+              </div>
+
+              {/* Local (smaller) */}
+              <div className="rounded-3xl bg-black p-2 order-1 xl:order-2">
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  className="h-44 w-full rounded-3xl object-cover bg-slate-900"
+                />
+                <p className="mt-2 text-sm text-slate-400">Your camera</p>
+              </div>
             </div>
-            <div className="space-y-2 text-right">
-              <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">
-                {session?.status || "live"}
-              </span>
-              <p className="text-sm text-slate-500">{statusMessage}</p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={toggleMute}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                  micOn
+                    ? "bg-slate-700 text-white hover:bg-slate-800"
+                    : "bg-red-100 text-red-700 hover:bg-red-200"
+                }`}
+              >
+                {micOn ? "Mute" : "Unmute"}
+              </button>
+              <button
+                type="button"
+                onClick={toggleCamera}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                  cameraOn
+                    ? "bg-slate-700 text-white hover:bg-slate-800"
+                    : "bg-red-100 text-red-700 hover:bg-red-200"
+                }`}
+              >
+                {cameraOn ? "Stop camera" : "Start camera"}
+              </button>
+              <button
+                type="button"
+                onClick={endSession}
+                className="rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+              >
+                End session
+              </button>
+            </div>
+
+            {/* Mobile chat toggle button (small screens) */}
+            <div className="block lg:hidden">
+              <button
+                type="button"
+                onClick={() => setShowMobileChat(true)}
+                className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white"
+              >
+                Open chat
+              </button>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white p-4">
+              <h2 className="text-sm font-semibold text-slate-900 mb-3">
+                Chat
+              </h2>
+              <div className="space-y-3 max-h-80 overflow-y-auto pb-2">
+                {chatMessages.length === 0 ? (
+                  <p className="text-sm text-slate-500">
+                    Send a note to your partner while you wait.
+                  </p>
+                ) : (
+                  chatMessages.map((message, index) => {
+                    const isMine = message.userId === user?._id;
+                    return (
+                      <div
+                        key={`${message.createdAt}-${index}`}
+                        className={`rounded-3xl px-4 py-3 text-sm shadow-sm ${
+                          isMine
+                            ? "bg-blue-600 text-white self-end"
+                            : "bg-slate-100 text-slate-900"
+                        }`}
+                      >
+                        <div className="font-medium">
+                          {isMine ? "You" : message.userName || "Partner"}
+                        </div>
+                        <p className="mt-1 whitespace-pre-wrap">
+                          {message.content}
+                        </p>
+                        <span className="text-xs text-slate-400">
+                          {new Date(message.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+              <div className="mt-4 flex gap-2">
+                <textarea
+                  rows={2}
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  className="min-h-24 w-full resize-none rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
+                  placeholder="Type a message..."
+                />
+                <button
+                  type="button"
+                  onClick={sendChatMessage}
+                  disabled={!messageText.trim()}
+                  className="rounded-3xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+                >
+                  Send
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-            <div className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-4">
-              <div className="grid gap-4 xl:grid-cols-[2fr_1fr]">
-                {/* Partner (larger) */}
-                <div className="rounded-3xl bg-black p-2 order-2 xl:order-1">
-                  <video
-                    ref={remoteVideoRef}
-                    autoPlay
-                    playsInline
-                    className="h-96 w-full rounded-3xl object-cover bg-slate-900"
-                  />
-                  <p className="mt-2 text-sm text-slate-400">Partner camera</p>
-                </div>
-
-                {/* Local (smaller) */}
-                <div className="rounded-3xl bg-black p-2 order-1 xl:order-2">
-                  <video
-                    ref={localVideoRef}
-                    autoPlay
-                    muted
-                    playsInline
-                    className="h-44 w-full rounded-3xl object-cover bg-slate-900"
-                  />
-                  <p className="mt-2 text-sm text-slate-400">Your camera</p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={toggleMute}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                    micOn
-                      ? "bg-slate-700 text-white hover:bg-slate-800"
-                      : "bg-red-100 text-red-700 hover:bg-red-200"
-                  }`}
-                >
-                  {micOn ? "Mute" : "Unmute"}
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleCamera}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                    cameraOn
-                      ? "bg-slate-700 text-white hover:bg-slate-800"
-                      : "bg-red-100 text-red-700 hover:bg-red-200"
-                  }`}
-                >
-                  {cameraOn ? "Stop camera" : "Start camera"}
-                </button>
-                <button
-                  type="button"
-                  onClick={endSession}
-                  className="rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                >
-                  End session
-                </button>
-              </div>
-
-              {/* Mobile chat toggle button (small screens) */}
-              <div className="block lg:hidden">
-                <button
-                  type="button"
-                  onClick={() => setShowMobileChat(true)}
-                  className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white"
-                >
-                  Open chat
-                </button>
-              </div>
-
-              <div className="rounded-3xl border border-slate-200 bg-white p-4">
-                <h2 className="text-sm font-semibold text-slate-900 mb-3">
-                  Chat
-                </h2>
-                <div className="space-y-3 max-h-80 overflow-y-auto pb-2">
-                  {chatMessages.length === 0 ? (
-                    <p className="text-sm text-slate-500">
-                      Send a note to your partner while you wait.
-                    </p>
-                  ) : (
-                    chatMessages.map((message, index) => {
-                      const isMine = message.userId === user?._id;
-                      return (
-                        <div
-                          key={`${message.createdAt}-${index}`}
-                          className={`rounded-3xl px-4 py-3 text-sm shadow-sm ${
-                            isMine
-                              ? "bg-blue-600 text-white self-end"
-                              : "bg-slate-100 text-slate-900"
-                          }`}
-                        >
-                          <div className="font-medium">
-                            {isMine ? "You" : message.userName || "Partner"}
-                          </div>
-                          <p className="mt-1 whitespace-pre-wrap">
-                            {message.content}
-                          </p>
-                          <span className="text-xs text-slate-400">
-                            {new Date(message.createdAt).toLocaleString()}
-                          </span>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-                <div className="mt-4 flex gap-2">
-                  <textarea
-                    rows={2}
-                    value={messageText}
-                    onChange={(e) => setMessageText(e.target.value)}
-                    className="min-h-24 w-full resize-none rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                    placeholder="Type a message..."
-                  />
-                  <button
-                    type="button"
-                    onClick={sendChatMessage}
-                    disabled={!messageText.trim()}
-                    className="rounded-3xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
-                  >
-                    Send
-                  </button>
-                </div>
-              </div>
+          <div className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6">
+            <div>
+              <h2 className="text-lg font-semibold text-slate-900">
+                Meeting details
+              </h2>
+              <p className="mt-2 text-sm text-slate-500">Room ID: {roomId}</p>
+              <p className="mt-2 text-sm text-slate-500">
+                Partner: {partner?.name || partner?.email || "Pending"}
+              </p>
             </div>
-
-            <div className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6">
-              <div>
-                <h2 className="text-lg font-semibold text-slate-900">
-                  Meeting details
-                </h2>
-                <p className="mt-2 text-sm text-slate-500">Room ID: {roomId}</p>
-                <p className="mt-2 text-sm text-slate-500">
-                  Partner: {partner?.name || partner?.email || "Pending"}
-                </p>
-              </div>
-              <div className="rounded-3xl bg-slate-50 p-4">
-                <p className="text-sm text-slate-600">
-                  This session is using the internal SkillSwap meeting
-                  experience. Keep this browser tab open while the session is
-                  live.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <p className="text-sm text-slate-700">
-                  Session status: {meeting?.status || session?.status}
-                </p>
-                <p className="text-sm text-slate-700">
-                  Server connection: {socketConnected ? "online" : "offline"}
-                </p>
-                <p className="text-sm text-slate-700">
-                  Call status:{" "}
-                  {peerConnected ? "Connected" : "Waiting for partner"}
-                </p>
-              </div>
+            <div className="rounded-3xl bg-slate-50 p-4">
+              <p className="text-sm text-slate-600">
+                This session is using the internal SkillSwap meeting experience.
+                Keep this browser tab open while the session is live.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-sm text-slate-700">
+                Session status: {meeting?.status || session?.status}
+              </p>
+              <p className="text-sm text-slate-700">
+                Server connection: {socketConnected ? "online" : "offline"}
+              </p>
+              <p className="text-sm text-slate-700">
+                Call status:{" "}
+                {peerConnected ? "Connected" : "Waiting for partner"}
+              </p>
             </div>
           </div>
         </div>
-        <WorkFlow />
       </div>
+      <WorkFlow />
     </div>
   );
 }
