@@ -796,8 +796,6 @@ function SessionRoom() {
           </p>
         </div>
       </div>
-
-      <WorkFlow />
     </div>
   );
 }
