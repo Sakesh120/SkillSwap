@@ -539,7 +539,7 @@ function SessionRoom() {
       <div
         className="
         absolute
-        bottom-24
+        bottom-2
         right-3
         md:right-6
         z-50
