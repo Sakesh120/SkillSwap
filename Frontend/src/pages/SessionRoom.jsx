@@ -1,10 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FiMessageCircle } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { useAuth } from "../context/AuthContext";
 import { getSessionByRoomId } from "../api/session.api";
 import WorkFlow from "../components/WorkFlow";
+
+import {
+  FaMicrophone,
+  FaMicrophoneSlash,
+  FaVideo,
+  FaVideoSlash,
+  FaPhoneSlash,
+  FaCommentDots,
+  FaTimes,
+} from "react-icons/fa";
 
 const SOCKET_SERVER_URL = "http://localhost:3000";
 
@@ -27,7 +36,7 @@ function SessionRoom() {
   const [cameraOn, setCameraOn] = useState(true);
   const [micOn, setMicOn] = useState(true);
   const [peerConnected, setPeerConnected] = useState(false);
-  const [showChatPanel, setShowChatPanel] = useState(false);
+  const [showMobileChat, setShowMobileChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
 
@@ -66,11 +75,13 @@ function SessionRoom() {
         video: true,
       });
       setLocalStream(stream);
+
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
       }
     } catch (err) {
       console.error("Unable to access local media", err);
+
       setError(
         "Could not access camera and microphone. Please allow permissions and refresh.",
       );
@@ -79,15 +90,19 @@ function SessionRoom() {
 
   useEffect(() => {
     if (!user || !roomId) return;
+
     const loadRoom = async () => {
       try {
         setLoading(true);
+
         const response = await getSessionByRoomId(roomId);
+
         setSession(response.data.session);
         setMeeting(response.data.meeting);
         setError(null);
       } catch (err) {
         console.error("Room load error", err);
+
         setError(
           err.response?.data?.message ||
             "Unable to load the session meeting room.",
@@ -102,6 +117,7 @@ function SessionRoom() {
 
   useEffect(() => {
     if (!user || !session) return;
+
     let mounted = true;
 
     const createPeerConnection = () => {
@@ -118,11 +134,15 @@ function SessionRoom() {
 
       pc.ontrack = (event) => {
         if (!mounted) return;
+
         const [remoteStream] = event.streams;
+
         setRemoteStream(remoteStream);
+
         if (remoteVideoRef.current) {
           remoteVideoRef.current.srcObject = remoteStream;
         }
+
         setPeerConnected(true);
       };
 
@@ -148,6 +168,7 @@ function SessionRoom() {
       if (!pcRef.current) {
         pcRef.current = createPeerConnection();
       }
+
       return pcRef.current;
     };
 
@@ -161,7 +182,9 @@ function SessionRoom() {
 
     socket.on("connect", () => {
       setSocketConnected(true);
+
       setStatusMessage("Connected to meeting server. Joining room...");
+
       socket.emit("join-room", {
         roomId,
         userId: user._id,
@@ -179,23 +202,31 @@ function SessionRoom() {
     socket.on("user-joined", async ({ userId, userName, currentCount }) => {
       setParticipants((current) => {
         const next = [...current];
+
         if (!next.some((u) => u.userId === userId)) {
           next.push({ userId, userName });
         }
+
         return next;
       });
 
       if (currentCount === 2 && !offerCreatedRef.current) {
         const pc = ensurePeerConnection();
+
         if (isOfferer) {
           try {
             const offer = await pc.createOffer();
+
             await pc.setLocalDescription(offer);
+
             socket.emit("offer", { roomId, offer });
+
             offerCreatedRef.current = true;
+
             setStatusMessage("Creating call offer...");
           } catch (err) {
             console.error("Offer creation failed", err);
+
             setError("Unable to create the WebRTC offer.");
           }
         }
@@ -205,13 +236,19 @@ function SessionRoom() {
     socket.on("offer", async (offer) => {
       try {
         const pc = ensurePeerConnection();
+
         await pc.setRemoteDescription(offer);
+
         const answer = await pc.createAnswer();
+
         await pc.setLocalDescription(answer);
+
         socket.emit("answer", { roomId, answer });
+
         setStatusMessage("Answering call...");
       } catch (err) {
         console.error("Offer handling failed", err);
+
         setError("Unable to establish the call.");
       }
     });
@@ -219,7 +256,9 @@ function SessionRoom() {
     socket.on("answer", async (answer) => {
       try {
         if (!pcRef.current) return;
+
         await pcRef.current.setRemoteDescription(answer);
+
         setStatusMessage("Call connected.");
       } catch (err) {
         console.error("Answer handling failed", err);
@@ -229,6 +268,7 @@ function SessionRoom() {
     socket.on("ice-candidate", async (candidate) => {
       try {
         if (!pcRef.current) return;
+
         await pcRef.current.addIceCandidate(candidate);
       } catch (err) {
         console.error("Failed to add ICE candidate", err);
@@ -241,33 +281,40 @@ function SessionRoom() {
 
     socket.on("session-ended", ({ reason }) => {
       setStatusMessage(reason || "The session has ended.");
+
       setPeerConnected(false);
+
       cleanupPeerConnection();
       stopLocalStream();
-      // navigate back to sessions after brief message
+
       setTimeout(() => navigate("/my-sessions"), 1200);
     });
 
     socket.on("user-left", () => {
       setStatusMessage("Your partner left the session.");
+
       setPeerConnected(false);
     });
 
     socket.on("disconnect", () => {
       setSocketConnected(false);
+
       setStatusMessage("Disconnected from meeting server.");
     });
 
     socket.on("connect_error", (reason) => {
       console.error("Socket connect error", reason);
+
       setError("Unable to connect to the meeting server.");
     });
 
     return () => {
       mounted = false;
+
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
+
       cleanupPeerConnection();
       stopLocalStream();
     };
@@ -279,37 +326,33 @@ function SessionRoom() {
     }
   }, [localStream]);
 
-  // Ensure that if the peer connection was created before we obtained
-  // the local media, we attach the local tracks to the existing
-  // RTCPeerConnection and (for the offerer) create the offer.
   useEffect(() => {
     const attachTracksAndMaybeOffer = async () => {
       if (!localStream || !pcRef.current || !socketRef.current) return;
 
       try {
-        // Add tracks if they're not already present
         const senders = pcRef.current
           .getSenders()
           .map((s) => s.track)
           .filter(Boolean);
+
         localStream.getTracks().forEach((track) => {
           if (!senders.includes(track)) {
             try {
               pcRef.current.addTrack(track, localStream);
-            } catch (err) {
-              // addTrack can throw if connection is closed — ignore silently
-            }
+            } catch (err) {}
           }
         });
 
-        // If this client should be the offerer but no offer was created yet,
-        // create and send one now (handles case where offer was attempted
-        // before local media was ready).
         if (isOfferer && !offerCreatedRef.current) {
           const offer = await pcRef.current.createOffer();
+
           await pcRef.current.setLocalDescription(offer);
+
           socketRef.current.emit("offer", { roomId, offer });
+
           offerCreatedRef.current = true;
+
           setStatusMessage("Creating call offer...");
         }
       } catch (err) {
@@ -334,6 +377,7 @@ function SessionRoom() {
 
   const toggleMute = () => {
     if (!localStream) return;
+
     localStream.getAudioTracks().forEach((track) => {
       track.enabled = !track.enabled;
       setMicOn(track.enabled);
@@ -342,6 +386,7 @@ function SessionRoom() {
 
   const toggleCamera = () => {
     if (!localStream) return;
+
     localStream.getVideoTracks().forEach((track) => {
       track.enabled = !track.enabled;
       setCameraOn(track.enabled);
@@ -355,20 +400,25 @@ function SessionRoom() {
         userId: user?._id,
       });
     }
+
     cleanupPeerConnection();
     stopLocalStream();
+
     navigate("/my-sessions");
   };
 
   const sendChatMessage = () => {
     if (!messageText.trim() || !socketRef.current || !user) return;
+
     const payload = {
       roomId,
       userId: user._id,
       userName: user.name || "You",
       content: messageText.trim(),
     };
+
     socketRef.current.emit("chat-message", payload);
+
     setChatMessages((prev) => [
       ...prev,
       {
@@ -378,6 +428,7 @@ function SessionRoom() {
         createdAt: new Date().toISOString(),
       },
     ]);
+
     setMessageText("");
   };
 
@@ -389,9 +440,9 @@ function SessionRoom() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8 mt-[10vh]">
-        <div className="mx-auto w-full max-w-4xl rounded-3xl border border-slate-200 bg-white p-8 shadow-xl text-center">
-          <p className="text-lg text-slate-600">Loading meeting room…</p>
+      <div className="min-h-screen bg-slate-50 py-10 px-4 mt-[10vh]">
+        <div className="mx-auto max-w-4xl rounded-3xl bg-white p-8 text-center">
+          <p>Loading meeting room...</p>
         </div>
       </div>
     );
@@ -399,14 +450,11 @@ function SessionRoom() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8 mt-[10vh]">
-        <div className="mx-auto w-full max-w-4xl rounded-3xl border border-red-200 bg-red-50 p-8 shadow-xl text-center">
-          <p className="text-lg text-red-700">{error}</p>
-          <button
-            type="button"
-            onClick={() => navigate("/my-sessions")}
-            className="mt-6 rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
-          >
+      <div className="min-h-screen bg-slate-50 py-10 px-4 mt-[10vh]">
+        <div className="mx-auto max-w-4xl rounded-3xl bg-red-50 p-8 text-center">
+          <p>{error}</p>
+
+          <button onClick={() => navigate("/my-sessions")}>
             Back to sessions
           </button>
         </div>
@@ -414,185 +462,341 @@ function SessionRoom() {
     );
   }
 
+  // WAIT FOR PART 2 → RETURN UI
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8 mt-[10vh]">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div className="h-screen w-screen overflow-hidden bg-black relative">
+      {/* ================= FULLSCREEN REMOTE VIDEO ================= */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={remoteVideoRef}
+          autoPlay
+          playsInline
+          className="w-full h-full object-cover bg-slate-900"
+        />
+      </div>
+
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black/30 z-10"></div>
+
+      {/* ================= TOP HEADER ================= */}
+      <div className="absolute top-0 left-0 right-0 z-40 px-3 md:px-6 py-4">
+        <div
+          className="
+          flex justify-between items-center
+          rounded-2xl
+          bg-black/30
+          backdrop-blur-lg
+          border border-white/10
+          px-4 md:px-6 py-3
+        "
+        >
+          {/* Left */}
           <div>
-            <h1 className="text-3xl font-semibold text-slate-900">
-              SkillSwap meeting
+            <h1 className="text-lg md:text-2xl font-semibold text-white">
+              SkillSwap Session
             </h1>
-            <p className="mt-2 text-sm text-slate-500">
+
+            <p className="text-xs md:text-sm text-gray-300 mt-1">
               {session?.skillRequested ||
                 session?.skillsOffered ||
-                "Skill session"}
-              {partner ? ` with ${partner.name}` : ""}.
+                "Skill Session"}
+
+              {partner ? ` • with ${partner.name}` : ""}
             </p>
           </div>
-          <div className="space-y-2 text-right">
-            <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">
-              {session?.status || "live"}
-            </span>
-            <p className="text-sm text-slate-500">{statusMessage}</p>
-          </div>
-        </div>
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <div className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-4">
-            <div className="grid gap-4 xl:grid-cols-[2fr_1fr]">
-              {/* Partner (larger) */}
-              <div className="rounded-3xl bg-black p-2 order-2 xl:order-1">
-                <video
-                  ref={remoteVideoRef}
-                  autoPlay
-                  playsInline
-                  className="h-96 w-full rounded-3xl object-cover bg-slate-900"
-                />
-                <p className="mt-2 text-sm text-slate-400">Partner camera</p>
-              </div>
+          {/* Right */}
+          <div className="hidden md:block text-right">
+            <p className="text-sm text-white">
+              {meeting?.status || session?.status || "Live"}
+            </p>
 
-              {/* Local (smaller) */}
-              <div className="rounded-3xl bg-black p-2 order-1 xl:order-2">
-                <video
-                  ref={localVideoRef}
-                  autoPlay
-                  muted
-                  playsInline
-                  className="h-44 w-full rounded-3xl object-cover bg-slate-900"
-                />
-                <p className="mt-2 text-sm text-slate-400">Your camera</p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={toggleMute}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  micOn
-                    ? "bg-slate-700 text-white hover:bg-slate-800"
-                    : "bg-red-100 text-red-700 hover:bg-red-200"
-                }`}
-              >
-                {micOn ? "Mute" : "Unmute"}
-              </button>
-              <button
-                type="button"
-                onClick={toggleCamera}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  cameraOn
-                    ? "bg-slate-700 text-white hover:bg-slate-800"
-                    : "bg-red-100 text-red-700 hover:bg-red-200"
-                }`}
-              >
-                {cameraOn ? "Stop camera" : "Start camera"}
-              </button>
-              <button
-                type="button"
-                onClick={endSession}
-                className="rounded-full bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-              >
-                End session
-              </button>
-            </div>
-
-            {/* Mobile chat toggle button (small screens) */}
-            <div className="block lg:hidden">
-              <button
-                type="button"
-                onClick={() => setShowMobileChat(true)}
-                className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white"
-              >
-                Open chat
-              </button>
-            </div>
-
-            <div className="rounded-3xl border border-slate-200 bg-white p-4">
-              <h2 className="text-sm font-semibold text-slate-900 mb-3">
-                Chat
-              </h2>
-              <div className="space-y-3 max-h-80 overflow-y-auto pb-2">
-                {chatMessages.length === 0 ? (
-                  <p className="text-sm text-slate-500">
-                    Send a note to your partner while you wait.
-                  </p>
-                ) : (
-                  chatMessages.map((message, index) => {
-                    const isMine = message.userId === user?._id;
-                    return (
-                      <div
-                        key={`${message.createdAt}-${index}`}
-                        className={`rounded-3xl px-4 py-3 text-sm shadow-sm ${
-                          isMine
-                            ? "bg-blue-600 text-white self-end"
-                            : "bg-slate-100 text-slate-900"
-                        }`}
-                      >
-                        <div className="font-medium">
-                          {isMine ? "You" : message.userName || "Partner"}
-                        </div>
-                        <p className="mt-1 whitespace-pre-wrap">
-                          {message.content}
-                        </p>
-                        <span className="text-xs text-slate-400">
-                          {new Date(message.createdAt).toLocaleString()}
-                        </span>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-              <div className="mt-4 flex gap-2">
-                <textarea
-                  rows={2}
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  className="min-h-24 w-full resize-none rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                  placeholder="Type a message..."
-                />
-                <button
-                  type="button"
-                  onClick={sendChatMessage}
-                  disabled={!messageText.trim()}
-                  className="rounded-3xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
-                >
-                  Send
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900">
-                Meeting details
-              </h2>
-              <p className="mt-2 text-sm text-slate-500">Room ID: {roomId}</p>
-              <p className="mt-2 text-sm text-slate-500">
-                Partner: {partner?.name || partner?.email || "Pending"}
-              </p>
-            </div>
-            <div className="rounded-3xl bg-slate-50 p-4">
-              <p className="text-sm text-slate-600">
-                This session is using the internal SkillSwap meeting experience.
-                Keep this browser tab open while the session is live.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm text-slate-700">
-                Session status: {meeting?.status || session?.status}
-              </p>
-              <p className="text-sm text-slate-700">
-                Server connection: {socketConnected ? "online" : "offline"}
-              </p>
-              <p className="text-sm text-slate-700">
-                Call status:{" "}
-                {peerConnected ? "Connected" : "Waiting for partner"}
-              </p>
-            </div>
+            <p className="text-xs text-gray-300 mt-1">{statusMessage}</p>
           </div>
         </div>
       </div>
+
+      {/* ================= WAITING STATE ================= */}
+      {!peerConnected && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div
+            className="
+            rounded-2xl
+            bg-black/40
+            backdrop-blur-md
+            px-6 py-4
+            border border-white/10
+          "
+          >
+            <p className="text-white text-sm md:text-base">
+              Waiting for partner to join...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ================= LOCAL VIDEO FLOATING ================= */}
+      <div
+        className="
+        absolute
+        bottom-24
+        right-3
+        md:right-6
+        z-50
+
+        w-28 h-28
+        sm:w-36 sm:h-36
+        md:w-50 md:h-50
+
+        rounded-2xl
+        overflow-hidden
+        border-2 border-white/20
+        shadow-2xl
+        bg-black
+      "
+      >
+        <video
+          ref={localVideoRef}
+          autoPlay
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        />
+
+        <div
+          className="
+          absolute bottom-2 left-2
+          bg-black/50
+          px-2 py-1
+          rounded
+          text-[11px]
+          text-white
+        "
+        >
+          You
+        </div>
+      </div>
+
+      {/* ================= CHAT POPUP ================= */}
+      {showMobileChat && (
+        <div
+          className="
+          absolute
+          z-50
+
+          bottom-24
+          left-3
+          md:left-auto
+          md:right-6
+
+          w-[95vw]
+          md:w-95
+
+          h-107.5
+
+          rounded-2xl
+          bg-black/40
+          backdrop-blur-xl
+          border border-white/10
+
+          flex flex-col
+          overflow-hidden
+        "
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center p-4 border-b border-white/10">
+            <h2 className="text-white font-semibold">Chat</h2>
+
+            <button
+              onClick={() => setShowMobileChat(false)}
+              className="text-white text-lg"
+            >
+              <FaTimes />
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {chatMessages.length === 0 ? (
+              <p className="text-sm text-gray-300">No messages yet</p>
+            ) : (
+              chatMessages.map((message, index) => {
+                const isMine = message.userId === user?._id;
+
+                return (
+                  <div
+                    key={`${message.createdAt}-${index}`}
+                    className={`
+                    max-w-[80%]
+                    rounded-xl
+                    px-3 py-2
+                    text-sm
+
+                    ${
+                      isMine
+                        ? "ml-auto bg-blue-600 text-white"
+                        : "bg-white/15 text-white"
+                    }
+                  `}
+                  >
+                    <div className="font-medium text-xs mb-1">
+                      {isMine ? "You" : message.userName || "Partner"}
+                    </div>
+
+                    <p className="wrap-break-words">{message.content}</p>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Input */}
+          <div className="p-3 border-t border-white/10 flex gap-2">
+            <textarea
+              rows={2}
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="Type message..."
+              className="
+              flex-1
+              resize-none
+              rounded-xl
+              bg-white/10
+              text-white
+              px-3 py-2
+              outline-none
+              border border-white/10
+            "
+            />
+
+            <button
+              onClick={sendChatMessage}
+              disabled={!messageText.trim()}
+              className="
+              bg-blue-600
+              px-4
+              rounded-xl
+              text-white
+              disabled:opacity-50
+            "
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ================= BOTTOM CONTROLS ================= */}
+      <div className="absolute bottom-0 left-0 right-0 z-40 px-4 py-5">
+        <div
+          className="
+          mx-auto
+          w-fit
+
+          flex items-center gap-3 md:gap-4
+
+          rounded-2xl
+          bg-black/30
+          backdrop-blur-lg
+          border border-white/10
+
+          px-4 md:px-6
+          py-3
+        "
+        >
+          {/* MIC */}
+          <button
+            onClick={toggleMute}
+            className={`
+            w-12 h-12 rounded-full
+            flex items-center justify-center
+            transition
+
+            ${
+              micOn
+                ? "bg-slate-700 text-white hover:bg-slate-600"
+                : "bg-red-600 text-white hover:bg-red-500"
+            }
+          `}
+          >
+            {micOn ? (
+              <FaMicrophone size={18} />
+            ) : (
+              <FaMicrophoneSlash size={18} />
+            )}
+          </button>
+
+          {/* CAMERA */}
+          <button
+            onClick={toggleCamera}
+            className={`
+            w-12 h-12 rounded-full
+            flex items-center justify-center
+            transition
+
+            ${
+              cameraOn
+                ? "bg-slate-700 text-white hover:bg-slate-600"
+                : "bg-red-600 text-white hover:bg-red-500"
+            }
+          `}
+          >
+            {cameraOn ? <FaVideo size={18} /> : <FaVideoSlash size={18} />}
+          </button>
+
+          {/* CHAT */}
+          <button
+            onClick={() => setShowMobileChat(!showMobileChat)}
+            className="
+            w-12 h-12 rounded-full
+            bg-blue-600
+            hover:bg-blue-500
+            text-white
+            flex items-center justify-center
+          "
+          >
+            <FaCommentDots size={18} />
+          </button>
+
+          {/* END SESSION */}
+          <button
+            onClick={endSession}
+            className="
+            w-14 h-14 rounded-full
+            bg-red-600
+            hover:bg-red-500
+            text-white
+            flex items-center justify-center
+          "
+          >
+            <FaPhoneSlash size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* ================= SIDE STATUS ================= */}
+      <div className="absolute left-4 bottom-24 z-30 hidden lg:block">
+        <div
+          className="
+          rounded-xl
+          bg-black/30
+          backdrop-blur-md
+          border border-white/10
+          px-4 py-3
+        "
+        >
+          <p className="text-xs text-gray-300">Room: {roomId}</p>
+
+          <p className="text-xs text-gray-300 mt-1">
+            Server: {socketConnected ? "Online" : "Offline"}
+          </p>
+
+          <p className="text-xs text-gray-300 mt-1">
+            Call: {peerConnected ? "Connected" : "Waiting"}
+          </p>
+        </div>
+      </div>
+
       <WorkFlow />
     </div>
   );
