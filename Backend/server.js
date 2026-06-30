@@ -16,7 +16,7 @@ const PORT = process.env.PORTN0 || 3000;
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://skillswap-omega-gilt.vercel.app/",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true,
   },

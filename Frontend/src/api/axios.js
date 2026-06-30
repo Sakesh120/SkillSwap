@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://skillswap-backend-ipgk.onrender.com/api", // your backend URL
+  baseURL: "http://localhost:3000/api", // your backend URL
   withCredentials: true, // important if using cookies
 });
 
